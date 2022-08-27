@@ -347,6 +347,7 @@
             this.ClientSize = new System.Drawing.Size(1168, 582);
             this.Controls.Add(this.splitContainer1);
             this.Name = "FormColorSpacePicker";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormColorSpacePicker";
             this.Load += new System.EventHandler(this.FormColorSpacePicker_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);

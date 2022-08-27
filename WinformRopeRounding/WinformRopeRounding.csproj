@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RtspPlayer\**" />
+    <EmbeddedResource Remove="RtspPlayer\**" />
+    <None Remove="RtspPlayer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="UserControls\PtzPictureBoxEx.Designer.cs" />
   </ItemGroup>
 
@@ -45,7 +51,6 @@
 
   <ItemGroup>
     <Folder Include="Assets\Images\" />
-    <Folder Include="RtspPlayer\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,9 +62,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /y /d  &quot;$(ProjectDir)RtspPlayer\x64\*.dll&quot; &quot;$(ProjectDir)$(OutDir)&quot;" />
-  </Target>
 
 </Project>

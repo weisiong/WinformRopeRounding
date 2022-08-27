@@ -1,11 +1,11 @@
-﻿using SimpleRTSPPlayerWinforms;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using WinformRopeRounding.Classes;
+using WinformRopeRounding.Modules.VideoProcessor;
 using WinformRopeRounding.UserControls;
 
 namespace WinformRopeRounding
 {
-    public partial class FormCamCalibration : Form
+    public partial class FormCamControl : Form
     {       
         private ucCamPtzPanel _ctrpanel;
         private PtzCamControl _controller;
@@ -15,8 +15,10 @@ namespace WinformRopeRounding
         public string RtspPath { get; set; }
         public Image SnapshootImage { get; internal set; }
 
-        private VideoControl videoControl;
-        public FormCamCalibration(string Title, string value)
+        private Emgu.CV.UI.ImageBox cameraImageBox;
+        VideoProcessor vp;
+
+        public FormCamControl(string Title, string value)
         {
             InitializeComponent();
             this.Text = Title;
@@ -25,15 +27,6 @@ namespace WinformRopeRounding
 
         private async void FormCamCalibration_Load(object sender, EventArgs e)
         {
-            videoControl = new VideoControl();
-            if (!splitContainer1.Panel1.Controls.Contains(videoControl))
-            {
-                splitContainer1.Panel1.Controls.Add(videoControl);
-                videoControl.Dock = DockStyle.Fill;
-                videoControl.HandleStreamStartedEvent += VideoControl_HandleStreamStartedEvent;
-                videoControl.HandleStreamStoppedEvent += VideoControl_HandleStreamStoppedEvent;
-            }
-
             _ctrpanel = ucCamPtzPanel1;
             _ctrpanel.OnActionButtonDown += Ctrpanel_OnButtonMouseDown;
             _ctrpanel.OnActionButtonUp += Ctrpanel_OnButtonMouseUp;
@@ -42,8 +35,30 @@ namespace WinformRopeRounding
             var success = await _controller.InitialiseAsync(CameraIP, CamUsername, CamPassword);
             if (success)
             {
+                cameraImageBox = new Emgu.CV.UI.ImageBox();
+                if (!splitContainer1.Panel1.Controls.Contains(cameraImageBox))
+                {
+                    splitContainer1.Panel1.Controls.Add(cameraImageBox);
+                    cameraImageBox.Dock = DockStyle.Fill;
+                    cameraImageBox.BackgroundImageLayout = ImageLayout.Stretch;
+                    cameraImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+
+                    lblMessage.Visible = false;
+                    var url = RtspPath;
+                    vp = new(url, EnumMediaInput.HTTP);
+                    vp.OnFrameReceived += Vp_OnFrameReceived;
+                    vp.Run();
+                }
                 //_controller.SetPosition(txtValue.Text);
-                PlayStream();
+            }
+        }
+
+        private void Vp_OnFrameReceived(object? sender, VideoProcessorEventArgs e)
+        {
+            var frame = e.MatSrc;
+            if (frame is not null && frame.Ptr != IntPtr.Zero)
+            {
+                cameraImageBox.BackgroundImage = Emgu.CV.BitmapExtension.ToBitmap(frame);
             }
         }
 
@@ -80,19 +95,6 @@ namespace WinformRopeRounding
             _controller.Stop();
         }
 
-        private void PlayStream()
-        {
-            var RtspPath = $"rtsp://{CamUsername}:{CamPassword}@{CameraIP}";
-            if (!videoControl.IsPlaying)
-                videoControl.StartPlay(RtspPath);
-        }
-
-        private void StopStream()
-        {
-            if (videoControl.IsPlaying)
-                videoControl.Stop();
-        }
-
         public string InputValue
         {
             get
@@ -100,10 +102,9 @@ namespace WinformRopeRounding
                return txtValue.Text;
             }
         }
-
-        private async Task btnGetPosition_ClickAsync(object sender, EventArgs e)
+        private void btnGetPosition_Click(object sender, EventArgs e)
         {
-                txtValue.Text =await _controller.GetPosition();
+            txtValue.Text = _controller.GetPosition();
         }
 
         private void FrmLocInfo_FormClosed(object sender, FormClosedEventArgs e)
@@ -111,31 +112,38 @@ namespace WinformRopeRounding
             _ctrpanel.OnActionButtonDown -= Ctrpanel_OnButtonMouseDown;
             _ctrpanel.OnActionButtonUp -= Ctrpanel_OnButtonMouseUp;
             _ctrpanel.OnActionButtonClick -= _ctrpanel_OnActionButtonClick;
-            StopStream();
-            videoControl.Dispose();
-            videoControl = null;
-            _controller = null;
+            vp.Stop();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            SnapshootImage = Snapshoot();
+            var img = Snapshoot();
+            if (img is not null)
+                SnapshootImage = img;
         }
 
 
-        private Image Snapshoot()
+        private Image? Snapshoot()
         {
-            Image img = null;
+            Image? img = null;
             try
             {
-                var img1 = videoControl.GetCurrentFrame();
-                img = new Bitmap(img1); //, new Size(1920, 1080));
+                var img1 = vp.CurrentFrame;
+                img = Emgu.CV.BitmapExtension.ToBitmap(img1);  
             }
             catch (Exception ex)
             {
                 Debug.Print(ex.Message);
             }
             return img;
+        }
+
+        private void splitContainer1_Panel1_SizeChanged(object sender, EventArgs e)
+        {
+            var Left = (splitContainer1.Width - lblMessage.Width) / 2;
+            var Top = (splitContainer1.Height - lblMessage.Height) / 2;
+            lblMessage.Left = Left;
+            lblMessage.Top = Top;
         }
 
 

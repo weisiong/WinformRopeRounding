@@ -22,48 +22,54 @@ namespace WinformRopeRounding.Modules.VideoProcessor
             CvInvoke.Init();
             _uri = uri;
             _mediaInput = mediaInput;
-            //cam.ImageGrabbed += Cam_ImageGrabbed;
         }
 
         public Mat CurrentFrame => cam.QueryFrame();
         public async void Run()
         {
             if (_mediaInput == EnumMediaInput.RTSP || _mediaInput == EnumMediaInput.VIDEO)
-                cam = new VideoCapture(_uri);
-
-            while (true)
             {
-                if (_isStop) break;
+                cam = new VideoCapture(_uri);
+                cam.ImageGrabbed += Cam_ImageGrabbed;
+                cam.Start();
+                //Application.Idle += RefreshFrames;
                 
-                while(_isPause)
+            }
+            else
+            {
+                while (true)
                 {
-                    if(!_isPause) break;
                     if (_isStop) break;
-                    Application.DoEvents();
-                    await Task.Delay(1000);
-                }
-                
-                if (_mediaInput == EnumMediaInput.PICS)
-                {
-                    var files = Directory.GetFiles(_uri);
-                    foreach (var file in files)
+
+                    while (_isPause)
                     {
-                        cam = new VideoCapture(file);
+                        if (!_isPause) break;
+                        if (_isStop) break;
+                        Application.DoEvents();
+                        await Task.Delay(1000);
+                    }
+
+                    if (_mediaInput == EnumMediaInput.PICS)
+                    {
+                        var files = Directory.GetFiles(_uri);
+                        foreach (var file in files)
+                        {
+                            cam = new VideoCapture(file);
+                            RaiseOnFrameReceivedEvent();
+                        }
+                    }
+                    else
+                    {
+                        if (_mediaInput == EnumMediaInput.HTTP || _mediaInput == EnumMediaInput.PIC)
+                            cam = new VideoCapture(_uri);
+
                         RaiseOnFrameReceivedEvent();
                     }
+                    Application.DoEvents();
+                    await Task.Delay(100);
                 }
-                else
-                {
-                    if (_mediaInput == EnumMediaInput.HTTP || _mediaInput == EnumMediaInput.PIC)
-                        cam = new VideoCapture(_uri);
-
-                    RaiseOnFrameReceivedEvent();
-                }
-                Application.DoEvents();
-                await Task.Delay(100);
             }
         }
-
         private void RaiseOnFrameReceivedEvent()
         {
             Mat refMat = cam.QueryFrame();
@@ -73,11 +79,15 @@ namespace WinformRopeRounding.Modules.VideoProcessor
                 OnFrameReceived?.Invoke(this, e);
             }
         }
-
-
+ 
         private void Cam_ImageGrabbed(object? sender, EventArgs e)
         {
-            Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.fff")} Cam_ImageGrabbed");
+            //Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.fff")} Cam_ImageGrabbed");
+            //Mat refMat = new();
+            //cam.Retrieve(refMat);
+            Mat refMat = cam.QueryFrame();
+            var arg = new VideoProcessorEventArgs() { MatSrc = refMat };
+            OnFrameReceived?.Invoke(this, arg);
         }
         public void Start()
         {
@@ -95,6 +105,12 @@ namespace WinformRopeRounding.Modules.VideoProcessor
             _isPause = !_isPause;
         }
 
+        public bool IsPlaying {
+            get
+            {
+                return (!_isPause && !_isStop);
+            }
+        }
 
     }
 }

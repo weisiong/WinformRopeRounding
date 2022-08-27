@@ -21,30 +21,53 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Capabilities")]
+        OnvifMedia10.Capabilities GetServiceCapabilities();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetServiceCapabilities", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Capabilities")]
         System.Threading.Tasks.Task<OnvifMedia10.Capabilities> GetServiceCapabilitiesAsync();
         
+        // CODEGEN: Parameter 'VideoSources' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetVideoSources/", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="VideoSources")]
+        OnvifMedia10.GetVideoSourcesResponse GetVideoSources(OnvifMedia10.GetVideoSourcesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetVideoSources/", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetVideoSourcesResponse> GetVideoSourcesAsync(OnvifMedia10.GetVideoSourcesRequest request);
         
+        // CODEGEN: Parameter 'AudioSources' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioSources", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="AudioSources")]
+        OnvifMedia10.GetAudioSourcesResponse GetAudioSources(OnvifMedia10.GetAudioSourcesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioSources", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioSourcesResponse> GetAudioSourcesAsync(OnvifMedia10.GetAudioSourcesRequest request);
         
+        // CODEGEN: Parameter 'AudioOutputs' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputs", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="AudioOutputs")]
+        OnvifMedia10.GetAudioOutputsResponse GetAudioOutputs(OnvifMedia10.GetAudioOutputsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputs", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioOutputsResponse> GetAudioOutputsAsync(OnvifMedia10.GetAudioOutputsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/CreateProfile", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Profile")]
+        OnvifMedia10.Profile CreateProfile(string Name, string Token);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/CreateProfile", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Profile")]
         System.Threading.Tasks.Task<OnvifMedia10.Profile> CreateProfileAsync(string Name, string Token);
         
@@ -53,180 +76,290 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Profile")]
+        OnvifMedia10.Profile GetProfile(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetProfile/", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Profile")]
         System.Threading.Tasks.Task<OnvifMedia10.Profile> GetProfileAsync(string ProfileToken);
         
+        // CODEGEN: Parameter 'Profiles' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetProfiles", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Profiles")]
+        OnvifMedia10.GetProfilesResponse GetProfiles(OnvifMedia10.GetProfilesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetProfiles", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetProfilesResponse> GetProfilesAsync(OnvifMedia10.GetProfilesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddVideoEncoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddVideoEncoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddVideoEncoderConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveVideoEncoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveVideoEncoderConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveVideoEncoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveVideoEncoderConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddVideoSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddVideoSourceConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddVideoSourceConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddVideoSourceConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveVideoSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveVideoSourceConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveVideoSourceConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveVideoSourceConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioEncoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddAudioEncoderConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioEncoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddAudioEncoderConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioEncoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveAudioEncoderConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioEncoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveAudioEncoderConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddAudioSourceConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioSourceConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddAudioSourceConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveAudioSourceConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioSourceConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveAudioSourceConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddPTZConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddPTZConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddPTZConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddPTZConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemovePTZConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemovePTZConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemovePTZConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemovePTZConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddVideoAnalyticsConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddVideoAnalyticsConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddVideoAnalyticsConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddVideoAnalyticsConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveVideoAnalyticsConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveVideoAnalyticsConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveVideoAnalyticsConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveVideoAnalyticsConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddMetadataConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddMetadataConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddMetadataConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddMetadataConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveMetadataConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveMetadataConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveMetadataConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveMetadataConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioOutputConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddAudioOutputConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioOutputConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddAudioOutputConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioOutputConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveAudioOutputConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioOutputConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveAudioOutputConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioDecoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void AddAudioDecoderConfiguration(string ProfileToken, string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/AddAudioDecoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task AddAudioDecoderConfigurationAsync(string ProfileToken, string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioDecoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void RemoveAudioDecoderConfiguration(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/RemoveAudioDecoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task RemoveAudioDecoderConfigurationAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/DeleteProfile", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void DeleteProfile(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/DeleteProfile", ReplyAction="*")]
         System.Threading.Tasks.Task DeleteProfileAsync(string ProfileToken);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetVideoSourceConfigurationsResponse GetVideoSourceConfigurations(OnvifMedia10.GetVideoSourceConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetVideoSourceConfigurationsResponse> GetVideoSourceConfigurationsAsync(OnvifMedia10.GetVideoSourceConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetVideoEncoderConfigurationsResponse GetVideoEncoderConfigurations(OnvifMedia10.GetVideoEncoderConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetVideoEncoderConfigurationsResponse> GetVideoEncoderConfigurationsAsync(OnvifMedia10.GetVideoEncoderConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetAudioSourceConfigurations/", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetAudioSourceConfigurationsResponse GetAudioSourceConfigurations(OnvifMedia10.GetAudioSourceConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetAudioSourceConfigurations/", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioSourceConfigurationsResponse> GetAudioSourceConfigurationsAsync(OnvifMedia10.GetAudioSourceConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioEncoderConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetAudioEncoderConfigurationsResponse GetAudioEncoderConfigurations(OnvifMedia10.GetAudioEncoderConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioEncoderConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioEncoderConfigurationsResponse> GetAudioEncoderConfigurationsAsync(OnvifMedia10.GetAudioEncoderConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoAnalyticsConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetVideoAnalyticsConfigurationsResponse GetVideoAnalyticsConfigurations(OnvifMedia10.GetVideoAnalyticsConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoAnalyticsConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetVideoAnalyticsConfigurationsResponse> GetVideoAnalyticsConfigurationsAsync(OnvifMedia10.GetVideoAnalyticsConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetMetadataConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetMetadataConfigurationsResponse GetMetadataConfigurations(OnvifMedia10.GetMetadataConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetMetadataConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetMetadataConfigurationsResponse> GetMetadataConfigurationsAsync(OnvifMedia10.GetMetadataConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetAudioOutputConfigurationsResponse GetAudioOutputConfigurations(OnvifMedia10.GetAudioOutputConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioOutputConfigurationsResponse> GetAudioOutputConfigurationsAsync(OnvifMedia10.GetAudioOutputConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioDecoderConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetAudioDecoderConfigurationsResponse GetAudioDecoderConfigurations(OnvifMedia10.GetAudioDecoderConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioDecoderConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioDecoderConfigurationsResponse> GetAudioDecoderConfigurationsAsync(OnvifMedia10.GetAudioDecoderConfigurationsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.VideoSourceConfiguration GetVideoSourceConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfiguration", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.VideoSourceConfiguration> GetVideoSourceConfigurationAsync(string ConfigurationToken);
         
@@ -235,12 +368,20 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.VideoEncoderConfiguration GetVideoEncoderConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfiguration", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.VideoEncoderConfiguration> GetVideoEncoderConfigurationAsync(string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.AudioSourceConfiguration GetAudioSourceConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioSourceConfiguration", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioSourceConfiguration> GetAudioSourceConfigurationAsync(string ConfigurationToken);
         
@@ -249,12 +390,20 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.AudioEncoderConfiguration GetAudioEncoderConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioEncoderConfiguration", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioEncoderConfiguration> GetAudioEncoderConfigurationAsync(string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoAnalyticsConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.VideoAnalyticsConfiguration GetVideoAnalyticsConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoAnalyticsConfiguration", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.VideoAnalyticsConfiguration> GetVideoAnalyticsConfigurationAsync(string ConfigurationToken);
         
@@ -263,12 +412,20 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.MetadataConfiguration GetMetadataConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetMetadataConfiguration", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.MetadataConfiguration> GetMetadataConfigurationAsync(string ConfigurationToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.AudioOutputConfiguration GetAudioOutputConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputConfiguration", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioOutputConfiguration> GetAudioOutputConfigurationAsync(string ConfigurationToken);
         
@@ -277,108 +434,180 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
+        OnvifMedia10.AudioDecoderConfiguration GetAudioDecoderConfiguration(string ConfigurationToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioDecoderConfiguration", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configuration")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioDecoderConfiguration> GetAudioDecoderConfigurationAsync(string ConfigurationToken);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoEncoderConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleVideoEncoderConfigurationsResponse GetCompatibleVideoEncoderConfigurations(OnvifMedia10.GetCompatibleVideoEncoderConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoEncoderConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleVideoEncoderConfigurationsResponse> GetCompatibleVideoEncoderConfigurationsAsync(OnvifMedia10.GetCompatibleVideoEncoderConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoSourceConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleVideoSourceConfigurationsResponse GetCompatibleVideoSourceConfigurations(OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoSourceConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleVideoSourceConfigurationsResponse> GetCompatibleVideoSourceConfigurationsAsync(OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioEncoderConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleAudioEncoderConfigurationsResponse GetCompatibleAudioEncoderConfigurations(OnvifMedia10.GetCompatibleAudioEncoderConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioEncoderConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleAudioEncoderConfigurationsResponse> GetCompatibleAudioEncoderConfigurationsAsync(OnvifMedia10.GetCompatibleAudioEncoderConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioSourceConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleAudioSourceConfigurationsResponse GetCompatibleAudioSourceConfigurations(OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioSourceConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleAudioSourceConfigurationsResponse> GetCompatibleAudioSourceConfigurationsAsync(OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoAnalyticsConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsResponse GetCompatibleVideoAnalyticsConfigurations(OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoAnalyticsConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsResponse> GetCompatibleVideoAnalyticsConfigurationsAsync(OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleMetadataConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleMetadataConfigurationsResponse GetCompatibleMetadataConfigurations(OnvifMedia10.GetCompatibleMetadataConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleMetadataConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleMetadataConfigurationsResponse> GetCompatibleMetadataConfigurationsAsync(OnvifMedia10.GetCompatibleMetadataConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioOutputConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleAudioOutputConfigurationsResponse GetCompatibleAudioOutputConfigurations(OnvifMedia10.GetCompatibleAudioOutputConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioOutputConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleAudioOutputConfigurationsResponse> GetCompatibleAudioOutputConfigurationsAsync(OnvifMedia10.GetCompatibleAudioOutputConfigurationsRequest request);
         
+        // CODEGEN: Parameter 'Configurations' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioDecoderConfigurations", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Configurations")]
+        OnvifMedia10.GetCompatibleAudioDecoderConfigurationsResponse GetCompatibleAudioDecoderConfigurations(OnvifMedia10.GetCompatibleAudioDecoderConfigurationsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetCompatibleAudioDecoderConfigurations", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleAudioDecoderConfigurationsResponse> GetCompatibleAudioDecoderConfigurationsAsync(OnvifMedia10.GetCompatibleAudioDecoderConfigurationsRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetVideoSourceConfiguration(OnvifMedia10.VideoSourceConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoSourceConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetVideoSourceConfigurationAsync(OnvifMedia10.VideoSourceConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoEncoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetVideoEncoderConfiguration(OnvifMedia10.VideoEncoderConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoEncoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetVideoEncoderConfigurationAsync(OnvifMedia10.VideoEncoderConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioSourceConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetAudioSourceConfiguration(OnvifMedia10.AudioSourceConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioSourceConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetAudioSourceConfigurationAsync(OnvifMedia10.AudioSourceConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioEncoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetAudioEncoderConfiguration(OnvifMedia10.AudioEncoderConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioEncoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetAudioEncoderConfigurationAsync(OnvifMedia10.AudioEncoderConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoAnalyticsConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetVideoAnalyticsConfiguration(OnvifMedia10.VideoAnalyticsConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoAnalyticsConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetVideoAnalyticsConfigurationAsync(OnvifMedia10.VideoAnalyticsConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetMetadataConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetMetadataConfiguration(OnvifMedia10.MetadataConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetMetadataConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetMetadataConfigurationAsync(OnvifMedia10.MetadataConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioOutputConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetAudioOutputConfiguration(OnvifMedia10.AudioOutputConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioOutputConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetAudioOutputConfigurationAsync(OnvifMedia10.AudioOutputConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioDecoderConfiguration", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetAudioDecoderConfiguration(OnvifMedia10.AudioDecoderConfiguration Configuration, bool ForcePersistence);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetAudioDecoderConfiguration", ReplyAction="*")]
         System.Threading.Tasks.Task SetAudioDecoderConfigurationAsync(OnvifMedia10.AudioDecoderConfiguration Configuration, bool ForcePersistence);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetVideoSourceConfigurationOptions/", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.VideoSourceConfigurationOptions GetVideoSourceConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdlGetVideoSourceConfigurationOptions/", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.VideoSourceConfigurationOptions> GetVideoSourceConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
@@ -387,12 +616,20 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.VideoEncoderConfigurationOptions GetVideoEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfigurationOptions", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.VideoEncoderConfigurationOptions> GetVideoEncoderConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioSourceConfigurationOptions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.AudioSourceConfigurationOptions GetAudioSourceConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioSourceConfigurationOptions", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioSourceConfigurationOptions> GetAudioSourceConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
@@ -401,12 +638,20 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.AudioEncoderConfigurationOptions GetAudioEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioEncoderConfigurationOptions", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioEncoderConfigurationOptions> GetAudioEncoderConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetMetadataConfigurationOptions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.MetadataConfigurationOptions GetMetadataConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetMetadataConfigurationOptions", ReplyAction="*")]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.MetadataConfigurationOptions> GetMetadataConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
@@ -415,6 +660,10 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.AudioOutputConfigurationOptions GetAudioOutputConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioOutputConfigurationOptions", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioOutputConfigurationOptions> GetAudioOutputConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioDecoderConfigurationOptions", ReplyAction="*")]
@@ -422,13 +671,20 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
+        OnvifMedia10.AudioDecoderConfigurationOptions GetAudioDecoderConfigurationOptions(string ConfigurationToken, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetAudioDecoderConfigurationOptions", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Options")]
         System.Threading.Tasks.Task<OnvifMedia10.AudioDecoderConfigurationOptions> GetAudioDecoderConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken);
         
-        // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetGuaranteedNumberOfVideoEncoderInstances", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesResponse GetGuaranteedNumberOfVideoEncoderInstances(OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetGuaranteedNumberOfVideoEncoderInstances", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesResponse> GetGuaranteedNumberOfVideoEncoderInstancesAsync(OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetStreamUri", ReplyAction="*")]
@@ -436,24 +692,37 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="MediaUri")]
+        OnvifMedia10.MediaUri GetStreamUri(OnvifMedia10.StreamSetup StreamSetup, string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetStreamUri", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="MediaUri")]
         System.Threading.Tasks.Task<OnvifMedia10.MediaUri> GetStreamUriAsync(OnvifMedia10.StreamSetup StreamSetup, string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/StartMulticastStreaming", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void StartMulticastStreaming(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/StartMulticastStreaming", ReplyAction="*")]
         System.Threading.Tasks.Task StartMulticastStreamingAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/StopMulticastStreaming", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void StopMulticastStreaming(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/StopMulticastStreaming", ReplyAction="*")]
         System.Threading.Tasks.Task StopMulticastStreamingAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetSynchronizationPoint", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        void SetSynchronizationPoint(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetSynchronizationPoint", ReplyAction="*")]
         System.Threading.Tasks.Task SetSynchronizationPointAsync(string ProfileToken);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetSnapshotUri", ReplyAction="*")]
@@ -461,12 +730,21 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="MediaUri")]
+        OnvifMedia10.MediaUri GetSnapshotUri(string ProfileToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetSnapshotUri", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="MediaUri")]
         System.Threading.Tasks.Task<OnvifMedia10.MediaUri> GetSnapshotUriAsync(string ProfileToken);
         
+        // CODEGEN: Parameter 'VideoSourceModes' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoSourceModes", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="VideoSourceModes")]
+        OnvifMedia10.GetVideoSourceModesResponse GetVideoSourceModes(OnvifMedia10.GetVideoSourceModesRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetVideoSourceModes", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetVideoSourceModesResponse> GetVideoSourceModesAsync(OnvifMedia10.GetVideoSourceModesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoSourceMode", ReplyAction="*")]
@@ -474,47 +752,71 @@ namespace OnvifMedia10
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
         [return: System.ServiceModel.MessageParameterAttribute(Name="Reboot")]
+        bool SetVideoSourceMode(string VideoSourceToken, string VideoSourceModeToken);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetVideoSourceMode", ReplyAction="*")]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="Reboot")]
         System.Threading.Tasks.Task<bool> SetVideoSourceModeAsync(string VideoSourceToken, string VideoSourceModeToken);
         
+        // CODEGEN: Parameter 'OSDs' requires additional schema information that cannot be captured using the parameter mode. The specific attribute is 'Microsoft.Xml.Serialization.XmlElementAttribute'.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetOSDs", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        [return: System.ServiceModel.MessageParameterAttribute(Name="OSDs")]
+        OnvifMedia10.GetOSDsResponse GetOSDs(OnvifMedia10.GetOSDsRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetOSDs", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.GetOSDsResponse> GetOSDsAsync(OnvifMedia10.GetOSDsRequest request);
         
-        // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetOSD", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
-        System.Threading.Tasks.Task<OnvifMedia10.GetOSDResponse> GetOSDAsync(OnvifMedia10.GetOSDRequest request);
+        OnvifMedia10.GetOSDResponse GetOSD(OnvifMedia10.GetOSDRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetOSD", ReplyAction="*")]
+        System.Threading.Tasks.Task<OnvifMedia10.GetOSDResponse> GetOSDAsync(OnvifMedia10.GetOSDRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetOSDOptions", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
-        System.Threading.Tasks.Task<OnvifMedia10.GetOSDOptionsResponse> GetOSDOptionsAsync(OnvifMedia10.GetOSDOptionsRequest request);
+        OnvifMedia10.GetOSDOptionsResponse GetOSDOptions(OnvifMedia10.GetOSDOptionsRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/GetOSDOptions", ReplyAction="*")]
+        System.Threading.Tasks.Task<OnvifMedia10.GetOSDOptionsResponse> GetOSDOptionsAsync(OnvifMedia10.GetOSDOptionsRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetOSD", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
-        System.Threading.Tasks.Task<OnvifMedia10.SetOSDResponse> SetOSDAsync(OnvifMedia10.SetOSDRequest request);
+        OnvifMedia10.SetOSDResponse SetOSD(OnvifMedia10.SetOSDRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/SetOSD", ReplyAction="*")]
+        System.Threading.Tasks.Task<OnvifMedia10.SetOSDResponse> SetOSDAsync(OnvifMedia10.SetOSDRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/CreateOSD", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
-        System.Threading.Tasks.Task<OnvifMedia10.CreateOSDResponse> CreateOSDAsync(OnvifMedia10.CreateOSDRequest request);
+        OnvifMedia10.CreateOSDResponse CreateOSD(OnvifMedia10.CreateOSDRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/CreateOSD", ReplyAction="*")]
+        System.Threading.Tasks.Task<OnvifMedia10.CreateOSDResponse> CreateOSDAsync(OnvifMedia10.CreateOSDRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/DeleteOSD", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(ConfigurationEntity))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(DeviceEntity))]
+        OnvifMedia10.DeleteOSDResponse DeleteOSD(OnvifMedia10.DeleteOSDRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://www.onvif.org/ver10/media/wsdl/DeleteOSD", ReplyAction="*")]
         System.Threading.Tasks.Task<OnvifMedia10.DeleteOSDResponse> DeleteOSDAsync(OnvifMedia10.DeleteOSDRequest request);
     }
     
@@ -15607,9 +15909,27 @@ namespace OnvifMedia10
         {
         }
         
+        public OnvifMedia10.Capabilities GetServiceCapabilities()
+        {
+            return base.Channel.GetServiceCapabilities();
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.Capabilities> GetServiceCapabilitiesAsync()
         {
             return base.Channel.GetServiceCapabilitiesAsync();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetVideoSourcesResponse OnvifMedia10.Media.GetVideoSources(OnvifMedia10.GetVideoSourcesRequest request)
+        {
+            return base.Channel.GetVideoSources(request);
+        }
+        
+        public OnvifMedia10.VideoSource[] GetVideoSources()
+        {
+            OnvifMedia10.GetVideoSourcesRequest inValue = new OnvifMedia10.GetVideoSourcesRequest();
+            OnvifMedia10.GetVideoSourcesResponse retVal = ((OnvifMedia10.Media)(this)).GetVideoSources(inValue);
+            return retVal.VideoSources;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15625,6 +15945,19 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetAudioSourcesResponse OnvifMedia10.Media.GetAudioSources(OnvifMedia10.GetAudioSourcesRequest request)
+        {
+            return base.Channel.GetAudioSources(request);
+        }
+        
+        public OnvifMedia10.AudioSource[] GetAudioSources()
+        {
+            OnvifMedia10.GetAudioSourcesRequest inValue = new OnvifMedia10.GetAudioSourcesRequest();
+            OnvifMedia10.GetAudioSourcesResponse retVal = ((OnvifMedia10.Media)(this)).GetAudioSources(inValue);
+            return retVal.AudioSources;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioSourcesResponse> OnvifMedia10.Media.GetAudioSourcesAsync(OnvifMedia10.GetAudioSourcesRequest request)
         {
             return base.Channel.GetAudioSourcesAsync(request);
@@ -15634,6 +15967,19 @@ namespace OnvifMedia10
         {
             OnvifMedia10.GetAudioSourcesRequest inValue = new OnvifMedia10.GetAudioSourcesRequest();
             return ((OnvifMedia10.Media)(this)).GetAudioSourcesAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetAudioOutputsResponse OnvifMedia10.Media.GetAudioOutputs(OnvifMedia10.GetAudioOutputsRequest request)
+        {
+            return base.Channel.GetAudioOutputs(request);
+        }
+        
+        public OnvifMedia10.AudioOutput[] GetAudioOutputs()
+        {
+            OnvifMedia10.GetAudioOutputsRequest inValue = new OnvifMedia10.GetAudioOutputsRequest();
+            OnvifMedia10.GetAudioOutputsResponse retVal = ((OnvifMedia10.Media)(this)).GetAudioOutputs(inValue);
+            return retVal.AudioOutputs;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15648,14 +15994,37 @@ namespace OnvifMedia10
             return ((OnvifMedia10.Media)(this)).GetAudioOutputsAsync(inValue);
         }
         
+        public OnvifMedia10.Profile CreateProfile(string Name, string Token)
+        {
+            return base.Channel.CreateProfile(Name, Token);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.Profile> CreateProfileAsync(string Name, string Token)
         {
             return base.Channel.CreateProfileAsync(Name, Token);
         }
         
+        public OnvifMedia10.Profile GetProfile(string ProfileToken)
+        {
+            return base.Channel.GetProfile(ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.Profile> GetProfileAsync(string ProfileToken)
         {
             return base.Channel.GetProfileAsync(ProfileToken);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetProfilesResponse OnvifMedia10.Media.GetProfiles(OnvifMedia10.GetProfilesRequest request)
+        {
+            return base.Channel.GetProfiles(request);
+        }
+        
+        public OnvifMedia10.Profile[] GetProfiles()
+        {
+            OnvifMedia10.GetProfilesRequest inValue = new OnvifMedia10.GetProfilesRequest();
+            OnvifMedia10.GetProfilesResponse retVal = ((OnvifMedia10.Media)(this)).GetProfiles(inValue);
+            return retVal.Profiles;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15670,9 +16039,19 @@ namespace OnvifMedia10
             return ((OnvifMedia10.Media)(this)).GetProfilesAsync(inValue);
         }
         
+        public void AddVideoEncoderConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddVideoEncoderConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddVideoEncoderConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddVideoEncoderConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveVideoEncoderConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveVideoEncoderConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveVideoEncoderConfigurationAsync(string ProfileToken)
@@ -15680,9 +16059,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveVideoEncoderConfigurationAsync(ProfileToken);
         }
         
+        public void AddVideoSourceConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddVideoSourceConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddVideoSourceConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddVideoSourceConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveVideoSourceConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveVideoSourceConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveVideoSourceConfigurationAsync(string ProfileToken)
@@ -15690,9 +16079,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveVideoSourceConfigurationAsync(ProfileToken);
         }
         
+        public void AddAudioEncoderConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioEncoderConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddAudioEncoderConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddAudioEncoderConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveAudioEncoderConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioEncoderConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveAudioEncoderConfigurationAsync(string ProfileToken)
@@ -15700,9 +16099,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveAudioEncoderConfigurationAsync(ProfileToken);
         }
         
+        public void AddAudioSourceConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioSourceConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddAudioSourceConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddAudioSourceConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveAudioSourceConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioSourceConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveAudioSourceConfigurationAsync(string ProfileToken)
@@ -15710,9 +16119,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveAudioSourceConfigurationAsync(ProfileToken);
         }
         
+        public void AddPTZConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddPTZConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddPTZConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddPTZConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemovePTZConfiguration(string ProfileToken)
+        {
+            base.Channel.RemovePTZConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemovePTZConfigurationAsync(string ProfileToken)
@@ -15720,9 +16139,19 @@ namespace OnvifMedia10
             return base.Channel.RemovePTZConfigurationAsync(ProfileToken);
         }
         
+        public void AddVideoAnalyticsConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddVideoAnalyticsConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddVideoAnalyticsConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddVideoAnalyticsConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveVideoAnalyticsConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveVideoAnalyticsConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveVideoAnalyticsConfigurationAsync(string ProfileToken)
@@ -15730,9 +16159,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveVideoAnalyticsConfigurationAsync(ProfileToken);
         }
         
+        public void AddMetadataConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddMetadataConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddMetadataConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddMetadataConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveMetadataConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveMetadataConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveMetadataConfigurationAsync(string ProfileToken)
@@ -15740,9 +16179,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveMetadataConfigurationAsync(ProfileToken);
         }
         
+        public void AddAudioOutputConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioOutputConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddAudioOutputConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddAudioOutputConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveAudioOutputConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioOutputConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveAudioOutputConfigurationAsync(string ProfileToken)
@@ -15750,9 +16199,19 @@ namespace OnvifMedia10
             return base.Channel.RemoveAudioOutputConfigurationAsync(ProfileToken);
         }
         
+        public void AddAudioDecoderConfiguration(string ProfileToken, string ConfigurationToken)
+        {
+            base.Channel.AddAudioDecoderConfiguration(ProfileToken, ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task AddAudioDecoderConfigurationAsync(string ProfileToken, string ConfigurationToken)
         {
             return base.Channel.AddAudioDecoderConfigurationAsync(ProfileToken, ConfigurationToken);
+        }
+        
+        public void RemoveAudioDecoderConfiguration(string ProfileToken)
+        {
+            base.Channel.RemoveAudioDecoderConfiguration(ProfileToken);
         }
         
         public System.Threading.Tasks.Task RemoveAudioDecoderConfigurationAsync(string ProfileToken)
@@ -15760,9 +16219,27 @@ namespace OnvifMedia10
             return base.Channel.RemoveAudioDecoderConfigurationAsync(ProfileToken);
         }
         
+        public void DeleteProfile(string ProfileToken)
+        {
+            base.Channel.DeleteProfile(ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task DeleteProfileAsync(string ProfileToken)
         {
             return base.Channel.DeleteProfileAsync(ProfileToken);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetVideoSourceConfigurationsResponse OnvifMedia10.Media.GetVideoSourceConfigurations(OnvifMedia10.GetVideoSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetVideoSourceConfigurations(request);
+        }
+        
+        public OnvifMedia10.VideoSourceConfiguration[] GetVideoSourceConfigurations()
+        {
+            OnvifMedia10.GetVideoSourceConfigurationsRequest inValue = new OnvifMedia10.GetVideoSourceConfigurationsRequest();
+            OnvifMedia10.GetVideoSourceConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetVideoSourceConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15778,6 +16255,19 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetVideoEncoderConfigurationsResponse OnvifMedia10.Media.GetVideoEncoderConfigurations(OnvifMedia10.GetVideoEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetVideoEncoderConfigurations(request);
+        }
+        
+        public OnvifMedia10.VideoEncoderConfiguration[] GetVideoEncoderConfigurations()
+        {
+            OnvifMedia10.GetVideoEncoderConfigurationsRequest inValue = new OnvifMedia10.GetVideoEncoderConfigurationsRequest();
+            OnvifMedia10.GetVideoEncoderConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetVideoEncoderConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetVideoEncoderConfigurationsResponse> OnvifMedia10.Media.GetVideoEncoderConfigurationsAsync(OnvifMedia10.GetVideoEncoderConfigurationsRequest request)
         {
             return base.Channel.GetVideoEncoderConfigurationsAsync(request);
@@ -15787,6 +16277,19 @@ namespace OnvifMedia10
         {
             OnvifMedia10.GetVideoEncoderConfigurationsRequest inValue = new OnvifMedia10.GetVideoEncoderConfigurationsRequest();
             return ((OnvifMedia10.Media)(this)).GetVideoEncoderConfigurationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetAudioSourceConfigurationsResponse OnvifMedia10.Media.GetAudioSourceConfigurations(OnvifMedia10.GetAudioSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioSourceConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioSourceConfiguration[] GetAudioSourceConfigurations()
+        {
+            OnvifMedia10.GetAudioSourceConfigurationsRequest inValue = new OnvifMedia10.GetAudioSourceConfigurationsRequest();
+            OnvifMedia10.GetAudioSourceConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetAudioSourceConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15802,6 +16305,19 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetAudioEncoderConfigurationsResponse OnvifMedia10.Media.GetAudioEncoderConfigurations(OnvifMedia10.GetAudioEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioEncoderConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioEncoderConfiguration[] GetAudioEncoderConfigurations()
+        {
+            OnvifMedia10.GetAudioEncoderConfigurationsRequest inValue = new OnvifMedia10.GetAudioEncoderConfigurationsRequest();
+            OnvifMedia10.GetAudioEncoderConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetAudioEncoderConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioEncoderConfigurationsResponse> OnvifMedia10.Media.GetAudioEncoderConfigurationsAsync(OnvifMedia10.GetAudioEncoderConfigurationsRequest request)
         {
             return base.Channel.GetAudioEncoderConfigurationsAsync(request);
@@ -15811,6 +16327,19 @@ namespace OnvifMedia10
         {
             OnvifMedia10.GetAudioEncoderConfigurationsRequest inValue = new OnvifMedia10.GetAudioEncoderConfigurationsRequest();
             return ((OnvifMedia10.Media)(this)).GetAudioEncoderConfigurationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetVideoAnalyticsConfigurationsResponse OnvifMedia10.Media.GetVideoAnalyticsConfigurations(OnvifMedia10.GetVideoAnalyticsConfigurationsRequest request)
+        {
+            return base.Channel.GetVideoAnalyticsConfigurations(request);
+        }
+        
+        public OnvifMedia10.VideoAnalyticsConfiguration[] GetVideoAnalyticsConfigurations()
+        {
+            OnvifMedia10.GetVideoAnalyticsConfigurationsRequest inValue = new OnvifMedia10.GetVideoAnalyticsConfigurationsRequest();
+            OnvifMedia10.GetVideoAnalyticsConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetVideoAnalyticsConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15826,6 +16355,19 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetMetadataConfigurationsResponse OnvifMedia10.Media.GetMetadataConfigurations(OnvifMedia10.GetMetadataConfigurationsRequest request)
+        {
+            return base.Channel.GetMetadataConfigurations(request);
+        }
+        
+        public OnvifMedia10.MetadataConfiguration[] GetMetadataConfigurations()
+        {
+            OnvifMedia10.GetMetadataConfigurationsRequest inValue = new OnvifMedia10.GetMetadataConfigurationsRequest();
+            OnvifMedia10.GetMetadataConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetMetadataConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetMetadataConfigurationsResponse> OnvifMedia10.Media.GetMetadataConfigurationsAsync(OnvifMedia10.GetMetadataConfigurationsRequest request)
         {
             return base.Channel.GetMetadataConfigurationsAsync(request);
@@ -15835,6 +16377,19 @@ namespace OnvifMedia10
         {
             OnvifMedia10.GetMetadataConfigurationsRequest inValue = new OnvifMedia10.GetMetadataConfigurationsRequest();
             return ((OnvifMedia10.Media)(this)).GetMetadataConfigurationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetAudioOutputConfigurationsResponse OnvifMedia10.Media.GetAudioOutputConfigurations(OnvifMedia10.GetAudioOutputConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioOutputConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioOutputConfiguration[] GetAudioOutputConfigurations()
+        {
+            OnvifMedia10.GetAudioOutputConfigurationsRequest inValue = new OnvifMedia10.GetAudioOutputConfigurationsRequest();
+            OnvifMedia10.GetAudioOutputConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetAudioOutputConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15850,6 +16405,19 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetAudioDecoderConfigurationsResponse OnvifMedia10.Media.GetAudioDecoderConfigurations(OnvifMedia10.GetAudioDecoderConfigurationsRequest request)
+        {
+            return base.Channel.GetAudioDecoderConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioDecoderConfiguration[] GetAudioDecoderConfigurations()
+        {
+            OnvifMedia10.GetAudioDecoderConfigurationsRequest inValue = new OnvifMedia10.GetAudioDecoderConfigurationsRequest();
+            OnvifMedia10.GetAudioDecoderConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetAudioDecoderConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetAudioDecoderConfigurationsResponse> OnvifMedia10.Media.GetAudioDecoderConfigurationsAsync(OnvifMedia10.GetAudioDecoderConfigurationsRequest request)
         {
             return base.Channel.GetAudioDecoderConfigurationsAsync(request);
@@ -15861,9 +16429,19 @@ namespace OnvifMedia10
             return ((OnvifMedia10.Media)(this)).GetAudioDecoderConfigurationsAsync(inValue);
         }
         
+        public OnvifMedia10.VideoSourceConfiguration GetVideoSourceConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetVideoSourceConfiguration(ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.VideoSourceConfiguration> GetVideoSourceConfigurationAsync(string ConfigurationToken)
         {
             return base.Channel.GetVideoSourceConfigurationAsync(ConfigurationToken);
+        }
+        
+        public OnvifMedia10.VideoEncoderConfiguration GetVideoEncoderConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetVideoEncoderConfiguration(ConfigurationToken);
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.VideoEncoderConfiguration> GetVideoEncoderConfigurationAsync(string ConfigurationToken)
@@ -15871,9 +16449,19 @@ namespace OnvifMedia10
             return base.Channel.GetVideoEncoderConfigurationAsync(ConfigurationToken);
         }
         
+        public OnvifMedia10.AudioSourceConfiguration GetAudioSourceConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioSourceConfiguration(ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.AudioSourceConfiguration> GetAudioSourceConfigurationAsync(string ConfigurationToken)
         {
             return base.Channel.GetAudioSourceConfigurationAsync(ConfigurationToken);
+        }
+        
+        public OnvifMedia10.AudioEncoderConfiguration GetAudioEncoderConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioEncoderConfiguration(ConfigurationToken);
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.AudioEncoderConfiguration> GetAudioEncoderConfigurationAsync(string ConfigurationToken)
@@ -15881,9 +16469,19 @@ namespace OnvifMedia10
             return base.Channel.GetAudioEncoderConfigurationAsync(ConfigurationToken);
         }
         
+        public OnvifMedia10.VideoAnalyticsConfiguration GetVideoAnalyticsConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetVideoAnalyticsConfiguration(ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.VideoAnalyticsConfiguration> GetVideoAnalyticsConfigurationAsync(string ConfigurationToken)
         {
             return base.Channel.GetVideoAnalyticsConfigurationAsync(ConfigurationToken);
+        }
+        
+        public OnvifMedia10.MetadataConfiguration GetMetadataConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetMetadataConfiguration(ConfigurationToken);
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.MetadataConfiguration> GetMetadataConfigurationAsync(string ConfigurationToken)
@@ -15891,14 +16489,38 @@ namespace OnvifMedia10
             return base.Channel.GetMetadataConfigurationAsync(ConfigurationToken);
         }
         
+        public OnvifMedia10.AudioOutputConfiguration GetAudioOutputConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioOutputConfiguration(ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.AudioOutputConfiguration> GetAudioOutputConfigurationAsync(string ConfigurationToken)
         {
             return base.Channel.GetAudioOutputConfigurationAsync(ConfigurationToken);
         }
         
+        public OnvifMedia10.AudioDecoderConfiguration GetAudioDecoderConfiguration(string ConfigurationToken)
+        {
+            return base.Channel.GetAudioDecoderConfiguration(ConfigurationToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.AudioDecoderConfiguration> GetAudioDecoderConfigurationAsync(string ConfigurationToken)
         {
             return base.Channel.GetAudioDecoderConfigurationAsync(ConfigurationToken);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleVideoEncoderConfigurationsResponse OnvifMedia10.Media.GetCompatibleVideoEncoderConfigurations(OnvifMedia10.GetCompatibleVideoEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleVideoEncoderConfigurations(request);
+        }
+        
+        public OnvifMedia10.VideoEncoderConfiguration[] GetCompatibleVideoEncoderConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleVideoEncoderConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleVideoEncoderConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleVideoEncoderConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleVideoEncoderConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15915,6 +16537,20 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleVideoSourceConfigurationsResponse OnvifMedia10.Media.GetCompatibleVideoSourceConfigurations(OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleVideoSourceConfigurations(request);
+        }
+        
+        public OnvifMedia10.VideoSourceConfiguration[] GetCompatibleVideoSourceConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleVideoSourceConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleVideoSourceConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleVideoSourceConfigurationsResponse> OnvifMedia10.Media.GetCompatibleVideoSourceConfigurationsAsync(OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleVideoSourceConfigurationsAsync(request);
@@ -15925,6 +16561,20 @@ namespace OnvifMedia10
             OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleVideoSourceConfigurationsRequest();
             inValue.ProfileToken = ProfileToken;
             return ((OnvifMedia10.Media)(this)).GetCompatibleVideoSourceConfigurationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleAudioEncoderConfigurationsResponse OnvifMedia10.Media.GetCompatibleAudioEncoderConfigurations(OnvifMedia10.GetCompatibleAudioEncoderConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioEncoderConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioEncoderConfiguration[] GetCompatibleAudioEncoderConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleAudioEncoderConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleAudioEncoderConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleAudioEncoderConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleAudioEncoderConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15941,6 +16591,20 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleAudioSourceConfigurationsResponse OnvifMedia10.Media.GetCompatibleAudioSourceConfigurations(OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioSourceConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioSourceConfiguration[] GetCompatibleAudioSourceConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleAudioSourceConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleAudioSourceConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleAudioSourceConfigurationsResponse> OnvifMedia10.Media.GetCompatibleAudioSourceConfigurationsAsync(OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleAudioSourceConfigurationsAsync(request);
@@ -15951,6 +16615,20 @@ namespace OnvifMedia10
             OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleAudioSourceConfigurationsRequest();
             inValue.ProfileToken = ProfileToken;
             return ((OnvifMedia10.Media)(this)).GetCompatibleAudioSourceConfigurationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsResponse OnvifMedia10.Media.GetCompatibleVideoAnalyticsConfigurations(OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleVideoAnalyticsConfigurations(request);
+        }
+        
+        public OnvifMedia10.VideoAnalyticsConfiguration[] GetCompatibleVideoAnalyticsConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleVideoAnalyticsConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleVideoAnalyticsConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15967,6 +16645,20 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleMetadataConfigurationsResponse OnvifMedia10.Media.GetCompatibleMetadataConfigurations(OnvifMedia10.GetCompatibleMetadataConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleMetadataConfigurations(request);
+        }
+        
+        public OnvifMedia10.MetadataConfiguration[] GetCompatibleMetadataConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleMetadataConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleMetadataConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleMetadataConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleMetadataConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleMetadataConfigurationsResponse> OnvifMedia10.Media.GetCompatibleMetadataConfigurationsAsync(OnvifMedia10.GetCompatibleMetadataConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleMetadataConfigurationsAsync(request);
@@ -15977,6 +16669,20 @@ namespace OnvifMedia10
             OnvifMedia10.GetCompatibleMetadataConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleMetadataConfigurationsRequest();
             inValue.ProfileToken = ProfileToken;
             return ((OnvifMedia10.Media)(this)).GetCompatibleMetadataConfigurationsAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleAudioOutputConfigurationsResponse OnvifMedia10.Media.GetCompatibleAudioOutputConfigurations(OnvifMedia10.GetCompatibleAudioOutputConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioOutputConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioOutputConfiguration[] GetCompatibleAudioOutputConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleAudioOutputConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleAudioOutputConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleAudioOutputConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleAudioOutputConfigurations(inValue);
+            return retVal.Configurations;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -15993,6 +16699,20 @@ namespace OnvifMedia10
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetCompatibleAudioDecoderConfigurationsResponse OnvifMedia10.Media.GetCompatibleAudioDecoderConfigurations(OnvifMedia10.GetCompatibleAudioDecoderConfigurationsRequest request)
+        {
+            return base.Channel.GetCompatibleAudioDecoderConfigurations(request);
+        }
+        
+        public OnvifMedia10.AudioDecoderConfiguration[] GetCompatibleAudioDecoderConfigurations(string ProfileToken)
+        {
+            OnvifMedia10.GetCompatibleAudioDecoderConfigurationsRequest inValue = new OnvifMedia10.GetCompatibleAudioDecoderConfigurationsRequest();
+            inValue.ProfileToken = ProfileToken;
+            OnvifMedia10.GetCompatibleAudioDecoderConfigurationsResponse retVal = ((OnvifMedia10.Media)(this)).GetCompatibleAudioDecoderConfigurations(inValue);
+            return retVal.Configurations;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.Threading.Tasks.Task<OnvifMedia10.GetCompatibleAudioDecoderConfigurationsResponse> OnvifMedia10.Media.GetCompatibleAudioDecoderConfigurationsAsync(OnvifMedia10.GetCompatibleAudioDecoderConfigurationsRequest request)
         {
             return base.Channel.GetCompatibleAudioDecoderConfigurationsAsync(request);
@@ -16005,9 +16725,19 @@ namespace OnvifMedia10
             return ((OnvifMedia10.Media)(this)).GetCompatibleAudioDecoderConfigurationsAsync(inValue);
         }
         
+        public void SetVideoSourceConfiguration(OnvifMedia10.VideoSourceConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetVideoSourceConfiguration(Configuration, ForcePersistence);
+        }
+        
         public System.Threading.Tasks.Task SetVideoSourceConfigurationAsync(OnvifMedia10.VideoSourceConfiguration Configuration, bool ForcePersistence)
         {
             return base.Channel.SetVideoSourceConfigurationAsync(Configuration, ForcePersistence);
+        }
+        
+        public void SetVideoEncoderConfiguration(OnvifMedia10.VideoEncoderConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetVideoEncoderConfiguration(Configuration, ForcePersistence);
         }
         
         public System.Threading.Tasks.Task SetVideoEncoderConfigurationAsync(OnvifMedia10.VideoEncoderConfiguration Configuration, bool ForcePersistence)
@@ -16015,9 +16745,19 @@ namespace OnvifMedia10
             return base.Channel.SetVideoEncoderConfigurationAsync(Configuration, ForcePersistence);
         }
         
+        public void SetAudioSourceConfiguration(OnvifMedia10.AudioSourceConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioSourceConfiguration(Configuration, ForcePersistence);
+        }
+        
         public System.Threading.Tasks.Task SetAudioSourceConfigurationAsync(OnvifMedia10.AudioSourceConfiguration Configuration, bool ForcePersistence)
         {
             return base.Channel.SetAudioSourceConfigurationAsync(Configuration, ForcePersistence);
+        }
+        
+        public void SetAudioEncoderConfiguration(OnvifMedia10.AudioEncoderConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioEncoderConfiguration(Configuration, ForcePersistence);
         }
         
         public System.Threading.Tasks.Task SetAudioEncoderConfigurationAsync(OnvifMedia10.AudioEncoderConfiguration Configuration, bool ForcePersistence)
@@ -16025,9 +16765,19 @@ namespace OnvifMedia10
             return base.Channel.SetAudioEncoderConfigurationAsync(Configuration, ForcePersistence);
         }
         
+        public void SetVideoAnalyticsConfiguration(OnvifMedia10.VideoAnalyticsConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetVideoAnalyticsConfiguration(Configuration, ForcePersistence);
+        }
+        
         public System.Threading.Tasks.Task SetVideoAnalyticsConfigurationAsync(OnvifMedia10.VideoAnalyticsConfiguration Configuration, bool ForcePersistence)
         {
             return base.Channel.SetVideoAnalyticsConfigurationAsync(Configuration, ForcePersistence);
+        }
+        
+        public void SetMetadataConfiguration(OnvifMedia10.MetadataConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetMetadataConfiguration(Configuration, ForcePersistence);
         }
         
         public System.Threading.Tasks.Task SetMetadataConfigurationAsync(OnvifMedia10.MetadataConfiguration Configuration, bool ForcePersistence)
@@ -16035,9 +16785,19 @@ namespace OnvifMedia10
             return base.Channel.SetMetadataConfigurationAsync(Configuration, ForcePersistence);
         }
         
+        public void SetAudioOutputConfiguration(OnvifMedia10.AudioOutputConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioOutputConfiguration(Configuration, ForcePersistence);
+        }
+        
         public System.Threading.Tasks.Task SetAudioOutputConfigurationAsync(OnvifMedia10.AudioOutputConfiguration Configuration, bool ForcePersistence)
         {
             return base.Channel.SetAudioOutputConfigurationAsync(Configuration, ForcePersistence);
+        }
+        
+        public void SetAudioDecoderConfiguration(OnvifMedia10.AudioDecoderConfiguration Configuration, bool ForcePersistence)
+        {
+            base.Channel.SetAudioDecoderConfiguration(Configuration, ForcePersistence);
         }
         
         public System.Threading.Tasks.Task SetAudioDecoderConfigurationAsync(OnvifMedia10.AudioDecoderConfiguration Configuration, bool ForcePersistence)
@@ -16045,9 +16805,19 @@ namespace OnvifMedia10
             return base.Channel.SetAudioDecoderConfigurationAsync(Configuration, ForcePersistence);
         }
         
+        public OnvifMedia10.VideoSourceConfigurationOptions GetVideoSourceConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetVideoSourceConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.VideoSourceConfigurationOptions> GetVideoSourceConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
         {
             return base.Channel.GetVideoSourceConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
+        }
+        
+        public OnvifMedia10.VideoEncoderConfigurationOptions GetVideoEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetVideoEncoderConfigurationOptions(ConfigurationToken, ProfileToken);
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.VideoEncoderConfigurationOptions> GetVideoEncoderConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
@@ -16055,9 +16825,19 @@ namespace OnvifMedia10
             return base.Channel.GetVideoEncoderConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
         }
         
+        public OnvifMedia10.AudioSourceConfigurationOptions GetAudioSourceConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioSourceConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.AudioSourceConfigurationOptions> GetAudioSourceConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
         {
             return base.Channel.GetAudioSourceConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
+        }
+        
+        public OnvifMedia10.AudioEncoderConfigurationOptions GetAudioEncoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioEncoderConfigurationOptions(ConfigurationToken, ProfileToken);
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.AudioEncoderConfigurationOptions> GetAudioEncoderConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
@@ -16065,9 +16845,19 @@ namespace OnvifMedia10
             return base.Channel.GetAudioEncoderConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
         }
         
+        public OnvifMedia10.MetadataConfigurationOptions GetMetadataConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetMetadataConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.MetadataConfigurationOptions> GetMetadataConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
         {
             return base.Channel.GetMetadataConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
+        }
+        
+        public OnvifMedia10.AudioOutputConfigurationOptions GetAudioOutputConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioOutputConfigurationOptions(ConfigurationToken, ProfileToken);
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.AudioOutputConfigurationOptions> GetAudioOutputConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
@@ -16075,9 +16865,31 @@ namespace OnvifMedia10
             return base.Channel.GetAudioOutputConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
         }
         
+        public OnvifMedia10.AudioDecoderConfigurationOptions GetAudioDecoderConfigurationOptions(string ConfigurationToken, string ProfileToken)
+        {
+            return base.Channel.GetAudioDecoderConfigurationOptions(ConfigurationToken, ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.AudioDecoderConfigurationOptions> GetAudioDecoderConfigurationOptionsAsync(string ConfigurationToken, string ProfileToken)
         {
             return base.Channel.GetAudioDecoderConfigurationOptionsAsync(ConfigurationToken, ProfileToken);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesResponse OnvifMedia10.Media.GetGuaranteedNumberOfVideoEncoderInstances(OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesRequest request)
+        {
+            return base.Channel.GetGuaranteedNumberOfVideoEncoderInstances(request);
+        }
+        
+        public int GetGuaranteedNumberOfVideoEncoderInstances(string ConfigurationToken, out int JPEG, out int H264, out int MPEG4)
+        {
+            OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesRequest inValue = new OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesRequest();
+            inValue.ConfigurationToken = ConfigurationToken;
+            OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesResponse retVal = ((OnvifMedia10.Media)(this)).GetGuaranteedNumberOfVideoEncoderInstances(inValue);
+            JPEG = retVal.JPEG;
+            H264 = retVal.H264;
+            MPEG4 = retVal.MPEG4;
+            return retVal.TotalNumber;
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesResponse> GetGuaranteedNumberOfVideoEncoderInstancesAsync(OnvifMedia10.GetGuaranteedNumberOfVideoEncoderInstancesRequest request)
@@ -16085,9 +16897,19 @@ namespace OnvifMedia10
             return base.Channel.GetGuaranteedNumberOfVideoEncoderInstancesAsync(request);
         }
         
+        public OnvifMedia10.MediaUri GetStreamUri(OnvifMedia10.StreamSetup StreamSetup, string ProfileToken)
+        {
+            return base.Channel.GetStreamUri(StreamSetup, ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.MediaUri> GetStreamUriAsync(OnvifMedia10.StreamSetup StreamSetup, string ProfileToken)
         {
             return base.Channel.GetStreamUriAsync(StreamSetup, ProfileToken);
+        }
+        
+        public void StartMulticastStreaming(string ProfileToken)
+        {
+            base.Channel.StartMulticastStreaming(ProfileToken);
         }
         
         public System.Threading.Tasks.Task StartMulticastStreamingAsync(string ProfileToken)
@@ -16095,9 +16917,19 @@ namespace OnvifMedia10
             return base.Channel.StartMulticastStreamingAsync(ProfileToken);
         }
         
+        public void StopMulticastStreaming(string ProfileToken)
+        {
+            base.Channel.StopMulticastStreaming(ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task StopMulticastStreamingAsync(string ProfileToken)
         {
             return base.Channel.StopMulticastStreamingAsync(ProfileToken);
+        }
+        
+        public void SetSynchronizationPoint(string ProfileToken)
+        {
+            base.Channel.SetSynchronizationPoint(ProfileToken);
         }
         
         public System.Threading.Tasks.Task SetSynchronizationPointAsync(string ProfileToken)
@@ -16105,9 +16937,28 @@ namespace OnvifMedia10
             return base.Channel.SetSynchronizationPointAsync(ProfileToken);
         }
         
+        public OnvifMedia10.MediaUri GetSnapshotUri(string ProfileToken)
+        {
+            return base.Channel.GetSnapshotUri(ProfileToken);
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.MediaUri> GetSnapshotUriAsync(string ProfileToken)
         {
             return base.Channel.GetSnapshotUriAsync(ProfileToken);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetVideoSourceModesResponse OnvifMedia10.Media.GetVideoSourceModes(OnvifMedia10.GetVideoSourceModesRequest request)
+        {
+            return base.Channel.GetVideoSourceModes(request);
+        }
+        
+        public OnvifMedia10.VideoSourceMode[] GetVideoSourceModes(string VideoSourceToken)
+        {
+            OnvifMedia10.GetVideoSourceModesRequest inValue = new OnvifMedia10.GetVideoSourceModesRequest();
+            inValue.VideoSourceToken = VideoSourceToken;
+            OnvifMedia10.GetVideoSourceModesResponse retVal = ((OnvifMedia10.Media)(this)).GetVideoSourceModes(inValue);
+            return retVal.VideoSourceModes;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -16123,9 +16974,28 @@ namespace OnvifMedia10
             return ((OnvifMedia10.Media)(this)).GetVideoSourceModesAsync(inValue);
         }
         
+        public bool SetVideoSourceMode(string VideoSourceToken, string VideoSourceModeToken)
+        {
+            return base.Channel.SetVideoSourceMode(VideoSourceToken, VideoSourceModeToken);
+        }
+        
         public System.Threading.Tasks.Task<bool> SetVideoSourceModeAsync(string VideoSourceToken, string VideoSourceModeToken)
         {
             return base.Channel.SetVideoSourceModeAsync(VideoSourceToken, VideoSourceModeToken);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetOSDsResponse OnvifMedia10.Media.GetOSDs(OnvifMedia10.GetOSDsRequest request)
+        {
+            return base.Channel.GetOSDs(request);
+        }
+        
+        public OnvifMedia10.OSDConfiguration[] GetOSDs(string ConfigurationToken)
+        {
+            OnvifMedia10.GetOSDsRequest inValue = new OnvifMedia10.GetOSDsRequest();
+            inValue.ConfigurationToken = ConfigurationToken;
+            OnvifMedia10.GetOSDsResponse retVal = ((OnvifMedia10.Media)(this)).GetOSDs(inValue);
+            return retVal.OSDs;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -16141,9 +17011,41 @@ namespace OnvifMedia10
             return ((OnvifMedia10.Media)(this)).GetOSDsAsync(inValue);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetOSDResponse OnvifMedia10.Media.GetOSD(OnvifMedia10.GetOSDRequest request)
+        {
+            return base.Channel.GetOSD(request);
+        }
+        
+        public OnvifMedia10.OSDConfiguration GetOSD(string OSDToken, ref System.Xml.XmlElement[] Any)
+        {
+            OnvifMedia10.GetOSDRequest inValue = new OnvifMedia10.GetOSDRequest();
+            inValue.OSDToken = OSDToken;
+            inValue.Any = Any;
+            OnvifMedia10.GetOSDResponse retVal = ((OnvifMedia10.Media)(this)).GetOSD(inValue);
+            Any = retVal.Any;
+            return retVal.OSD;
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.GetOSDResponse> GetOSDAsync(OnvifMedia10.GetOSDRequest request)
         {
             return base.Channel.GetOSDAsync(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.GetOSDOptionsResponse OnvifMedia10.Media.GetOSDOptions(OnvifMedia10.GetOSDOptionsRequest request)
+        {
+            return base.Channel.GetOSDOptions(request);
+        }
+        
+        public OnvifMedia10.OSDConfigurationOptions GetOSDOptions(string ConfigurationToken, ref System.Xml.XmlElement[] Any)
+        {
+            OnvifMedia10.GetOSDOptionsRequest inValue = new OnvifMedia10.GetOSDOptionsRequest();
+            inValue.ConfigurationToken = ConfigurationToken;
+            inValue.Any = Any;
+            OnvifMedia10.GetOSDOptionsResponse retVal = ((OnvifMedia10.Media)(this)).GetOSDOptions(inValue);
+            Any = retVal.Any;
+            return retVal.OSDOptions;
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.GetOSDOptionsResponse> GetOSDOptionsAsync(OnvifMedia10.GetOSDOptionsRequest request)
@@ -16151,14 +17053,60 @@ namespace OnvifMedia10
             return base.Channel.GetOSDOptionsAsync(request);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.SetOSDResponse OnvifMedia10.Media.SetOSD(OnvifMedia10.SetOSDRequest request)
+        {
+            return base.Channel.SetOSD(request);
+        }
+        
+        public void SetOSD(OnvifMedia10.OSDConfiguration OSD, ref System.Xml.XmlElement[] Any)
+        {
+            OnvifMedia10.SetOSDRequest inValue = new OnvifMedia10.SetOSDRequest();
+            inValue.OSD = OSD;
+            inValue.Any = Any;
+            OnvifMedia10.SetOSDResponse retVal = ((OnvifMedia10.Media)(this)).SetOSD(inValue);
+            Any = retVal.Any;
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.SetOSDResponse> SetOSDAsync(OnvifMedia10.SetOSDRequest request)
         {
             return base.Channel.SetOSDAsync(request);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.CreateOSDResponse OnvifMedia10.Media.CreateOSD(OnvifMedia10.CreateOSDRequest request)
+        {
+            return base.Channel.CreateOSD(request);
+        }
+        
+        public string CreateOSD(OnvifMedia10.OSDConfiguration OSD, ref System.Xml.XmlElement[] Any)
+        {
+            OnvifMedia10.CreateOSDRequest inValue = new OnvifMedia10.CreateOSDRequest();
+            inValue.OSD = OSD;
+            inValue.Any = Any;
+            OnvifMedia10.CreateOSDResponse retVal = ((OnvifMedia10.Media)(this)).CreateOSD(inValue);
+            Any = retVal.Any;
+            return retVal.OSDToken;
+        }
+        
         public System.Threading.Tasks.Task<OnvifMedia10.CreateOSDResponse> CreateOSDAsync(OnvifMedia10.CreateOSDRequest request)
         {
             return base.Channel.CreateOSDAsync(request);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        OnvifMedia10.DeleteOSDResponse OnvifMedia10.Media.DeleteOSD(OnvifMedia10.DeleteOSDRequest request)
+        {
+            return base.Channel.DeleteOSD(request);
+        }
+        
+        public void DeleteOSD(string OSDToken, ref System.Xml.XmlElement[] Any)
+        {
+            OnvifMedia10.DeleteOSDRequest inValue = new OnvifMedia10.DeleteOSDRequest();
+            inValue.OSDToken = OSDToken;
+            inValue.Any = Any;
+            OnvifMedia10.DeleteOSDResponse retVal = ((OnvifMedia10.Media)(this)).DeleteOSD(inValue);
+            Any = retVal.Any;
         }
         
         public System.Threading.Tasks.Task<OnvifMedia10.DeleteOSDResponse> DeleteOSDAsync(OnvifMedia10.DeleteOSDRequest request)

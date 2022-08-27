@@ -36,6 +36,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSpacePickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cameraCalibrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -43,7 +44,6 @@
             this.cameraImageBox = new Emgu.CV.UI.ImageBox();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.cameraCalibrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -104,9 +104,16 @@
             // colorSpacePickerToolStripMenuItem
             // 
             this.colorSpacePickerToolStripMenuItem.Name = "colorSpacePickerToolStripMenuItem";
-            this.colorSpacePickerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.colorSpacePickerToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.colorSpacePickerToolStripMenuItem.Text = "ColorSpace&Picker";
             this.colorSpacePickerToolStripMenuItem.Click += new System.EventHandler(this.colorSpacePickerToolStripMenuItem_Click);
+            // 
+            // cameraCalibrationToolStripMenuItem
+            // 
+            this.cameraCalibrationToolStripMenuItem.Name = "cameraCalibrationToolStripMenuItem";
+            this.cameraCalibrationToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.cameraCalibrationToolStripMenuItem.Text = "Camera&Calibration";
+            this.cameraCalibrationToolStripMenuItem.Click += new System.EventHandler(this.cameraCalibrationToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -194,13 +201,6 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
             // 
-            // cameraCalibrationToolStripMenuItem
-            // 
-            this.cameraCalibrationToolStripMenuItem.Name = "cameraCalibrationToolStripMenuItem";
-            this.cameraCalibrationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.cameraCalibrationToolStripMenuItem.Text = "Camera&Calibration";
-            this.cameraCalibrationToolStripMenuItem.Click += new System.EventHandler(this.cameraCalibrationToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -211,6 +211,7 @@
             this.Controls.Add(this.msMain);
             this.MainMenuStrip = this.msMain;
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main Terminal";
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();

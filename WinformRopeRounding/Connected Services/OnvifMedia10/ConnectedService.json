@@ -10,6 +10,7 @@
     "namespaceMappings": [
       "*, OnvifMedia10"
     ],
+    "sync": true,
     "targetFramework": "net6.0",
     "typeReuseMode": "None"
   }

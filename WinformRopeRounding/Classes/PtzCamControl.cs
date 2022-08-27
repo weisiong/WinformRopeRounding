@@ -1,5 +1,6 @@
 ﻿using OnvifMedia10;
 using OnvifPTZService;
+using System;
 using System.ServiceModel.Channels;
 using System.ServiceModel;
 using System.Net;
@@ -21,7 +22,6 @@ namespace WinformRopeRounding.Classes
 
         public bool Initialised { get { return initialised; } }
 
-
         public async Task<bool> InitialiseAsync(string cameraAddress, string userName, string password)
         {
             bool result = false;
@@ -36,7 +36,7 @@ namespace WinformRopeRounding.Classes
                 {
                     AuthenticationScheme = AuthenticationSchemes.Digest
                 };
-                CustomBinding bind = new CustomBinding(messageElement, httpBinding);
+                CustomBinding bind = new(messageElement, httpBinding);
                 mediaClient = new MediaClient(bind, new EndpointAddress($"http://{cameraAddress}/onvif/Media"));
                 //mediaClient.ClientCredentials.HttpDigest.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
                 mediaClient.ClientCredentials.HttpDigest.ClientCredential.UserName = userName;
@@ -49,7 +49,7 @@ namespace WinformRopeRounding.Classes
                 var profResponse = await mediaClient.GetProfilesAsync();
                 profile = await mediaClient.GetProfileAsync(profResponse.Profiles[0].token);
 
-                var configResponse =await ptzClient.GetConfigurationsAsync();
+                var configResponse = await ptzClient.GetConfigurationsAsync();
 
                 options = await ptzClient.GetConfigurationOptionsAsync(configResponse.PTZConfiguration[0].token);
 
@@ -221,11 +221,11 @@ namespace WinformRopeRounding.Classes
             }
         }
 
-        public async void HomePosition()
+        public void HomePosition()
         {
             try
             {
-                await ptzClient.GotoHomePositionAsync(profile.token, velocity);
+                ptzClient.GotoHomePosition(profile.token, velocity);
             }
             catch
             {
@@ -241,7 +241,7 @@ namespace WinformRopeRounding.Classes
             var zoom = Convert.ToSingle(text.Split()[2]);
             try
             {
-                ptzClient.AbsoluteMoveAsync(profile.token, new PTZVector
+                ptzClient.AbsoluteMove(profile.token, new PTZVector
                 {
                     PanTilt = new OnvifPTZService.Vector2D
                     {
@@ -270,9 +270,9 @@ namespace WinformRopeRounding.Classes
             }
         }
 
-        public async Task<string> GetPosition()
+        public string GetPosition()
         {
-            var ptz_status =await ptzClient.GetStatusAsync(profile.token); //"Profile_1"); //
+            var ptz_status = ptzClient.GetStatus(profile.token); //"Profile_1"); //
             return $"{ptz_status.Position.PanTilt.x} {ptz_status.Position.PanTilt.y} {ptz_status.Position.Zoom.x}";
         }
 
@@ -282,7 +282,7 @@ namespace WinformRopeRounding.Classes
 
             try
             {
-                ptzClient.RelativeMoveAsync(profile.token, new PTZVector
+                ptzClient.RelativeMove(profile.token, new PTZVector
                 {
                     PanTilt = new OnvifPTZService.Vector2D
                     {
@@ -327,13 +327,13 @@ namespace WinformRopeRounding.Classes
             }
         }
 
-        public async void Stop()
+        public void Stop()
         {
             if (initialised)
             {
                 try
                 {
-                    await ptzClient.StopAsync(profile.token, true, true);
+                    ptzClient.Stop(profile.token, true, true);
                 }
                 catch
                 {

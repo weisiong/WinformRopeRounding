@@ -10,6 +10,7 @@
     "namespaceMappings": [
       "*, OnvifPTZService"
     ],
+    "sync": true,
     "targetFramework": "net6.0",
     "typeReuseMode": "None"
   }

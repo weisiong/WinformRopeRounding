@@ -7,7 +7,7 @@ namespace WinformRopeRounding
 {
     public partial class FormMain : Form
     {
-        //const string url = "rtsp://admin:joseph12345@192.168.125.64:554/Streaming/Channels/0101";
+        //const string url = "rtsp://admin:joseph12345@192.168.1.64:554/Streaming/Channels/0101";
         const string url = "http://admin:joseph12345@192.168.1.64/ISAPI/Streaming/channels/101/picture";
         //const string url = @"C:\Users\U\Web\CaptureFiles\2022-07-23\";
         //const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813162052323.mp4";
@@ -93,7 +93,7 @@ namespace WinformRopeRounding
 
         private void cameraCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCamCalibration frm = new("Calibration", string.Empty)
+            FormCamControl frm = new("Calibration", string.Empty)
             {
                 CameraIP = "192.168.1.64",
                 CamUsername = "admin",
