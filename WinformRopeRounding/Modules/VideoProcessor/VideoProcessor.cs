@@ -38,6 +38,7 @@ namespace WinformRopeRounding.Modules.VideoProcessor
                 while(_isPause)
                 {
                     if(!_isPause) break;
+                    if (_isStop) break;
                     Application.DoEvents();
                     await Task.Delay(1000);
                 }
