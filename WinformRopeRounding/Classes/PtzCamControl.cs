@@ -323,7 +323,7 @@ namespace WinformRopeRounding.Classes
         {
             if (initialised)
             {
-                Move(0.0f, 0.0f, -0.01f);
+                Move(0.0f, 0.0f, -0.1f);
             }
         }
 

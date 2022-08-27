@@ -90,5 +90,17 @@ namespace WinformRopeRounding
             FormColorSpacePicker frm = new(vp?.CurrentFrame);
             frm.ShowDialog();
         }
+
+        private void cameraCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormCamCalibration frm = new("Calibration", string.Empty)
+            {
+                CameraIP = "192.168.1.64",
+                CamUsername = "admin",
+                CamPassword = "joseph12345",
+                RtspPath = url
+            };
+            frm.ShowDialog();
+        }
     }
 }

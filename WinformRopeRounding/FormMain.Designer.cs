@@ -34,6 +34,8 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorSpacePickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -41,8 +43,7 @@
             this.cameraImageBox = new Emgu.CV.UI.ImageBox();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorSpacePickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cameraCalibrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -76,20 +77,36 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "&Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
+            // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorSpacePickerToolStripMenuItem,
+            this.cameraCalibrationToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // colorSpacePickerToolStripMenuItem
+            // 
+            this.colorSpacePickerToolStripMenuItem.Name = "colorSpacePickerToolStripMenuItem";
+            this.colorSpacePickerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.colorSpacePickerToolStripMenuItem.Text = "ColorSpace&Picker";
+            this.colorSpacePickerToolStripMenuItem.Click += new System.EventHandler(this.colorSpacePickerToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -177,20 +194,12 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
             // 
-            // toolsToolStripMenuItem
+            // cameraCalibrationToolStripMenuItem
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorSpacePickerToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // colorSpacePickerToolStripMenuItem
-            // 
-            this.colorSpacePickerToolStripMenuItem.Name = "colorSpacePickerToolStripMenuItem";
-            this.colorSpacePickerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.colorSpacePickerToolStripMenuItem.Text = "&ColorSpacePicker";
-            this.colorSpacePickerToolStripMenuItem.Click += new System.EventHandler(this.colorSpacePickerToolStripMenuItem_Click);
+            this.cameraCalibrationToolStripMenuItem.Name = "cameraCalibrationToolStripMenuItem";
+            this.cameraCalibrationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cameraCalibrationToolStripMenuItem.Text = "Camera&Calibration";
+            this.cameraCalibrationToolStripMenuItem.Click += new System.EventHandler(this.cameraCalibrationToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -202,7 +211,7 @@
             this.Controls.Add(this.msMain);
             this.MainMenuStrip = this.msMain;
             this.Name = "FormMain";
-            this.Text = "Form1";
+            this.Text = "Main Terminal";
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -233,5 +242,6 @@
         private Emgu.CV.UI.ImageBox cameraImageBox;
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem colorSpacePickerToolStripMenuItem;
+        private ToolStripMenuItem cameraCalibrationToolStripMenuItem;
     }
 }
