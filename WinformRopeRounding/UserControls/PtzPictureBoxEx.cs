@@ -19,7 +19,8 @@ namespace WinformRopeRounding.UserControls
 
         private IShape polyShape = null;
 
-        public Dictionary<string, Movement> Movements { get; internal set; } = new Dictionary<string, Movement>();
+        public Dictionary<string, Utilities.Action> Actions { get; internal set; } = new Dictionary<string, Utilities.Action>();
+        //public Dictionary<string, Movement> Movements { get; internal set; } = new Dictionary<string, Movement>();
         public string LastSelectedNode { get; internal set; }
 
         private int _drawMode = 0;
@@ -30,8 +31,7 @@ namespace WinformRopeRounding.UserControls
             {
                 _drawMode = value;
                 if (_drawMode == 1) polyShape = new NormRectangle();
-                if (_drawMode == 2)
-                    polyShape = new NormRectangle();
+                if (_drawMode == 2) polyShape = new RatioRectangle();
             }
         }
 
@@ -110,38 +110,36 @@ namespace WinformRopeRounding.UserControls
 
         public void SaveNewROI()
         {
-            var newPts = polyShape.Points;
-
-            var NodeROI = LastSelectedNode.Split('-')[0];
-            var LotName = LastSelectedNode.Split('-')[1];
-
-            foreach (var mov in Movements)
-            {
-                if (NodeROI.Equals("MotionROI") && mov.Key.Equals(LotName))
-                {
-                    var roi = new Rectangle();
-                    roi.X = Math.Min(newPts[0].X, newPts[1].X);
-                    roi.Y = Math.Min(newPts[0].Y, newPts[1].Y);
-                    roi.Width = Math.Abs(newPts[1].X - newPts[0].X);
-                    roi.Height = Math.Abs(newPts[1].Y - newPts[0].Y);
-                    mov.Value.MotionROI = roi;
-                    break;
-                }
-                if (NodeROI.Equals("LotROI"))
-                {
-                    var lotROI = mov.Value.LotROIs.FirstOrDefault(a => a.SeqId.ToString().Equals(LotName));
-                    if (lotROI != null)
-                    {
-                        var roi = new Rectangle();
-                        roi.X = Math.Min(newPts[0].X, newPts[1].X);
-                        roi.Y = Math.Min(newPts[0].Y, newPts[1].Y);
-                        roi.Width = Math.Abs(newPts[1].X - newPts[0].X);
-                        roi.Height = Math.Abs(newPts[1].Y - newPts[0].Y);
-                        lotROI.Lot = roi;
-                        break;
-                    }
-                }
-            }
+            //var newPts = polyShape.Points;
+            //var NodeROI = LastSelectedNode.Split('-')[0];
+            //var LotName = LastSelectedNode.Split('-')[1];
+            //foreach (var mov in Actions)
+            //{
+            //    if (NodeROI.Equals("MotionROI") && mov.Key.Equals(LotName))
+            //    {
+            //        var roi = new Rectangle();
+            //        roi.X = Math.Min(newPts[0].X, newPts[1].X);
+            //        roi.Y = Math.Min(newPts[0].Y, newPts[1].Y);
+            //        roi.Width = Math.Abs(newPts[1].X - newPts[0].X);
+            //        roi.Height = Math.Abs(newPts[1].Y - newPts[0].Y);
+            //        mov.Value.MotionROI = roi;
+            //        break;
+            //    }
+            //    if (NodeROI.Equals("LotROI"))
+            //    {
+            //        var lotROI = mov.Value.LotROIs.FirstOrDefault(a => a.SeqId.ToString().Equals(LotName));
+            //        if (lotROI != null)
+            //        {
+            //            var roi = new Rectangle();
+            //            roi.X = Math.Min(newPts[0].X, newPts[1].X);
+            //            roi.Y = Math.Min(newPts[0].Y, newPts[1].Y);
+            //            roi.Width = Math.Abs(newPts[1].X - newPts[0].X);
+            //            roi.Height = Math.Abs(newPts[1].Y - newPts[0].Y);
+            //            lotROI.Lot = roi;
+            //            break;
+            //        }
+            //    }
+            //}
 
         }
 

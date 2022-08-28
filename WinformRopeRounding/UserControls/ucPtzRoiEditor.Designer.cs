@@ -30,16 +30,16 @@
         {
             this.TreeView = new System.Windows.Forms.TreeView();
             this.pnlSave = new System.Windows.Forms.Panel();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnZoomOut = new System.Windows.Forms.Button();
+            this.btnAutoFit = new System.Windows.Forms.Button();
+            this.btnZoomIn = new System.Windows.Forms.Button();
             this.lblLocation = new System.Windows.Forms.Label();
             this.cbShowValue = new System.Windows.Forms.CheckBox();
             this.pbImage = new WinformRopeRounding.UserControls.PtzPictureBoxEx();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnZoomIn = new System.Windows.Forms.Button();
-            this.btnAutoFit = new System.Windows.Forms.Button();
-            this.btnZoomOut = new System.Windows.Forms.Button();
             this.pnlSave.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +52,7 @@
             this.TreeView.Name = "TreeView";
             this.TreeView.Size = new System.Drawing.Size(320, 480);
             this.TreeView.TabIndex = 0;
+            this.TreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
             // 
             // pnlSave
             // 
@@ -66,6 +67,84 @@
             this.pnlSave.Name = "pnlSave";
             this.pnlSave.Size = new System.Drawing.Size(320, 128);
             this.pnlSave.TabIndex = 2;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSave.Location = new System.Drawing.Point(215, 3);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(102, 32);
+            this.btnSave.TabIndex = 5;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnEdit.Location = new System.Drawing.Point(109, 3);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(102, 32);
+            this.btnEdit.TabIndex = 4;
+            this.btnEdit.Text = "Edit";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnClear.Location = new System.Drawing.Point(3, 3);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(102, 32);
+            this.btnClear.TabIndex = 3;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btnZoomOut);
+            this.groupBox1.Controls.Add(this.btnAutoFit);
+            this.groupBox1.Controls.Add(this.btnZoomIn);
+            this.groupBox1.Location = new System.Drawing.Point(3, 41);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(317, 58);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Zoom";
+            // 
+            // btnZoomOut
+            // 
+            this.btnZoomOut.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnZoomOut.Location = new System.Drawing.Point(218, 20);
+            this.btnZoomOut.Name = "btnZoomOut";
+            this.btnZoomOut.Size = new System.Drawing.Size(96, 32);
+            this.btnZoomOut.TabIndex = 6;
+            this.btnZoomOut.Text = "-";
+            this.btnZoomOut.UseVisualStyleBackColor = true;
+            this.btnZoomOut.Click += new System.EventHandler(this.btnZoomOut_Click);
+            // 
+            // btnAutoFit
+            // 
+            this.btnAutoFit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAutoFit.Location = new System.Drawing.Point(112, 20);
+            this.btnAutoFit.Name = "btnAutoFit";
+            this.btnAutoFit.Size = new System.Drawing.Size(96, 32);
+            this.btnAutoFit.TabIndex = 5;
+            this.btnAutoFit.Text = "Auto Fit";
+            this.btnAutoFit.UseVisualStyleBackColor = true;
+            this.btnAutoFit.Click += new System.EventHandler(this.btnAutoFit_Click);
+            // 
+            // btnZoomIn
+            // 
+            this.btnZoomIn.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnZoomIn.Location = new System.Drawing.Point(6, 20);
+            this.btnZoomIn.Name = "btnZoomIn";
+            this.btnZoomIn.Size = new System.Drawing.Size(96, 32);
+            this.btnZoomIn.TabIndex = 4;
+            this.btnZoomIn.Text = "+";
+            this.btnZoomIn.UseVisualStyleBackColor = true;
+            this.btnZoomIn.Click += new System.EventHandler(this.btnZoomIn_Click);
             // 
             // lblLocation
             // 
@@ -98,78 +177,6 @@
             this.pbImage.Name = "pbImage";
             this.pbImage.Size = new System.Drawing.Size(491, 614);
             this.pbImage.TabIndex = 3;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnZoomOut);
-            this.groupBox1.Controls.Add(this.btnAutoFit);
-            this.groupBox1.Controls.Add(this.btnZoomIn);
-            this.groupBox1.Location = new System.Drawing.Point(3, 41);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(317, 58);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Zoom";
-            // 
-            // btnClear
-            // 
-            this.btnClear.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnClear.Location = new System.Drawing.Point(3, 3);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(102, 32);
-            this.btnClear.TabIndex = 3;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnEdit.Location = new System.Drawing.Point(109, 3);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(102, 32);
-            this.btnEdit.TabIndex = 4;
-            this.btnEdit.Text = "Edit";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSave.Location = new System.Drawing.Point(215, 3);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(102, 32);
-            this.btnSave.TabIndex = 5;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            // 
-            // btnZoomIn
-            // 
-            this.btnZoomIn.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnZoomIn.Location = new System.Drawing.Point(6, 20);
-            this.btnZoomIn.Name = "btnZoomIn";
-            this.btnZoomIn.Size = new System.Drawing.Size(96, 32);
-            this.btnZoomIn.TabIndex = 4;
-            this.btnZoomIn.Text = "+";
-            this.btnZoomIn.UseVisualStyleBackColor = true;
-            // 
-            // btnAutoFit
-            // 
-            this.btnAutoFit.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnAutoFit.Location = new System.Drawing.Point(112, 20);
-            this.btnAutoFit.Name = "btnAutoFit";
-            this.btnAutoFit.Size = new System.Drawing.Size(96, 32);
-            this.btnAutoFit.TabIndex = 5;
-            this.btnAutoFit.Text = "Auto Fit";
-            this.btnAutoFit.UseVisualStyleBackColor = true;
-            // 
-            // btnZoomOut
-            // 
-            this.btnZoomOut.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnZoomOut.Location = new System.Drawing.Point(218, 20);
-            this.btnZoomOut.Name = "btnZoomOut";
-            this.btnZoomOut.Size = new System.Drawing.Size(96, 32);
-            this.btnZoomOut.TabIndex = 6;
-            this.btnZoomOut.Text = "-";
-            this.btnZoomOut.UseVisualStyleBackColor = true;
             // 
             // ucPtzRoiEditor
             // 

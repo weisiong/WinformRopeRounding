@@ -24,30 +24,30 @@ namespace WinformRopeRounding.Utilities
 
             var actions = new List<Action>
             {
-                new() { ActId = "A", CamId = "Cam1", LocInfo = "1 1 0", BBox = new(120, 50, 80, 100) },
-                new() { ActId = "B", CamId = "Cam1", LocInfo = "0.76324 0.28763 0.2", BBox = new(120, 150, 180, 300) },
-                new() { ActId = "C", CamId = string.Empty, LocInfo = string.Empty, BBox = Rectangle.Empty }
+                new() { ActId = "A", CamId = "Cam1", PtzInfo =  new PTZInfo { Pan=1f, Tilt=1f, Zoom=0f }, BBox = new(120, 50, 80, 100) },
+                new() { ActId = "B", CamId = "Cam1", PtzInfo = new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f } , BBox = new(120, 150, 180, 300) },
+                new() { ActId = "C", CamId = string.Empty, PtzInfo = new PTZInfo(), BBox = Rectangle.Empty }
             };
 
             var template = new ProductTemplate
             {
                 Name = "Product01",
                 ProductCode = "Pro-01",
-                BaseRefROI = new(253, 107, 55, 65),
-                HoleROIs = new List<Rectangle>
+                BaseROI = new ROI() { Name = "Base", BBOX = new(253, 107, 55, 65) },
+                HoleROIs = new List<ROI>
                 {                
-                    new Rectangle(322, 172, 95, 30),
-                    new Rectangle(322, 213, 95, 30),
-                    new Rectangle(322, 254, 95, 30),
-                    new Rectangle(322, 293, 95, 30),
-                    new Rectangle(322, 334, 95, 30),
-                    new Rectangle(322, 375, 95, 30),
-                    new Rectangle(322, 417, 95, 30),
-                    new Rectangle(322, 454, 95, 30),
-                    new Rectangle(322, 497, 95, 30),
-                    new Rectangle(322, 538, 95, 30),
-                    new Rectangle(322, 577, 95, 30),
-                    new Rectangle(322, 617, 95, 30)
+                    new ROI{ Name="Hole01", BBOX = new Rectangle(322, 172, 95, 30) },
+                    new ROI{ Name="Hole02", BBOX = new Rectangle(322, 213, 95, 30) },
+                    new ROI{ Name="Hole03", BBOX =new Rectangle(322, 254, 95, 30) },
+                    new ROI{ Name="Hole04", BBOX =new Rectangle(322, 293, 95, 30) },
+                    new ROI{ Name="Hole05", BBOX =new Rectangle(322, 334, 95, 30) },
+                    new ROI{ Name="Hole06", BBOX =new Rectangle(322, 375, 95, 30) },
+                    new ROI{ Name="Hole07", BBOX =new Rectangle(322, 417, 95, 30) },
+                    new ROI{ Name="Hole08", BBOX =new Rectangle(322, 454, 95, 30) },
+                    new ROI{ Name="Hole09", BBOX =new Rectangle(322, 497, 95, 30) },
+                    new ROI{ Name="Hole10", BBOX =new Rectangle(322, 538, 95, 30) },
+                    new ROI{ Name="Hole11", BBOX =new Rectangle(322, 577, 95, 30) },
+                    new ROI{ Name="Hole12", BBOX =new Rectangle(322, 617, 95, 30) }
                 }
             };
 

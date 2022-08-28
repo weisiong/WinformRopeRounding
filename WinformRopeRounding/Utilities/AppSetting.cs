@@ -12,8 +12,14 @@
     {
         public string Name { get; set; }
         public string ProductCode { get; set; }
-        public Rectangle BaseRefROI { get; set; }
-        public List<Rectangle> HoleROIs { get; set; }
+        public ROI BaseROI { get; set; }
+        public List<ROI> HoleROIs { get; set; }
+    }
+
+    public class ROI
+    {
+        public string Name { get; set; }
+        public Rectangle BBOX { get; set; }
     }
 
     public class Camera
@@ -28,15 +34,21 @@
     {
         public string ActId { get; set; }
         public string CamId { get; set; }
-        public string LocInfo { get; set; }
+        public PTZInfo PtzInfo { get; set; }
         public Rectangle BBox { get; set; }
     }
 
-    public class LocInfo
+    public class PTZInfo
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public float Z { get; set; }
+        public float Pan { get; set; }
+        public float Tilt { get; set; }
+        public float Zoom { get; set; }
+
+        //pan tilt zoom
+        public override string ToString()
+        {
+            return "{" + $"Pan={Pan}, Tilt={Tilt}, Zoom={Zoom}" + "}";
+        }
     }
 
 }
