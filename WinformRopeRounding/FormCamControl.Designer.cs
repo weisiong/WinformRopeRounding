@@ -78,11 +78,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblMessage.AutoSize = true;
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblMessage.Location = new System.Drawing.Point(203, 254);
+            this.lblMessage.Location = new System.Drawing.Point(191, 276);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(235, 24);
+            this.lblMessage.Size = new System.Drawing.Size(233, 24);
             this.lblMessage.TabIndex = 0;
-            this.lblMessage.Text = "Loading Video Stream...";
+            this.lblMessage.Text = "Connecting to camera...";
             this.lblMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pnlRight

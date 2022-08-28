@@ -5,7 +5,7 @@ using System.ServiceModel.Channels;
 using System.ServiceModel;
 using System.Net;
 
-namespace WinformRopeRounding.Classes
+namespace WinformRopeRounding.Utilities
 {
     public class PtzCamControl
     {

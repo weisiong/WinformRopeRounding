@@ -18,4 +18,5 @@
         public string Plate_Output_Empty_Path { get; set; }
         public string Plate_Emptylot_Path { get; set; }
     }
+
 }

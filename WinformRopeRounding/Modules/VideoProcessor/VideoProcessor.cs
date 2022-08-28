@@ -24,7 +24,8 @@ namespace WinformRopeRounding.Modules.VideoProcessor
             _mediaInput = mediaInput;
         }
 
-        public Mat CurrentFrame => cam.QueryFrame();
+        //public Mat CurrentFrame => cam.QueryFrame();
+        public Mat CurrentFrame { get; internal set; }
         public async void Run()
         {
             if (_mediaInput == EnumMediaInput.RTSP || _mediaInput == EnumMediaInput.VIDEO)
@@ -72,10 +73,11 @@ namespace WinformRopeRounding.Modules.VideoProcessor
         }
         private void RaiseOnFrameReceivedEvent()
         {
-            Mat refMat = cam.QueryFrame();
-            if (refMat != null)
+            //Mat refMat = cam.QueryFrame();
+            CurrentFrame = cam.QueryFrame();
+            if (CurrentFrame != null)
             {
-                var e = new VideoProcessorEventArgs() { MatSrc = refMat };
+                var e = new VideoProcessorEventArgs() { MatSrc = CurrentFrame };
                 OnFrameReceived?.Invoke(this, e);
             }
         }

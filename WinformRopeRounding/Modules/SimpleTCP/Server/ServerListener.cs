@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -65,9 +66,9 @@ namespace SimpleTCP.Server
                 {
                     RunLoopStep();
                 }
-                catch 
+                catch (Exception ex)
                 {
-
+                    Debug.Print(ex.Message);
                 }
 
                 System.Threading.Thread.Sleep(ReadLoopIntervalMs);

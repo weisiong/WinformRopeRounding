@@ -40,8 +40,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.cameraImageBox = new Emgu.CV.UI.ImageBox();
+            this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.msMain.SuspendLayout();
@@ -147,8 +147,8 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.cameraImageBox, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.txtDebug, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -157,15 +157,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.40541F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(749, 592);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 414);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(743, 175);
-            this.textBox1.TabIndex = 1;
             // 
             // cameraImageBox
             // 
@@ -180,6 +171,22 @@
             this.cameraImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cameraImageBox.TabIndex = 2;
             this.cameraImageBox.TabStop = false;
+            // 
+            // txtDebug
+            // 
+            this.txtDebug.BackColor = System.Drawing.Color.White;
+            this.txtDebug.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtDebug.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtDebug.ForContext = "";
+            this.txtDebug.Location = new System.Drawing.Point(4, 414);
+            this.txtDebug.LogBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.txtDebug.LogPadding = new System.Windows.Forms.Padding(3);
+            this.txtDebug.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtDebug.Name = "txtDebug";
+            this.txtDebug.ReadOnly = true;
+            this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDebug.Size = new System.Drawing.Size(741, 175);
+            this.txtDebug.TabIndex = 3;
             // 
             // btnPause
             // 
@@ -220,7 +227,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -236,7 +242,6 @@
         private StatusStrip statusStrip1;
         private SplitContainer splitContainer1;
         private TableLayoutPanel tableLayoutPanel1;
-        private TextBox textBox1;
         private Button btnPause;
         private Button btnStart;
         private ToolStripMenuItem saveToolStripMenuItem;
@@ -244,5 +249,6 @@
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem colorSpacePickerToolStripMenuItem;
         private ToolStripMenuItem cameraCalibrationToolStripMenuItem;
+        private Serilog.Sinks.WinForms.Core.SimpleLogTextBox txtDebug;
     }
 }

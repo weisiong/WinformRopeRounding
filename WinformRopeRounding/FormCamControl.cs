@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
-using WinformRopeRounding.Classes;
 using WinformRopeRounding.Modules.VideoProcessor;
 using WinformRopeRounding.UserControls;
+using WinformRopeRounding.Utilities;
 
 namespace WinformRopeRounding
 {
@@ -12,7 +12,6 @@ namespace WinformRopeRounding
         public string CameraIP { get; set; }
         public string CamUsername { get; set; }
         public string CamPassword { get; set; }
-        public string RtspPath { get; set; }
         public Image SnapshootImage { get; internal set; }
 
         private Emgu.CV.UI.ImageBox cameraImageBox;
@@ -44,12 +43,16 @@ namespace WinformRopeRounding
                     cameraImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
                     lblMessage.Visible = false;
-                    var url = RtspPath;
+                    var url = $"rtsp://{CamUsername}:{CamPassword}@{CameraIP}";
                     vp = new(url, EnumMediaInput.HTTP);
                     vp.OnFrameReceived += Vp_OnFrameReceived;
                     vp.Run();
                 }
                 //_controller.SetPosition(txtValue.Text);
+            }
+            else
+            {
+                MessageBox.Show("Failed to access camera!");
             }
         }
 
