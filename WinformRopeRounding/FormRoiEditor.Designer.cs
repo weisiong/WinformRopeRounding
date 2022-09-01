@@ -33,9 +33,17 @@
             // 
             // ucEditor
             // 
+            this.ucEditor.CameraId = 0;
+            this.ucEditor.CameraIP = null;
+            this.ucEditor.CamPassword = null;
+            this.ucEditor.CamUsername = null;
+            this.ucEditor.ControllerIP = null;
+            this.ucEditor.ControllerType = null;
             this.ucEditor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ucEditor.Location = new System.Drawing.Point(0, 0);
+            this.ucEditor.LotName = null;
             this.ucEditor.Name = "ucEditor";
+            this.ucEditor.RtspPath = null;
             this.ucEditor.Size = new System.Drawing.Size(800, 551);
             this.ucEditor.TabIndex = 0;
             // 
@@ -48,6 +56,7 @@
             this.Name = "FormRoiEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormRoiEditor";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FormRoiEditor_Load);
             this.ResumeLayout(false);
 

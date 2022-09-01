@@ -12,8 +12,8 @@ namespace WinformRopeRounding
         {
             GlobalVars.Init();
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormRoiEditor());
-            //Application.Run(new FormMain());
+            //Application.Run(new FormRoiEditor());
+            Application.Run(new FormMain());
             //Application.Run(new FormColorSpacePicker());
 
         }

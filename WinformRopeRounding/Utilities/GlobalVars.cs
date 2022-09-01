@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace WinformRopeRounding.Utilities
 {
+    
     public static class GlobalVars
     {
         // System Variables
@@ -11,43 +12,58 @@ namespace WinformRopeRounding.Utilities
 
         public static string SettingPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
+
         public static AppSetting AppSetting { get; set; } = new AppSetting();
         public static void Init()
         {
+            DefaultAppSetting();
             ConfigureSerilog();
 
-            var cams = new List<Camera>
+            var fullFileName = "Config.json"; //System.IO.Path.Combine(SettingPath, "Config.json");
+            if (File.Exists(fullFileName))
             {
-                new() { CamId = "Cam1", IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345" },
-                new() { CamId = "Cam2", IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345" }
+                var jsonString = File.ReadAllText(fullFileName);
+                if (!string.IsNullOrEmpty(jsonString))
+                {
+                    AppSetting = JsonConvert.DeserializeObject<AppSetting>(jsonString);
+                }
+            }
+        }
+
+        private static void DefaultAppSetting()
+        {
+            var cams = new Dictionary<string, Camera>
+            {
+                { "Cam1", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345" } },
+                { "Cam2", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345" } }
             };
 
-            var actions = new List<Action>
+            var actions = new Dictionary<string, Action> //List<Action>
             {
-                new() { ActId = "A", CamId = "Cam1", PtzInfo =  new PTZInfo { Pan=1f, Tilt=1f, Zoom=0f }, BBox = new(120, 50, 80, 100) },
-                new() { ActId = "B", CamId = "Cam1", PtzInfo = new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f } , BBox = new(120, 150, 180, 300) },
-                new() { ActId = "C", CamId = string.Empty, PtzInfo = new PTZInfo(), BBox = Rectangle.Empty }
+                {"A", new() {  CameraName = "Cam1", PtzInfo =  new PTZInfo { Pan=1f, Tilt=1f, Zoom=0f }, BBox = new(120, 50, 80, 100) }},
+                {"B", new() {  CameraName = "Cam2", PtzInfo =  new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f}, BBox = new(120, 150, 180, 300) }},
+                {"C", new() {  CameraName = "Cam3", PtzInfo =  new PTZInfo(), BBox = Rectangle.Empty }}
             };
 
             var template = new ProductTemplate
             {
                 Name = "Product01",
                 ProductCode = "Pro-01",
-                BaseROI = new ROI() { Name = "Base", BBOX = new(253, 107, 55, 65) },
-                HoleROIs = new List<ROI>
-                {                
-                    new ROI{ Name="Hole01", BBOX = new Rectangle(322, 172, 95, 30) },
-                    new ROI{ Name="Hole02", BBOX = new Rectangle(322, 213, 95, 30) },
-                    new ROI{ Name="Hole03", BBOX =new Rectangle(322, 254, 95, 30) },
-                    new ROI{ Name="Hole04", BBOX =new Rectangle(322, 293, 95, 30) },
-                    new ROI{ Name="Hole05", BBOX =new Rectangle(322, 334, 95, 30) },
-                    new ROI{ Name="Hole06", BBOX =new Rectangle(322, 375, 95, 30) },
-                    new ROI{ Name="Hole07", BBOX =new Rectangle(322, 417, 95, 30) },
-                    new ROI{ Name="Hole08", BBOX =new Rectangle(322, 454, 95, 30) },
-                    new ROI{ Name="Hole09", BBOX =new Rectangle(322, 497, 95, 30) },
-                    new ROI{ Name="Hole10", BBOX =new Rectangle(322, 538, 95, 30) },
-                    new ROI{ Name="Hole11", BBOX =new Rectangle(322, 577, 95, 30) },
-                    new ROI{ Name="Hole12", BBOX =new Rectangle(322, 617, 95, 30) }
+                HoleROIs = new Dictionary<string, ROI> // List<ROI>
+                {
+                    {"Base00", new() { BBOX = new Rectangle(253, 107, 55, 65) } },
+                    {"Hole01", new() { BBOX = new Rectangle(322, 172, 95, 30) } },
+                    {"Hole02", new() { BBOX = new Rectangle(322, 213, 95, 30) } },
+                    {"Hole03", new() { BBOX = new Rectangle(322, 254, 95, 30) } },
+                    {"Hole04", new() { BBOX = new Rectangle(253, 293, 55, 65) } },
+                    {"Hole05", new() { BBOX = new Rectangle(253, 334, 55, 65) } },
+                    {"Hole06", new() { BBOX = new Rectangle(253, 375, 55, 65) } },
+                    {"Hole07", new() { BBOX = new Rectangle(253, 417, 55, 65) } },
+                    {"Hole08", new() { BBOX = new Rectangle(253, 454, 55, 65) } },
+                    {"Hole09", new() { BBOX = new Rectangle(253, 497, 55, 65) } },
+                    {"Hole10", new() { BBOX = new Rectangle(253, 538, 55, 65) } },
+                    {"Hole11", new() { BBOX = new Rectangle(253, 577, 55, 65) } },
+                    {"Hole12", new() { BBOX = new Rectangle(253, 617, 55, 65) } }
                 }
             };
 
@@ -58,8 +74,6 @@ namespace WinformRopeRounding.Utilities
                 Actions = actions,
                 Template = template
             };
-
-            var json = JsonConvert.SerializeObject(AppSetting, Formatting.Indented);
         }
 
         private static void ConfigureSerilog()
@@ -73,5 +87,6 @@ namespace WinformRopeRounding.Utilities
                         //.WriteToJsonTextBox()                        
                         .CreateLogger();
         }
+    
     }
 }

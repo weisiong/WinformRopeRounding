@@ -9,7 +9,7 @@ namespace WinformRopeRounding.UserControls
         private Image imgOrg;
         public void SetImage(Image image)
         {
-            imgOrg = (Image)image.Clone();
+            imgOrg = (Image)image.Clone(); 
             base.Image = image;
         }
         ~PtzPictureBoxEx()
@@ -18,10 +18,6 @@ namespace WinformRopeRounding.UserControls
         }
 
         private IShape polyShape = null;
-
-        public Dictionary<string, Utilities.Action> Actions { get; internal set; } = new Dictionary<string, Utilities.Action>();
-        //public Dictionary<string, Movement> Movements { get; internal set; } = new Dictionary<string, Movement>();
-        public string LastSelectedNode { get; internal set; }
 
         private int _drawMode = 0;
         public int DrawMode
@@ -48,11 +44,7 @@ namespace WinformRopeRounding.UserControls
             }
         }
 
-        public PtzPictureBoxEx()
-        {
-            base.Dock = DockStyle.Fill;
-            //polyShape.OnShapeComplete += PolyShape_OnShapeComplete;
-        }
+        public PtzPictureBoxEx() => base.Dock = DockStyle.Fill;
 
         private void PolyShape_OnShapeComplete(object sender, System.EventArgs e)
         {
@@ -101,6 +93,15 @@ namespace WinformRopeRounding.UserControls
             e.Graphics.DrawLine(myPen, lastX, 0, lastX, this.Height);
         }
 
+        public void DrawShape(Rectangle Roi, Color color)
+        {
+            DrawShape(new List<Point>()
+            {
+                new Point(Roi.X,Roi.Y),
+                new Point(Roi.X + Roi.Width, Roi.Y + Roi.Height)
+            }, color);
+        }
+
         public void DrawShape(List<Point> points, Color color)
         {
             polyShape.Points = points;
@@ -108,39 +109,17 @@ namespace WinformRopeRounding.UserControls
             Invalidate();
         }
 
-        public void SaveNewROI()
+        public Rectangle SaveNewROI()
         {
-            //var newPts = polyShape.Points;
-            //var NodeROI = LastSelectedNode.Split('-')[0];
-            //var LotName = LastSelectedNode.Split('-')[1];
-            //foreach (var mov in Actions)
-            //{
-            //    if (NodeROI.Equals("MotionROI") && mov.Key.Equals(LotName))
-            //    {
-            //        var roi = new Rectangle();
-            //        roi.X = Math.Min(newPts[0].X, newPts[1].X);
-            //        roi.Y = Math.Min(newPts[0].Y, newPts[1].Y);
-            //        roi.Width = Math.Abs(newPts[1].X - newPts[0].X);
-            //        roi.Height = Math.Abs(newPts[1].Y - newPts[0].Y);
-            //        mov.Value.MotionROI = roi;
-            //        break;
-            //    }
-            //    if (NodeROI.Equals("LotROI"))
-            //    {
-            //        var lotROI = mov.Value.LotROIs.FirstOrDefault(a => a.SeqId.ToString().Equals(LotName));
-            //        if (lotROI != null)
-            //        {
-            //            var roi = new Rectangle();
-            //            roi.X = Math.Min(newPts[0].X, newPts[1].X);
-            //            roi.Y = Math.Min(newPts[0].Y, newPts[1].Y);
-            //            roi.Width = Math.Abs(newPts[1].X - newPts[0].X);
-            //            roi.Height = Math.Abs(newPts[1].Y - newPts[0].Y);
-            //            lotROI.Lot = roi;
-            //            break;
-            //        }
-            //    }
-            //}
-
+            var newPts = polyShape.Points;
+            var roi = new Rectangle
+            {
+                X = Math.Min(newPts[0].X, newPts[1].X),
+                Y = Math.Min(newPts[0].Y, newPts[1].Y),
+                Width = Math.Abs(newPts[1].X - newPts[0].X),
+                Height = Math.Abs(newPts[1].Y - newPts[0].Y)
+            };
+            return roi;
         }
 
     }

@@ -142,12 +142,15 @@ namespace WinformRopeRounding
 
         private void cameraCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCamControl frm = new("Calibration", string.Empty)
-            {
-                CameraIP = GlobalVars.AppSetting.Cams[0].IPAddress,
-                CamUsername = GlobalVars.AppSetting.Cams[0].Username,
-                CamPassword = GlobalVars.AppSetting.Cams[0].Password
-            };
+            //FormCamControl frm = new("Calibration", string.Empty)
+            //{
+            //    CameraIP = GlobalVars.AppSetting.Cams.Values.ElementAt(0).IPAddress,
+            //    CamUsername = GlobalVars.AppSetting.Cams.Values.ElementAt(0).Username,
+            //    CamPassword = GlobalVars.AppSetting.Cams.Values.ElementAt(0).Password
+            //};
+            FormRoiEditor frm = new();
+            Image img = vp.CurrentFrame.ToBitmap();
+            frm.SetImage(img);
             frm.ShowDialog();
         }
 
