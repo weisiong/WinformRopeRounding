@@ -8,6 +8,7 @@ namespace WinformRopeRounding.Modules.VideoProcessor
     }
     public class VideoProcessor
     {
+        private static bool isLoaded = false;
         public event EventHandler<VideoProcessorEventArgs>? OnFrameReceived;
 
         private bool _isStop = false;
@@ -19,14 +20,13 @@ namespace WinformRopeRounding.Modules.VideoProcessor
 
         public VideoProcessor(string uri, EnumMediaInput mediaInput)
         {
-            CvInvoke.Init();
+            if (!isLoaded) { CvInvoke.Init(); isLoaded = true; }
             _uri = uri;
             _mediaInput = mediaInput;
         }
 
-        //public Mat CurrentFrame => cam.QueryFrame();
-        public Mat CurrentFrame { get; internal set; }
-        public async void Run()
+        public Mat CurrentFrame { get; internal set; } = new Mat();
+        public async void RunContinuously()
         {
             if (_mediaInput == EnumMediaInput.RTSP || _mediaInput == EnumMediaInput.VIDEO)
             {
@@ -67,22 +67,23 @@ namespace WinformRopeRounding.Modules.VideoProcessor
                         RaiseOnFrameReceivedEvent();
                     }
                     Application.DoEvents();
-                    await Task.Delay(100);
+                    await Task.Delay(10);
                 }
             }
         }
 
         public Mat Snapshot()
         {
-            Mat img = new();
-            cam = new VideoCapture(_uri);
-            if(cam is not null) img = cam.QueryFrame();
-            return img; 
+            if (CurrentFrame.IsEmpty)
+            {
+                cam = new VideoCapture(_uri);
+                CurrentFrame = cam.QueryFrame();                
+            }
+            return CurrentFrame;
         }
 
         private void RaiseOnFrameReceivedEvent()
         {
-            //Mat refMat = cam.QueryFrame();
             CurrentFrame = cam.QueryFrame();
             if (CurrentFrame != null)
             {
@@ -91,15 +92,11 @@ namespace WinformRopeRounding.Modules.VideoProcessor
             }
         }
  
-        private void Cam_ImageGrabbed(object? sender, EventArgs e)
+        private void Cam_ImageGrabbed(object? sender, EventArgs arg)
         {
-            //Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.fff")} Cam_ImageGrabbed");
-            //Mat refMat = new();
-            //cam.Retrieve(refMat);
-            Mat refMat = cam.QueryFrame();
-            var arg = new VideoProcessorEventArgs() { MatSrc = refMat };
-            OnFrameReceived?.Invoke(this, arg);
+            RaiseOnFrameReceivedEvent();
         }
+
         public void Start()
         {
             cam.Start();
@@ -114,13 +111,6 @@ namespace WinformRopeRounding.Modules.VideoProcessor
         {
             //cam.Pause();
             _isPause = !_isPause;
-        }
-
-        public bool IsPlaying {
-            get
-            {
-                return (!_isPause && !_isStop);
-            }
         }
 
     }

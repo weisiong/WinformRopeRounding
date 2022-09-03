@@ -12,6 +12,8 @@ namespace WinformRopeRounding.Utilities
 
         public static string SettingPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
+        public static string VIDEO_SOURCE_FORMAT = "http://{0}:{1}@{2}/ISAPI/Streaming/channels/101/picture";
+
 
         public static AppSetting AppSetting { get; set; } = new AppSetting();
         public static void Init()

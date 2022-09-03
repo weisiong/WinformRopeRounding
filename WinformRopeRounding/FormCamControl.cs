@@ -43,12 +43,13 @@ namespace WinformRopeRounding
                     cameraImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
                     lblMessage.Visible = false;
-                    string url = $"http://{CamUsername}:{CamPassword}@{CameraIP}/ISAPI/Streaming/channels/101/picture";
+                    string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, CamUsername, CamPassword, CameraIP);
                     vp = new(url, EnumMediaInput.HTTP);
                     vp.OnFrameReceived += Vp_OnFrameReceived;
-                    vp.Run();
+                    vp.RunContinuously();
                 }
-                _controller.SetPosition(txtValue.Text);
+                if(!string.IsNullOrEmpty(txtValue.Text))
+                    _controller.SetPosition(txtValue.Text);
             }
             else
             {

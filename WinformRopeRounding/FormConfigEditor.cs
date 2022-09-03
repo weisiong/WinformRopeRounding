@@ -5,13 +5,13 @@ using WinformRopeRounding.Utilities;
 
 namespace WinformRopeRounding
 {
-    public partial class FormRoiEditor : Form
+    public partial class FormConfigEditor : Form
     {
         public string LastSelectedNode { get; internal set; }
         private Dictionary<string, Utilities.Action> Actions;
         private Dictionary<string, ROI> HoleROIs = new();
         private Dictionary<string, Camera> Cams = new();
-        public FormRoiEditor()
+        public FormConfigEditor()
         {
             InitializeComponent();
             lblLocation.Text = string.Empty;
@@ -19,7 +19,7 @@ namespace WinformRopeRounding
             btnSave.Enabled = false;
             btnEdit.Enabled = false;
         }
-        ~FormRoiEditor()
+        ~FormConfigEditor()
         {
             pbImage.MouseMove -= PbImage_OnMouseMove;
         }
@@ -34,7 +34,7 @@ namespace WinformRopeRounding
             cboCamera.SelectedIndex = 0;
             Actions = GlobalVars.AppSetting.Actions;
             HoleROIs = GlobalVars.AppSetting.Template.HoleROIs;
-            PTZRenderTreeView(true);
+            PTZRenderTreeView(cbShowValue.Checked);
         }
 
         private void btnSnapshoot_Click(object sender, EventArgs e)
@@ -43,9 +43,31 @@ namespace WinformRopeRounding
             if (idx >= 0)
             {
                 var cam = Cams.Values.ElementAt(idx);
-                string url = $"http://{cam.Username}:{cam.Password}@{cam.IPAddress}/ISAPI/Streaming/channels/101/picture";
+                string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
                 VideoProcessor vp = new(url, EnumMediaInput.HTTP);
                 SetImage(vp.Snapshot().ToBitmap());
+            }
+        }
+        private void btnCamControl_Click(object sender, EventArgs e)
+        {
+            var idx = cboCamera.SelectedIndex;
+            if (idx >= 0)
+            {
+                var cam = Cams.Values.ElementAt(idx);
+                var strPtz = string.Empty;
+                var frm = new FormCamControl("Position View", strPtz)
+                {
+                    CameraIP = cam.IPAddress,
+                    CamUsername = cam.Username,
+                    CamPassword = cam.Password
+                };
+                var result = frm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    var img = frm.SnapshootImage;
+                    this.SetImage(img);
+                }
+
             }
         }
 
@@ -95,19 +117,13 @@ namespace WinformRopeRounding
                         btnEdit.Enabled = true;
                         LastSelectedNode = $"PTZInfo|{idx}";
                     }
+                    if (paths.Contains("CamId"))
+                    {
+                        btnEdit.Enabled = true;
+                        LastSelectedNode = $"CamId|{idx}";
+                    }
                     break;
             }
-        }
-
-        private void TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            //if (e.Button == MouseButtons.Right)
-            //{
-            //    System.Windows.Forms.ContextMenu cm = new ContextMenu();
-            //    cm.MenuItems.Add("Change", new EventHandler(Edit_Region));
-            //    cm.MenuItems.Add("Clear", new EventHandler(Clear_Region));
-            //    TreeView.ContextMenu = cm;
-            //}
         }
 
         private void Edit_Region(object sender, EventArgs e)
@@ -121,6 +137,8 @@ namespace WinformRopeRounding
                 case "HoleROIs":
                 case "TargetROI":
                     pbImage.EnabledEditMode = true;
+                    btnSave.Enabled = true;
+                    btnEdit.Enabled = false;
                     break;
                 case "PTZInfo":
                     var idx = cboCamera.SelectedIndex;
@@ -137,9 +155,7 @@ namespace WinformRopeRounding
                     if (result == DialogResult.OK)
                     {
                         var img = frm.SnapshootImage;
-                        //var newImg = new Bitmap(img, new Size(1920, 1080));
                         this.SetImage(img);
-                        //mov.LocInfo = frm.InputValue;
                         var locInfo = frm.InputValue;
                         ptz.Pan =Convert.ToSingle(locInfo.Split()[0]);
                         ptz.Tilt = Convert.ToSingle(locInfo.Split()[1]);
@@ -147,28 +163,36 @@ namespace WinformRopeRounding
                         PTZRenderTreeView(cbShowValue.Checked);
                     }
                     break;
+                case "CamId":
+                    var cam1 = Actions[selectedNodes[1]];
+                    var frmCam = new FormSelectCam();
+                    var result1 = frmCam.ShowDialog();
+                    if (result1 == DialogResult.OK)
+                    {
+                        cam1.CameraName = frmCam.GetSelectedCamName;
+                        PTZRenderTreeView(cbShowValue.Checked);
+                    }                    
+                    break;
             }
-            btnSave.Enabled = true;
-            btnEdit.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            var roi = pbImage.SaveNewROI();
-
             var selectedNodes = LastSelectedNode.Split('|');
             var selectedKey = selectedNodes[0];
             var idx = selectedNodes[1];
             switch (selectedKey)
             {
                 case "HoleROIs":
-                    HoleROIs[idx].BBOX = roi;
+                    var roi1 = pbImage.SaveNewROI();
+                    HoleROIs[idx].BBOX = roi1;
                     break;
                 case "TargetROI":
-                    Actions[idx].BBox = roi;
+                    var roi2 = pbImage.SaveNewROI();
+                    Actions[idx].BBox = roi2;
                     break;
                 case "PTZInfo":
-
+                    //Actions[idx].PtzInfo = "";
                     break;
             }
 
@@ -182,15 +206,25 @@ namespace WinformRopeRounding
             PTZRenderTreeView(cbShowValue.Checked);
         }
 
-        private static void AddNode(TreeNode RootNode, string Key, string Val, string idx = "", bool ShowValue = true)
+        private static void AddNode(TreeNode RootNode, string Key, string Val, bool ShowValue = false)
         {
             TreeNode newNode = new(Key);
             RootNode.Nodes.Add(newNode);
-            newNode.Name = $"{Key}-{idx}";
+            //newNode.Name = $"{Key}-{idx}";
             newNode.Tag = Val;
             if (ShowValue)
                 newNode.Nodes.Add($"{Key}-val", Val);
         }
+
+        //private static void AddNode(TreeNode RootNode, string Key, string Val, string idx = "", bool ShowValue = true)
+        //{
+        //    TreeNode newNode = new(Key);
+        //    RootNode.Nodes.Add(newNode);
+        //    newNode.Name = $"{Key}-{idx}";
+        //    newNode.Tag = Val;
+        //    if (ShowValue)
+        //        newNode.Nodes.Add($"{Key}-val", Val);
+        //}
 
         private void PTZRenderTreeView(bool ShowValue = false)
         {
@@ -203,7 +237,8 @@ namespace WinformRopeRounding
             for (var i = 0; i < HoleROIs.Count; i++)
             {
                 var kv = HoleROIs.ElementAt(i);
-                AddNode(tplNode, kv.Key, kv.Value.BBOX.ToString(), i.ToString());
+                //AddNode(tplNode, kv.Key, kv.Value.BBOX.ToString(), i.ToString());
+                AddNode(tplNode, kv.Key, kv.Value.BBOX.ToString(), ShowValue);
             }
 
             TreeNode actsNode = new("Actions");
@@ -214,9 +249,12 @@ namespace WinformRopeRounding
                 var act = kv.Value;
                 TreeNode actNode = new(kv.Key);
                 actsNode.Nodes.Add(actNode);
-                AddNode(actNode, $"CamId", act.CameraName, i.ToString());
-                AddNode(actNode, $"PTZInfo", act.PtzInfo.ToString(), i.ToString());
-                AddNode(actNode, $"TargetROI", act.BBox.ToString(), i.ToString());
+                //AddNode(actNode, $"CamId", act.CameraName, i.ToString());
+                //AddNode(actNode, $"PTZInfo", act.PtzInfo.ToString(), i.ToString());
+                //AddNode(actNode, $"TargetROI", act.BBox.ToString(), i.ToString());
+                AddNode(actNode, $"CamId", act.CameraName, ShowValue);
+                AddNode(actNode, $"PTZInfo", act.PtzInfo.ToString(), ShowValue);
+                AddNode(actNode, $"TargetROI", act.BBox.ToString(), ShowValue);
             }
             TreeView.Nodes.Clear();
             TreeView.Nodes.Add(rootNode);
@@ -225,11 +263,19 @@ namespace WinformRopeRounding
 
         private void btnSaveFile_Click(object sender, EventArgs e)
         {
-            var appSetting = GlobalVars.AppSetting;
-            appSetting.Actions = Actions;
-            appSetting.Template.HoleROIs = HoleROIs;
-            var json = JsonConvert.SerializeObject(appSetting, Formatting.Indented);
-            File.WriteAllText("Config.json", json);
+            try
+            {
+                var appSetting = GlobalVars.AppSetting;
+                appSetting.Actions = Actions;
+                appSetting.Template.HoleROIs = HoleROIs;
+                var json = JsonConvert.SerializeObject(appSetting, Formatting.Indented);
+                File.WriteAllText("Config.json", json);
+                MessageBox.Show("Setting Save Successfully.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void PbImage_OnMouseMove(object sender, MouseEventArgs e)
@@ -262,6 +308,6 @@ namespace WinformRopeRounding
             Edit_Region(null, EventArgs.Empty);
         }
 
-
+ 
     }
 }

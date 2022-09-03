@@ -261,7 +261,7 @@ namespace WinformRopeRounding.Utilities
                     },
                     Zoom = new OnvifPTZService.Vector1D
                     {
-                        x = 0.5f //0.1f
+                        x = 1.0f //0.1f
                     }
                 });
             }
@@ -272,7 +272,7 @@ namespace WinformRopeRounding.Utilities
 
         public string GetPosition()
         {
-            var ptz_status = ptzClient.GetStatus(profile.token); //"Profile_1"); //
+            var ptz_status = ptzClient.GetStatus(profile.token);
             return $"{ptz_status.Position.PanTilt.x} {ptz_status.Position.PanTilt.y} {ptz_status.Position.Zoom.x}";
         }
 

@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.msMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSpacePickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,11 +39,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.cameraImageBox1 = new Emgu.CV.UI.ImageBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.cameraImageBox2 = new Emgu.CV.UI.ImageBox();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.msMain.SuspendLayout();
@@ -54,11 +48,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox1)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // msMain
@@ -75,30 +65,17 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openToolStripMenuItem.Text = "&Open";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.saveToolStripMenuItem.Text = "&Save";
-            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -155,8 +132,8 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.cameraImageBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtDebug, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tabControl, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -182,29 +159,6 @@
             this.txtDebug.Size = new System.Drawing.Size(806, 175);
             this.txtDebug.TabIndex = 3;
             // 
-            // tabControl
-            // 
-            this.tabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(3, 3);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(808, 405);
-            this.tabControl.TabIndex = 4;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.cameraImageBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 27);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(800, 374);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Cam1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // cameraImageBox1
             // 
             this.cameraImageBox1.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
@@ -214,35 +168,10 @@
             this.cameraImageBox1.Enabled = false;
             this.cameraImageBox1.Location = new System.Drawing.Point(3, 3);
             this.cameraImageBox1.Name = "cameraImageBox1";
-            this.cameraImageBox1.Size = new System.Drawing.Size(794, 368);
+            this.cameraImageBox1.Size = new System.Drawing.Size(808, 405);
             this.cameraImageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cameraImageBox1.TabIndex = 2;
             this.cameraImageBox1.TabStop = false;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.cameraImageBox2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 27);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(800, 374);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Cam2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // cameraImageBox2
-            // 
-            this.cameraImageBox2.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
-            this.cameraImageBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.cameraImageBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.cameraImageBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraImageBox2.Enabled = false;
-            this.cameraImageBox2.Location = new System.Drawing.Point(3, 3);
-            this.cameraImageBox2.Name = "cameraImageBox2";
-            this.cameraImageBox2.Size = new System.Drawing.Size(794, 368);
-            this.cameraImageBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cameraImageBox2.TabIndex = 3;
-            this.cameraImageBox2.TabStop = false;
             // 
             // btnPause
             // 
@@ -284,11 +213,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox1)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,22 +223,16 @@
 
         private MenuStrip msMain;
         private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
         private StatusStrip statusStrip1;
         private SplitContainer splitContainer1;
         private TableLayoutPanel tableLayoutPanel1;
         private Button btnPause;
         private Button btnStart;
-        private ToolStripMenuItem saveToolStripMenuItem;
         private Emgu.CV.UI.ImageBox cameraImageBox1;
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem colorSpacePickerToolStripMenuItem;
         private ToolStripMenuItem cameraCalibrationToolStripMenuItem;
         private Serilog.Sinks.WinForms.Core.SimpleLogTextBox txtDebug;
-        private TabControl tabControl;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
-        private Emgu.CV.UI.ImageBox cameraImageBox2;
     }
 }
