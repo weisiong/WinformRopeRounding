@@ -7,15 +7,15 @@ namespace WinformRopeRounding.UserControls
     {
         public event EventHandler<string> RetakePicture;
 
-        public string CameraIP { get; set; }
-        public string ControllerIP { get; set; }
-        public string LotName { get; set; }
-        public string ControllerType { get; set; }
+        //public string CameraIP { get; set; }
+        //public string ControllerIP { get; set; }
+        //public string LotName { get; set; }
+        //public string ControllerType { get; set; }
 
-        public string RtspPath { get; set; }
-        public string CamUsername { get; set; }
-        public string CamPassword { get; set; }
-        public int CameraId { get; set; }
+        //public string RtspPath { get; set; }
+        //public string CamUsername { get; set; }
+        //public string CamPassword { get; set; }
+        //public int CameraId { get; set; }
 
         public string LastSelectedNode { get; internal set; }
         private Dictionary<string, Utilities.Action> Actions;
@@ -114,14 +114,15 @@ namespace WinformRopeRounding.UserControls
                     pbImage.EnabledEditMode = true;
                     break;
                 case "PTZInfo":
+
                     var ptz = Actions[selectedNodes[1]].PtzInfo;
                     var strPtz = $"{ptz.Pan} {ptz.Tilt} {ptz.Zoom}";
                     var frm = new FormCamControl("Position View", strPtz)
                     {
                         //RtspPath = RtspPath,
-                        CameraIP = CameraIP,
-                        CamUsername = CamUsername,
-                        CamPassword = CamPassword
+                        //CameraIP = CameraIP,
+                        //CamUsername = CamUsername,
+                        //CamPassword = CamPassword
                     };
                     var result = frm.ShowDialog();
                     if (result == DialogResult.OK)

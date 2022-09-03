@@ -40,8 +40,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.cameraImageBox = new Emgu.CV.UI.ImageBox();
             this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.cameraImageBox1 = new Emgu.CV.UI.ImageBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cameraImageBox2 = new Emgu.CV.UI.ImageBox();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.msMain.SuspendLayout();
@@ -50,7 +54,11 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox)).BeginInit();
+            this.tabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox1)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // msMain
@@ -140,37 +148,23 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnPause);
             this.splitContainer1.Panel2.Controls.Add(this.btnStart);
             this.splitContainer1.Size = new System.Drawing.Size(974, 592);
-            this.splitContainer1.SplitterDistance = 749;
+            this.splitContainer1.SplitterDistance = 814;
             this.splitContainer1.TabIndex = 2;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.cameraImageBox, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtDebug, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tabControl, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.5946F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.40541F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(749, 592);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(814, 592);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // cameraImageBox
-            // 
-            this.cameraImageBox.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
-            this.cameraImageBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.cameraImageBox.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.cameraImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraImageBox.Enabled = false;
-            this.cameraImageBox.Location = new System.Drawing.Point(3, 3);
-            this.cameraImageBox.Name = "cameraImageBox";
-            this.cameraImageBox.Size = new System.Drawing.Size(743, 405);
-            this.cameraImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cameraImageBox.TabIndex = 2;
-            this.cameraImageBox.TabStop = false;
             // 
             // txtDebug
             // 
@@ -185,14 +179,76 @@
             this.txtDebug.Name = "txtDebug";
             this.txtDebug.ReadOnly = true;
             this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDebug.Size = new System.Drawing.Size(741, 175);
+            this.txtDebug.Size = new System.Drawing.Size(806, 175);
             this.txtDebug.TabIndex = 3;
+            // 
+            // tabControl
+            // 
+            this.tabControl.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(3, 3);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(808, 405);
+            this.tabControl.TabIndex = 4;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.cameraImageBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 27);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(800, 374);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Cam1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // cameraImageBox1
+            // 
+            this.cameraImageBox1.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
+            this.cameraImageBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cameraImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.cameraImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraImageBox1.Enabled = false;
+            this.cameraImageBox1.Location = new System.Drawing.Point(3, 3);
+            this.cameraImageBox1.Name = "cameraImageBox1";
+            this.cameraImageBox1.Size = new System.Drawing.Size(794, 368);
+            this.cameraImageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cameraImageBox1.TabIndex = 2;
+            this.cameraImageBox1.TabStop = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.cameraImageBox2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 27);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(800, 374);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Cam2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // cameraImageBox2
+            // 
+            this.cameraImageBox2.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
+            this.cameraImageBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cameraImageBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.cameraImageBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraImageBox2.Enabled = false;
+            this.cameraImageBox2.Location = new System.Drawing.Point(3, 3);
+            this.cameraImageBox2.Name = "cameraImageBox2";
+            this.cameraImageBox2.Size = new System.Drawing.Size(794, 368);
+            this.cameraImageBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cameraImageBox2.TabIndex = 3;
+            this.cameraImageBox2.TabStop = false;
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(121, 14);
+            this.btnPause.Location = new System.Drawing.Point(10, 55);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(88, 31);
+            this.btnPause.Size = new System.Drawing.Size(134, 31);
             this.btnPause.TabIndex = 1;
             this.btnPause.Text = "Pause";
             this.btnPause.UseVisualStyleBackColor = true;
@@ -200,9 +256,9 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(15, 14);
+            this.btnStart.Location = new System.Drawing.Point(10, 18);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(88, 31);
+            this.btnStart.Size = new System.Drawing.Size(134, 31);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -220,6 +276,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main Terminal";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.msMain.ResumeLayout(false);
             this.msMain.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -227,7 +284,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox)).EndInit();
+            this.tabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,10 +306,14 @@
         private Button btnPause;
         private Button btnStart;
         private ToolStripMenuItem saveToolStripMenuItem;
-        private Emgu.CV.UI.ImageBox cameraImageBox;
+        private Emgu.CV.UI.ImageBox cameraImageBox1;
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem colorSpacePickerToolStripMenuItem;
         private ToolStripMenuItem cameraCalibrationToolStripMenuItem;
         private Serilog.Sinks.WinForms.Core.SimpleLogTextBox txtDebug;
+        private TabControl tabControl;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private Emgu.CV.UI.ImageBox cameraImageBox2;
     }
 }

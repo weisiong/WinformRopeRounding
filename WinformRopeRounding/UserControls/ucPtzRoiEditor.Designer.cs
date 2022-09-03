@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TreeView = new System.Windows.Forms.TreeView();
             this.pnlSave = new System.Windows.Forms.Panel();
+            this.btnSaveFile = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
@@ -39,22 +39,11 @@
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.lblLocation = new System.Windows.Forms.Label();
             this.cbShowValue = new System.Windows.Forms.CheckBox();
+            this.TreeView = new System.Windows.Forms.TreeView();
             this.pbImage = new WinformRopeRounding.UserControls.PtzPictureBoxEx();
-            this.btnSaveFile = new System.Windows.Forms.Button();
             this.pnlSave.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TreeView
-            // 
-            this.TreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.TreeView.Location = new System.Drawing.Point(3, 3);
-            this.TreeView.Name = "TreeView";
-            this.TreeView.Size = new System.Drawing.Size(320, 431);
-            this.TreeView.TabIndex = 0;
-            this.TreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeView_BeforeSelect);
-            this.TreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
             // 
             // pnlSave
             // 
@@ -70,6 +59,17 @@
             this.pnlSave.Name = "pnlSave";
             this.pnlSave.Size = new System.Drawing.Size(320, 177);
             this.pnlSave.TabIndex = 2;
+            // 
+            // btnSaveFile
+            // 
+            this.btnSaveFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnSaveFile.Location = new System.Drawing.Point(9, 105);
+            this.btnSaveFile.Name = "btnSaveFile";
+            this.btnSaveFile.Size = new System.Drawing.Size(308, 35);
+            this.btnSaveFile.TabIndex = 6;
+            this.btnSaveFile.Text = "Save Setting";
+            this.btnSaveFile.UseVisualStyleBackColor = true;
+            this.btnSaveFile.Click += new System.EventHandler(this.btnSaveFile_Click);
             // 
             // btnSave
             // 
@@ -169,6 +169,17 @@
             this.cbShowValue.Text = "Show Coordinate";
             this.cbShowValue.UseVisualStyleBackColor = true;
             // 
+            // TreeView
+            // 
+            this.TreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.TreeView.Location = new System.Drawing.Point(134, 0);
+            this.TreeView.Name = "TreeView";
+            this.TreeView.Size = new System.Drawing.Size(186, 431);
+            this.TreeView.TabIndex = 0;
+            this.TreeView.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeView_BeforeSelect);
+            this.TreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
+            // 
             // pbImage
             // 
             this.pbImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -176,21 +187,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbImage.DrawMode = 0;
             this.pbImage.EnabledEditMode = false;
-            this.pbImage.Location = new System.Drawing.Point(329, 3);
+            this.pbImage.Location = new System.Drawing.Point(472, 17);
             this.pbImage.Name = "pbImage";
-            this.pbImage.Size = new System.Drawing.Size(491, 614);
+            this.pbImage.Size = new System.Drawing.Size(357, 614);
             this.pbImage.TabIndex = 3;
-            // 
-            // btnSaveFile
-            // 
-            this.btnSaveFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSaveFile.Location = new System.Drawing.Point(9, 105);
-            this.btnSaveFile.Name = "btnSaveFile";
-            this.btnSaveFile.Size = new System.Drawing.Size(308, 35);
-            this.btnSaveFile.TabIndex = 6;
-            this.btnSaveFile.Text = "Save Setting";
-            this.btnSaveFile.UseVisualStyleBackColor = true;
-            this.btnSaveFile.Click += new System.EventHandler(this.btnSaveFile_Click);
             // 
             // ucPtzRoiEditor
             // 
@@ -209,12 +209,9 @@
         }
 
         #endregion
-
-        private TreeView TreeView;
         private Panel pnlSave;
         private Label lblLocation;
         private CheckBox cbShowValue;
-        private PtzPictureBoxEx pbImage;
         private GroupBox groupBox1;
         private Button btnSave;
         private Button btnEdit;
@@ -223,5 +220,7 @@
         private Button btnAutoFit;
         private Button btnZoomIn;
         private Button btnSaveFile;
+        private TreeView TreeView;
+        private PtzPictureBoxEx pbImage;
     }
 }

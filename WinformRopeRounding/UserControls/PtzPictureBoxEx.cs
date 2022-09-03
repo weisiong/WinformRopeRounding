@@ -57,7 +57,7 @@ namespace WinformRopeRounding.UserControls
         {
             if (!EnabledEditMode) return;
             polyShape.AddNewImagePoint(this, e.Location);
-            if (polyShape != null) polyShape.Draw(base.Image);
+            if (polyShape is not null && base.Image is not null) polyShape.Draw(base.Image);
             Invalidate();
         }
 
@@ -78,7 +78,7 @@ namespace WinformRopeRounding.UserControls
         public void ResetSelectedRegion()
         {
             if (polyShape != null) polyShape.Reset();
-            base.Image = (Image)imgOrg.Clone();
+            if(imgOrg is not null) base.Image = (Image)imgOrg.Clone();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -87,7 +87,7 @@ namespace WinformRopeRounding.UserControls
             //if (polyShape != null) polyShape.Draw(base.Image);
 
             //Draw Cross Line
-            Pen myPen = new Pen(Color.Gray, 2.0F);
+            Pen myPen = new(Color.Gray, 2.0F);
             myPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
             e.Graphics.DrawLine(myPen, 0, lastY, this.Width, lastY);
             e.Graphics.DrawLine(myPen, lastX, 0, lastX, this.Height);
@@ -105,7 +105,7 @@ namespace WinformRopeRounding.UserControls
         public void DrawShape(List<Point> points, Color color)
         {
             polyShape.Points = points;
-            polyShape.Draw(base.Image, color);
+            if(base.Image is not null) polyShape.Draw(base.Image, color);
             Invalidate();
         }
 

@@ -71,6 +71,15 @@ namespace WinformRopeRounding.Modules.VideoProcessor
                 }
             }
         }
+
+        public Mat Snapshot()
+        {
+            Mat img = new();
+            cam = new VideoCapture(_uri);
+            if(cam is not null) img = cam.QueryFrame();
+            return img; 
+        }
+
         private void RaiseOnFrameReceivedEvent()
         {
             //Mat refMat = cam.QueryFrame();

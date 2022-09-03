@@ -43,12 +43,12 @@ namespace WinformRopeRounding
                     cameraImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
                     lblMessage.Visible = false;
-                    var url = $"rtsp://{CamUsername}:{CamPassword}@{CameraIP}";
+                    string url = $"http://{CamUsername}:{CamPassword}@{CameraIP}/ISAPI/Streaming/channels/101/picture";
                     vp = new(url, EnumMediaInput.HTTP);
                     vp.OnFrameReceived += Vp_OnFrameReceived;
                     vp.Run();
                 }
-                //_controller.SetPosition(txtValue.Text);
+                _controller.SetPosition(txtValue.Text);
             }
             else
             {
@@ -123,6 +123,7 @@ namespace WinformRopeRounding
             var img = Snapshoot();
             if (img is not null)
                 SnapshootImage = img;
+            this.Close();
         }
 
 
@@ -148,7 +149,6 @@ namespace WinformRopeRounding
             lblMessage.Left = Left;
             lblMessage.Top = Top;
         }
-
 
     }
 }

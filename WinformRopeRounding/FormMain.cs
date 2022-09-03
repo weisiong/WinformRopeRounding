@@ -13,7 +13,6 @@ namespace WinformRopeRounding
     {
         //const string url = "rtsp://admin:joseph12345@192.168.1.64:554/Streaming/Channels/0101";
         const string url = "http://admin:joseph12345@192.168.1.64/ISAPI/Streaming/channels/101/picture";
-
         //const string url = @"C:\Users\U\Web\CaptureFiles\2022-07-23\";
         //const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813162052323.mp4";
         //const string url = @"C:\SourceCodes\samples\20220723\BlackBgd.mp4";
@@ -25,11 +24,23 @@ namespace WinformRopeRounding
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190947761.mp4";
 
         private static readonly SimpleTcpServer tcp = new();
-        VideoProcessor? vp;
+        private readonly List<VideoProcessor> vps = new();
         ObjectDetector? det;
         public FormMain()
         {
             InitializeComponent();
+        }
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+            var cams = GlobalVars.AppSetting.Cams;
+            foreach (var kv in cams)
+            {
+                var cam = kv.Value;
+                var uri = $"http://{cam.Username}:{cam.Password}@{cam.IPAddress}/ISAPI/Streaming/channels/101/picture";
+                var vp = new VideoProcessor(uri, EnumMediaInput.HTTP);
+                vp.OnFrameReceived += Vp_OnFrameReceived;
+                vps.Add(vp);
+            }
         }
 
         #region "TCP"
@@ -55,7 +66,7 @@ namespace WinformRopeRounding
             }
             if (str == "B")
             {
-                var cam = new VideoCapture(url);
+                VideoCapture cam = new(url);
                 Mat refMat = cam.QueryFrame();
                 //var isPass = State1(ref refMat);  //CheckHole1(ref refMat, ROI, 0.2);
                 //if (isPass)
@@ -81,14 +92,12 @@ namespace WinformRopeRounding
             {
                 InitTCP();
                 det = new ObjectDetector();
-                vp = new(url, EnumMediaInput.HTTP);
-                vp.OnFrameReceived += Vp_OnFrameReceived;
-                vp.Run();
+                vps[0].Run();
                 btnStart.Text = "Stop";
             }
             else
             {
-                vp?.Stop();
+                vps[0].Stop();
                 btnStart.Text = "Start";
             }
 
@@ -99,12 +108,12 @@ namespace WinformRopeRounding
             var txt = btnPause.Text;
             if (txt.Equals("Pause"))
             {
-                vp?.Pause();
+                vps[0].Pause();
                 btnPause.Text = "Resume";
             }
             else
             {
-                vp?.Pause();
+                vps[0].Pause();
                 btnPause.Text = "Pause";
             }   
         }
@@ -119,7 +128,7 @@ namespace WinformRopeRounding
                     var col = det.Inference(ref frame, false, 0.3f, 0.1f);
                     OnUpdate(ref frame, col);
                 }
-                cameraImageBox.Image = frame;
+                cameraImageBox1.Image = frame;
             }
         }
         
@@ -136,7 +145,7 @@ namespace WinformRopeRounding
 
         private void colorSpacePickerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormColorSpacePicker frm = new(vp.CurrentFrame);
+            FormColorSpacePicker frm = new(vps[0].CurrentFrame);
             frm.ShowDialog();
         }
 
@@ -149,10 +158,15 @@ namespace WinformRopeRounding
             //    CamPassword = GlobalVars.AppSetting.Cams.Values.ElementAt(0).Password
             //};
             FormRoiEditor frm = new();
-            Image img = vp.CurrentFrame.ToBitmap();
-            frm.SetImage(img);
+            var curFrame = vps[0].CurrentFrame;
+            if(curFrame is not null && curFrame.Ptr != IntPtr.Zero)
+            {
+                Image img = vps[0].CurrentFrame.ToBitmap();
+                frm.SetImage(img);
+            }            
             frm.ShowDialog();
         }
+
 
     }
 }

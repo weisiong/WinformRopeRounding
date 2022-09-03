@@ -34,8 +34,8 @@ namespace WinformRopeRounding.Utilities
         {
             var cams = new Dictionary<string, Camera>
             {
-                { "Cam1", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345" } },
-                { "Cam2", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345" } }
+                { "Cam1", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", PtzInfo  =  new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f} } },
+                { "Cam2", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", PtzInfo  =  new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f} } }
             };
 
             var actions = new Dictionary<string, Action> //List<Action>

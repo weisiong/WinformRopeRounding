@@ -1,8 +1,4 @@
 ﻿using Cyotek.Windows.Forms;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
 
 
 namespace WinformRopeRounding.Models
@@ -11,9 +7,9 @@ namespace WinformRopeRounding.Models
     {
         private Point lastClickedPoint;
         private Point lastMovedPoint;
-        private int maxPoint;
+        private readonly int maxPoint;
 
-        private List<Point> points = new List<Point>();
+        private List<Point> points = new();
         public List<Point> Points
         {
             get { return points; }
@@ -43,14 +39,14 @@ namespace WinformRopeRounding.Models
         //editing draw
         public void Draw(Image img)
         {
-            Pen pen = new Pen(Color.Blue, 4);
+            Pen pen = new(Color.Blue, 4);
             DrawRectangleShape(img, pen);
         }
 
         //immediate draw
         public void Draw(Image img, Color color)
         {
-            Pen pen = new Pen(color, 4);
+            Pen pen = new(color, 4);
             PerformDraw(img, pen);
         }
 
@@ -62,23 +58,23 @@ namespace WinformRopeRounding.Models
             }
         }
 
-        private Rectangle lastDrawedRectange;
+        private Rectangle lastDrawedRectange = Rectangle.Empty;
         private void PerformDraw(Image img, Pen pen)
         {
             using (Graphics g = Graphics.FromImage(img))
             {
                 Point[] pts = Points.ToArray();
-                SolidBrush b = new SolidBrush(Color.FromArgb(100, pen.Color));
+                SolidBrush b = new(Color.FromArgb(100, pen.Color));
 
-                var pt1 = pts[pts.Length - 2];
-                var pt2 = pts[pts.Length - 1];
+                var pt1 = pts[^2];
+                var pt2 = pts[^1];
                 var left = Math.Min(pt1.X, pt2.X);
                 var top = Math.Min(pt1.Y, pt2.Y);
                 var width = Math.Abs(pt1.X - pt2.X);
                 var height = Math.Abs(pt1.Y - pt2.Y);
                 var rect = new Rectangle(new Point(left, top), new Size(width, height));
 
-                if (lastDrawedRectange == null || !lastDrawedRectange.Equals(rect))
+                if (lastDrawedRectange == Rectangle.Empty || !lastDrawedRectange.Equals(rect))
                 {
                     g.DrawRectangle(pen, rect);
                     g.FillRectangle(b, rect);
@@ -103,7 +99,7 @@ namespace WinformRopeRounding.Models
                     var top = Math.Min(point.Y, lastMovedPoint.Y);
                     var width = Math.Abs(point.X - lastMovedPoint.X);
                     var height = Math.Abs(point.Y - lastMovedPoint.Y);
-                    var newRect = new Rectangle(new Point(left, top), new Size(width, height));
+                    Rectangle newRect = new(new Point(left, top), new Size(width, height));
                     ControlPaint.DrawReversibleFrame(newRect, Color.Black, FrameStyle.Thick);
                 }
                 var startPoint = ctr.PointToScreen(currentLocation);
@@ -114,7 +110,7 @@ namespace WinformRopeRounding.Models
                     var top = Math.Min(point.Y, lastMovedPoint.Y);
                     var width = Math.Abs(point.X - lastMovedPoint.X);
                     var height = Math.Abs(point.Y - lastMovedPoint.Y);
-                    var newRect = new Rectangle(new Point(left, top), new Size(width, height));
+                    Rectangle newRect = new(new Point(left, top), new Size(width, height));
                     ControlPaint.DrawReversibleFrame(newRect, Color.Black, FrameStyle.Thick);
                 }
                 lastMovedPoint = startPoint;
