@@ -48,7 +48,7 @@ namespace WinformRopeRounding
                     string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, CamUsername, CamPassword, CameraIP);
                     vp = new(url, EnumMediaInput.HTTP);
                     vp.OnFrameReceived += Vp_OnFrameReceived;
-                    vp.RunContinuously();
+                    vp.Run();
                 }
                 if(!string.IsNullOrEmpty(txtValue.Text))
                     await _controller.SetPositionAsync(txtValue.Text);

@@ -38,8 +38,9 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
             this.cameraImageBox1 = new Emgu.CV.UI.ImageBox();
+            this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
+            this.btnInitialize = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
             this.msMain.SuspendLayout();
@@ -73,7 +74,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -122,6 +123,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnInitialize);
             this.splitContainer1.Panel2.Controls.Add(this.btnPause);
             this.splitContainer1.Panel2.Controls.Add(this.btnStart);
             this.splitContainer1.Size = new System.Drawing.Size(974, 592);
@@ -143,6 +145,20 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(814, 592);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // cameraImageBox1
+            // 
+            this.cameraImageBox1.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
+            this.cameraImageBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.cameraImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.cameraImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cameraImageBox1.Enabled = false;
+            this.cameraImageBox1.Location = new System.Drawing.Point(3, 3);
+            this.cameraImageBox1.Name = "cameraImageBox1";
+            this.cameraImageBox1.Size = new System.Drawing.Size(808, 405);
+            this.cameraImageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.cameraImageBox1.TabIndex = 2;
+            this.cameraImageBox1.TabStop = false;
+            // 
             // txtDebug
             // 
             this.txtDebug.BackColor = System.Drawing.Color.White;
@@ -159,23 +175,19 @@
             this.txtDebug.Size = new System.Drawing.Size(806, 175);
             this.txtDebug.TabIndex = 3;
             // 
-            // cameraImageBox1
+            // btnInitialize
             // 
-            this.cameraImageBox1.BackgroundImage = global::WinformRopeRounding.Properties.Resources.NoSignal;
-            this.cameraImageBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.cameraImageBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.cameraImageBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cameraImageBox1.Enabled = false;
-            this.cameraImageBox1.Location = new System.Drawing.Point(3, 3);
-            this.cameraImageBox1.Name = "cameraImageBox1";
-            this.cameraImageBox1.Size = new System.Drawing.Size(808, 405);
-            this.cameraImageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.cameraImageBox1.TabIndex = 2;
-            this.cameraImageBox1.TabStop = false;
+            this.btnInitialize.Location = new System.Drawing.Point(10, 14);
+            this.btnInitialize.Name = "btnInitialize";
+            this.btnInitialize.Size = new System.Drawing.Size(134, 31);
+            this.btnInitialize.TabIndex = 2;
+            this.btnInitialize.Text = "Initialize";
+            this.btnInitialize.UseVisualStyleBackColor = true;
+            this.btnInitialize.Click += new System.EventHandler(this.btnInitialize_Click);
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(10, 55);
+            this.btnPause.Location = new System.Drawing.Point(10, 88);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(134, 31);
             this.btnPause.TabIndex = 1;
@@ -185,7 +197,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(10, 18);
+            this.btnStart.Location = new System.Drawing.Point(10, 51);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(134, 31);
             this.btnStart.TabIndex = 0;
@@ -234,5 +246,6 @@
         private ToolStripMenuItem colorSpacePickerToolStripMenuItem;
         private ToolStripMenuItem cameraCalibrationToolStripMenuItem;
         private Serilog.Sinks.WinForms.Core.SimpleLogTextBox txtDebug;
+        private Button btnInitialize;
     }
 }

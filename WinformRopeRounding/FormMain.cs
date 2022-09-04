@@ -37,8 +37,8 @@ namespace WinformRopeRounding
         {
             var cams = GlobalVars.AppSetting.Cams;
             var cam = cams.Values.ElementAt(0);
-            //string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
-            vp = new VideoProcessor(url, EnumMediaInput.PIC);
+            string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+            vp = new VideoProcessor(url, EnumMediaInput.HTTP);
             det = new ObjectDetector();
         }
 
@@ -204,25 +204,30 @@ namespace WinformRopeRounding
 
 
         #region "UI Related"
-        private async void BtnStart_Click(object sender, EventArgs e)
+        private async void btnInitialize_Click(object sender, EventArgs e)
+        {
+            await InitPTZAsync();
+            InitTCP();
+            cameraImageBox1.Image = vp.Snapshot();
+            Log.Information("Initialization fully complete.");
+        }
+
+        private void BtnStart_Click(object sender, EventArgs e)
         {
             var txt = btnStart.Text;
             if(txt.Equals("Start"))
             {
-                await InitPTZAsync();
-                InitTCP();
-                //vp.Run();
-                cameraImageBox1.Image = vp.Snapshot();
+                vp.OnFrameReceived += Vp_OnFrameReceived;
+                vp.Run();
                 btnStart.Text = "Stop";
             }
             else
             {
+                vp.OnFrameReceived -= Vp_OnFrameReceived;
                 vp.Stop();
                 btnStart.Text = "Start";
             }
-
         }
-
         private void BtnPause_Click(object sender, EventArgs e)
         {
             var txt = btnPause.Text;
@@ -285,6 +290,9 @@ namespace WinformRopeRounding
         {
             Application.Exit();
         }
+
         #endregion
+
+
     }
 }

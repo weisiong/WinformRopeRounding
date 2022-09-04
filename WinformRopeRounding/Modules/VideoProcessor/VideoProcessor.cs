@@ -26,7 +26,7 @@ namespace WinformRopeRounding.Modules.VideoProcessor
         }
 
         public Mat CurrentFrame { get; internal set; } = new Mat();
-        public async void RunContinuously()
+        public async void Run()
         {
             if (_mediaInput == EnumMediaInput.RTSP || _mediaInput == EnumMediaInput.VIDEO)
             {
