@@ -1,4 +1,5 @@
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Serilog;
 using SimpleTCP;
@@ -6,6 +7,7 @@ using System.Net.Sockets;
 using WinformRopeRounding.Modules.ObjectDetection;
 using WinformRopeRounding.Modules.VideoProcessor;
 using WinformRopeRounding.Utilities;
+using static Emgu.CV.DepthAI.Camera;
 
 namespace WinformRopeRounding
 {
@@ -18,7 +20,7 @@ namespace WinformRopeRounding
         //const string url = @"C:\SourceCodes\samples\20220723\BlackBgd.mp4";
         //const string url = @"C:\SourceCodes\samples\20220723\BlackBgd01.jpg";        
         //const string url = @"C:\SourceCodes\samples\20220723\GreenBgdWithLight03.mp4";
-        //const string url = @"C:\SourceCodes\samples\20220723\GreenBgd01.jpg";
+        const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813143001761.jpg";
         //const string url = @"C:\SourceCodes\samples\20220723\192.168.125.64_01_20220723153920285.jpg";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_2022082319074257.mp4";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190947761.mp4";
@@ -34,15 +36,8 @@ namespace WinformRopeRounding
         {
             var cams = GlobalVars.AppSetting.Cams;
             var cam = cams.Values.ElementAt(0);
-            string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
-            vp = new VideoProcessor(url, EnumMediaInput.HTTP);
-            //foreach (var kv in cams)
-            //{
-            //    var cam = kv.Value;
-            //    string url = string.Format(GlobalVars.VIDEO_SOURCE, cam.Username, cam.Password, cam.IPAddress);
-            //    vp = new VideoProcessor(url, EnumMediaInput.HTTP);
-            //    vp.OnFrameReceived += Vp_OnFrameReceived;
-            //}
+            //string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+            vp = new VideoProcessor(url, EnumMediaInput.PIC);
             det = new ObjectDetector();
         }
 
@@ -56,30 +51,6 @@ namespace WinformRopeRounding
             tcp.DataReceived += Server_DataReceived;
             Log.Information($"TCP started at port: {tcpPortNo}");
         }
-        private void Server_DataReceived(object sender, SimpleTCP.Message e)
-        {
-            string str = e.MessageString;
-            Log.Information($"Data received: {str}");
-            if (str == "0")
-            {
-                tcp.Broadcast("Repeat");
-            }
-            if (str == "A")
-            {
-                var locX = 123; var locY = 456;
-                tcp.Broadcast($"{locX}:{locY}");
-            }
-            if (str == "B")
-            {
-                //VideoCapture cam = new(url);
-                //Mat refMat = cam.QueryFrame();
-                //var isPass = State1(ref refMat);  //CheckHole1(ref refMat, ROI, 0.2);
-                //if (isPass)
-                //    tcp.Broadcast("Y");
-                //else
-                //    tcp.Broadcast("N");
-            }
-        }
         private static void Server_ClientDisconnected(object sender, TcpClient e)
         {
             Log.Information($"Client disconnected: {e.Client.RemoteEndPoint}");
@@ -88,8 +59,124 @@ namespace WinformRopeRounding
         {
             Log.Information($"Client connected: {e.Client.RemoteEndPoint}");
         }
+        private void Server_DataReceived(object sender, SimpleTCP.Message e)
+        {
+            string req = e.MessageString;
+            Log.Information($"RX: {req}");
+            switch (req)
+            {
+                case "0":
+                    PerformAction0();
+                    break;
+                case "A":
+                    PerformActionA();
+                    break;
+                case "B":
+                    PerformActionB();
+                    break;
+                default:
+                    PerformActionUndefined();
+                    break;
+            }
+        }
         #endregion
 
+
+        #region "Perform Actions"
+        private void PerformActionUndefined()
+        {
+            Mat frame = vp.Snapshot();
+            if (frame is not null && frame.Ptr != IntPtr.Zero)
+            {
+                cameraImageBox1.Image = frame;
+            }
+            var msg = "Undefined";
+            tcp.Broadcast(msg);
+            Log.Information($"TX: {msg}");
+        }
+        private void PerformAction0()
+        {
+            Mat frame = vp.Snapshot();
+            if (frame is not null && frame.Ptr != IntPtr.Zero)
+            {
+                cameraImageBox1.Image = frame;
+            }
+            var msg = "Repeat";
+            tcp.Broadcast(msg);
+            Log.Information($"TX: {msg}");
+        }
+        private void PerformActionB()
+        {
+            bool isPass = false;
+            var bbox = GlobalVars.AppSetting.Actions["B"].BBox;
+            Mat frame = vp.Snapshot();
+            if (frame is not null && frame.Ptr != IntPtr.Zero)
+            {
+                if (det is not null)
+                {
+                    var col = det.Inference(ref frame, true, 0.3f, 0.1f);
+                    var firstHead = col.FirstOrDefault(c => c.Label.Equals("Head"));
+                    if (firstHead is not null)
+                    {
+                        if (firstHead.Rect.IntersectsWith(bbox))
+                        {
+                            isPass = true;
+                        }
+                    }
+                }
+                CvInvoke.Rectangle(frame, bbox, new Bgr(Color.White).MCvScalar);
+                cameraImageBox1.Image = frame;
+            }
+            var msg = isPass ? "Y" : "N";
+            tcp.Broadcast(msg);
+            Log.Information($"TX: {msg}");
+        }
+        private void PerformActionA()
+        {
+            int locX = 0; int locY = 0;
+            var bbox = GlobalVars.AppSetting.Actions["A"].BBox;
+
+            Mat frame = vp.Snapshot();
+            //frame = new(frame, bbox);
+            if (frame is not null && frame.Ptr != IntPtr.Zero)
+            {
+                if (det is not null)
+                {
+                    var col = det.Inference(ref frame, true, 0.3f, 0.1f);
+                    var firstHole = col.FirstOrDefault(c => c.Label.Equals("Base"));
+                    var firstHead = col.FirstOrDefault(c => c.Label.Equals("Head"));
+                    if (firstHole is not null && firstHead is not null)
+                    {
+                        var holeX = firstHole.Rect.X + firstHole.Rect.Width;
+                        var headX = firstHead.Rect.X + firstHead.Rect.Width;
+                        var dist = headX - holeX;
+                        if (dist > 0)
+                        {
+                            CvInvoke.Line(frame, new Point(headX, firstHead.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //right line
+                            CvInvoke.PutText(frame, $"X:{dist}px", new Point(30, 80), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
+                            locX = dist;
+                        }
+
+                        dist = firstHead.Rect.Y - firstHole.Rect.Y;
+                        if (dist < 5000)
+                        {
+                            CvInvoke.Line(frame, new Point(holeX, firstHole.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //top line 
+                            CvInvoke.PutText(frame, $"Y:{dist}px", new Point(30, 120), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
+                            locY = dist;
+                        }
+                    }
+                }
+                cameraImageBox1.Image = frame;
+            }
+            var msg = $"{locX}:{locY}";
+            tcp.Broadcast(msg);
+            Log.Information($"TX: {msg}");
+        }
+
+        #endregion
+
+
+        #region "UI Related"
         private void BtnStart_Click(object sender, EventArgs e)
         {
             var txt = btnStart.Text;
@@ -157,8 +244,8 @@ namespace WinformRopeRounding
         private void cameraCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormConfigEditor frm = new();
-            var curFrame = vp.CurrentFrame;
-            if(curFrame is not null && curFrame.Ptr != IntPtr.Zero)
+            var curFrame = vp.Snapshot(); // .CurrentFrame;
+            if(curFrame.DataPointer != IntPtr.Zero)
             {
                 Image img = vp.CurrentFrame.ToBitmap();
                 frm.SetImage(img);
@@ -170,5 +257,6 @@ namespace WinformRopeRounding
         {
             Application.Exit();
         }
+        #endregion
     }
 }

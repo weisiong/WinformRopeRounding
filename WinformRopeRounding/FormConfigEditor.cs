@@ -237,7 +237,6 @@ namespace WinformRopeRounding
             for (var i = 0; i < HoleROIs.Count; i++)
             {
                 var kv = HoleROIs.ElementAt(i);
-                //AddNode(tplNode, kv.Key, kv.Value.BBOX.ToString(), i.ToString());
                 AddNode(tplNode, kv.Key, kv.Value.BBOX.ToString(), ShowValue);
             }
 
@@ -249,9 +248,6 @@ namespace WinformRopeRounding
                 var act = kv.Value;
                 TreeNode actNode = new(kv.Key);
                 actsNode.Nodes.Add(actNode);
-                //AddNode(actNode, $"CamId", act.CameraName, i.ToString());
-                //AddNode(actNode, $"PTZInfo", act.PtzInfo.ToString(), i.ToString());
-                //AddNode(actNode, $"TargetROI", act.BBox.ToString(), i.ToString());
                 AddNode(actNode, $"CamId", act.CameraName, ShowValue);
                 AddNode(actNode, $"PTZInfo", act.PtzInfo.ToString(), ShowValue);
                 AddNode(actNode, $"TargetROI", act.BBox.ToString(), ShowValue);
