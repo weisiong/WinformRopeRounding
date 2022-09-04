@@ -93,6 +93,13 @@ namespace WinformRopeRounding
             var idx = paths[2];
             switch (paths[1])
             {
+                case "Cameras":
+                    if(paths.Contains("Position"))
+                    {
+                        btnEdit.Enabled = true;
+                        LastSelectedNode = $"CamPosition|{idx}";
+                    }
+                    break;
                 case "Template":
                     if (paths.Length > 2)
                     {
@@ -112,10 +119,10 @@ namespace WinformRopeRounding
                         btnEdit.Enabled = true;
                         LastSelectedNode = $"TargetROI|{idx}";
                     }
-                    if (paths.Contains("PTZInfo"))
+                    if (paths.Contains("Position"))
                     {
                         btnEdit.Enabled = true;
-                        LastSelectedNode = $"PTZInfo|{idx}";
+                        LastSelectedNode = $"ActPosition|{idx}";
                     }
                     if (paths.Contains("CamId"))
                     {
@@ -134,46 +141,69 @@ namespace WinformRopeRounding
 
             switch (selectedNodes[0])
             {
+                case "CamPosition":
+                    {
+                        var cam = Cams[selectedNodes[1]];
+                        var strPtz = cam.Position;
+                        var frm = new FormCamControl("Position View", strPtz)
+                        {
+                            CameraIP = cam.IPAddress,
+                            CamUsername = cam.Username,
+                            CamPassword = cam.Password
+                        };
+                        var result = frm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            var img = frm.SnapshootImage;
+                            this.SetImage(img);
+                            var locInfo = frm.InputValue;
+                            cam.Position = locInfo;
+                            PTZRenderTreeView(cbShowValue.Checked);
+                        }
+                    }
+                    break;
                 case "HoleROIs":
                 case "TargetROI":
                     pbImage.EnabledEditMode = true;
                     btnSave.Enabled = true;
                     btnEdit.Enabled = false;
                     break;
-                case "PTZInfo":
-                    var idx = cboCamera.SelectedIndex;
-                    var cam = Cams.Values.ElementAt(idx);
-                    var ptz = Actions[selectedNodes[1]].PtzInfo;
-                    var strPtz = $"{ptz.Pan} {ptz.Tilt} {ptz.Zoom}";
-                    var frm = new FormCamControl("Position View", strPtz)
+                case "ActPosition":
                     {
-                        CameraIP = cam.IPAddress,
-                        CamUsername = cam.Username,
-                        CamPassword = cam.Password
-                    };
-                    var result = frm.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        var img = frm.SnapshootImage;
-                        this.SetImage(img);
-                        var locInfo = frm.InputValue;
-                        ptz.Pan =Convert.ToSingle(locInfo.Split()[0]);
-                        ptz.Tilt = Convert.ToSingle(locInfo.Split()[1]);
-                        ptz.Zoom = Convert.ToSingle(locInfo.Split()[2]);
-                        PTZRenderTreeView(cbShowValue.Checked);
+                        var idx = cboCamera.SelectedIndex;
+                        var cam = Cams.Values.ElementAt(idx);
+                        var strPtz = Actions[selectedNodes[1]].Position;
+                        var frm = new FormCamControl("Position View", strPtz)
+                        {
+                            CameraIP = cam.IPAddress,
+                            CamUsername = cam.Username,
+                            CamPassword = cam.Password
+                        };
+                        var result = frm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            var img = frm.SnapshootImage;
+                            this.SetImage(img);
+                            var locInfo = frm.InputValue;
+                            Actions[selectedNodes[1]].Position = locInfo;
+                            PTZRenderTreeView(cbShowValue.Checked);
+                        }
                     }
                     break;
                 case "CamId":
-                    var cam1 = Actions[selectedNodes[1]];
-                    var frmCam = new FormSelectCam();
-                    var result1 = frmCam.ShowDialog();
-                    if (result1 == DialogResult.OK)
                     {
-                        cam1.CameraName = frmCam.GetSelectedCamName;
-                        PTZRenderTreeView(cbShowValue.Checked);
-                    }                    
+                        var cam1 = Actions[selectedNodes[1]];
+                        var frmCam = new FormSelectCam();
+                        var result1 = frmCam.ShowDialog();
+                        if (result1 == DialogResult.OK)
+                        {
+                            cam1.CameraId = frmCam.GetSelectedCamName;
+                            PTZRenderTreeView(cbShowValue.Checked);
+                        }
+                    }
                     break;
             }
+            btnSaveFile.Enabled = true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -191,8 +221,8 @@ namespace WinformRopeRounding
                     var roi2 = pbImage.SaveNewROI();
                     Actions[idx].BBox = roi2;
                     break;
-                case "PTZInfo":
-                    //Actions[idx].PtzInfo = "";
+                case "Position":
+                    //Actions[idx].Position = "";
                     break;
             }
 
@@ -210,27 +240,27 @@ namespace WinformRopeRounding
         {
             TreeNode newNode = new(Key);
             RootNode.Nodes.Add(newNode);
-            //newNode.Name = $"{Key}-{idx}";
             newNode.Tag = Val;
             if (ShowValue)
                 newNode.Nodes.Add($"{Key}-val", Val);
         }
-
-        //private static void AddNode(TreeNode RootNode, string Key, string Val, string idx = "", bool ShowValue = true)
-        //{
-        //    TreeNode newNode = new(Key);
-        //    RootNode.Nodes.Add(newNode);
-        //    newNode.Name = $"{Key}-{idx}";
-        //    newNode.Tag = Val;
-        //    if (ShowValue)
-        //        newNode.Nodes.Add($"{Key}-val", Val);
-        //}
 
         private void PTZRenderTreeView(bool ShowValue = false)
         {
             var appSetting = GlobalVars.AppSetting;
 
             TreeNode rootNode = new("AppSetting");
+
+            TreeNode camsNode = new("Cameras");
+            rootNode.Nodes.Add(camsNode);
+            for (var i = 0; i < appSetting.Cams.Count; i++)
+            {
+                var kv = appSetting.Cams.ElementAt(i);
+                var cam = kv.Value;
+                TreeNode camNode = new(kv.Key);
+                camsNode.Nodes.Add(camNode);
+                AddNode(camNode, $"Position", cam.Position, ShowValue);
+            }
 
             TreeNode tplNode = new("Template");
             rootNode.Nodes.Add(tplNode);
@@ -248,8 +278,8 @@ namespace WinformRopeRounding
                 var act = kv.Value;
                 TreeNode actNode = new(kv.Key);
                 actsNode.Nodes.Add(actNode);
-                AddNode(actNode, $"CamId", act.CameraName, ShowValue);
-                AddNode(actNode, $"PTZInfo", act.PtzInfo.ToString(), ShowValue);
+                AddNode(actNode, $"CamId", act.CameraId, ShowValue);
+                AddNode(actNode, $"Position", act.Position, ShowValue);
                 AddNode(actNode, $"TargetROI", act.BBox.ToString(), ShowValue);
             }
             TreeView.Nodes.Clear();
@@ -267,6 +297,7 @@ namespace WinformRopeRounding
                 var json = JsonConvert.SerializeObject(appSetting, Formatting.Indented);
                 File.WriteAllText("Config.json", json);
                 MessageBox.Show("Setting Save Successfully.");
+                btnSaveFile.Enabled = false;
             }
             catch (Exception ex)
             {

@@ -34,7 +34,6 @@ namespace WinformRopeRounding.Modules.VideoProcessor
                 cam.ImageGrabbed += Cam_ImageGrabbed;
                 cam.Start();
                 //Application.Idle += RefreshFrames;
-                
             }
             else
             {

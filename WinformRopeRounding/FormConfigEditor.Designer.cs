@@ -84,7 +84,7 @@
             this.btnCamControl.Name = "btnCamControl";
             this.btnCamControl.Size = new System.Drawing.Size(97, 27);
             this.btnCamControl.TabIndex = 7;
-            this.btnCamControl.Text = "PTZ Control";
+            this.btnCamControl.Text = "Cam Control";
             this.btnCamControl.UseVisualStyleBackColor = true;
             this.btnCamControl.Click += new System.EventHandler(this.btnCamControl_Click);
             // 
@@ -135,6 +135,7 @@
             // 
             // btnSaveFile
             // 
+            this.btnSaveFile.Enabled = false;
             this.btnSaveFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSaveFile.Location = new System.Drawing.Point(10, 105);
             this.btnSaveFile.Name = "btnSaveFile";
@@ -235,11 +236,11 @@
             // cbShowValue
             // 
             this.cbShowValue.AutoSize = true;
-            this.cbShowValue.Location = new System.Drawing.Point(199, 146);
+            this.cbShowValue.Location = new System.Drawing.Point(251, 146);
             this.cbShowValue.Name = "cbShowValue";
-            this.cbShowValue.Size = new System.Drawing.Size(117, 19);
+            this.cbShowValue.Size = new System.Drawing.Size(67, 19);
             this.cbShowValue.TabIndex = 0;
-            this.cbShowValue.Text = "Show Coordinate";
+            this.cbShowValue.Text = "Verbose";
             this.cbShowValue.UseVisualStyleBackColor = true;
             this.cbShowValue.CheckedChanged += new System.EventHandler(this.cbShowValue_CheckedChanged);
             // 

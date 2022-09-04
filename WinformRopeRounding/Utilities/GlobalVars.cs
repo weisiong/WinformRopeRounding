@@ -36,22 +36,21 @@ namespace WinformRopeRounding.Utilities
         {
             var cams = new Dictionary<string, Camera>
             {
-                { "Cam1", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", PtzInfo  =  new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f} } },
-                { "Cam2", new() { IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", PtzInfo  =  new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f} } }
+                { "Cam1", new() { Enable = true, IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", Position  =  "0.76324 0.28763 0.2" } },
+                { "Cam2", new() { Enable = false, IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", Position  =  "0.76324 0.28763 0.2" } }
             };
 
-            var actions = new Dictionary<string, Action> //List<Action>
+            var actions = new Dictionary<string, Action>
             {
-                {"A", new() {  CameraName = "Cam1", PtzInfo =  new PTZInfo { Pan=1f, Tilt=1f, Zoom=0f }, BBox = new(120, 50, 80, 100) }},
-                {"B", new() {  CameraName = "Cam2", PtzInfo =  new PTZInfo { Pan=0.76324f, Tilt=0.28763f, Zoom=0.2f}, BBox = new(120, 150, 180, 300) }},
-                {"C", new() {  CameraName = "Cam3", PtzInfo =  new PTZInfo(), BBox = Rectangle.Empty }}
+                {"A", new() {  CameraId = "Cam1", Position = "0.827222 0.519778 0.4", BBox = new(200, 70, 860, 600) }},
+                {"B", new() {  CameraId = "Cam2", Position = "0.76324 0.28763 0.2", BBox = new(300, 330, 115, 40) }},
             };
 
             var template = new ProductTemplate
             {
                 Name = "Product01",
                 ProductCode = "Pro-01",
-                HoleROIs = new Dictionary<string, ROI> // List<ROI>
+                HoleROIs = new Dictionary<string, ROI> 
                 {
                     {"Base00", new() { BBOX = new Rectangle(253, 107, 55, 65) } },
                     {"Hole01", new() { BBOX = new Rectangle(322, 172, 95, 30) } },

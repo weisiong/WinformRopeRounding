@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
+using WinformRopeRounding.Modules.PtzController;
 using WinformRopeRounding.Modules.VideoProcessor;
 using WinformRopeRounding.UserControls;
 using WinformRopeRounding.Utilities;
@@ -49,7 +51,7 @@ namespace WinformRopeRounding
                     vp.RunContinuously();
                 }
                 if(!string.IsNullOrEmpty(txtValue.Text))
-                    _controller.SetPosition(txtValue.Text);
+                    await _controller.SetPositionAsync(txtValue.Text);
             }
             else
             {

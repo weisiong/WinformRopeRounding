@@ -22,16 +22,17 @@
 
     public class Camera
     {
+        public bool Enable { get; set; }
         public string IPAddress { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public PTZInfo PtzInfo { get; set; }
+        public string Position { get; set; }
     }
 
     public class Action
     {
-        public string CameraName { get; set; }
-        public PTZInfo PtzInfo { get; set; }
+        public string CameraId { get; set; }
+        public string Position { get; set; }
         public Rectangle BBox { get; set; }
     }
 

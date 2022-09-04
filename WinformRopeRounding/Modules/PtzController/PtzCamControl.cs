@@ -4,8 +4,10 @@ using System;
 using System.ServiceModel.Channels;
 using System.ServiceModel;
 using System.Net;
+using Microsoft.VisualBasic.Logging;
+using System.Diagnostics;
 
-namespace WinformRopeRounding.Utilities
+namespace WinformRopeRounding.Modules.PtzController
 {
     public class PtzCamControl
     {
@@ -232,7 +234,7 @@ namespace WinformRopeRounding.Utilities
             }
         }
 
-        public void SetPosition(string text)
+        public async Task SetPositionAsync(string text)
         {
 
             if (ptzClient == null || profile.token == null) return;
@@ -264,9 +266,37 @@ namespace WinformRopeRounding.Utilities
                         x = 1.0f //0.1f
                     }
                 });
+                await SetZoomAsync(zoom);
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task SetZoomAsync(float zoom)
+        {
+            var tried = 5;
+            var prePos = string.Empty;
+            while (tried > 0)
+            {
+                Debug.Print("tried: " + tried--);
+                var curPos = GetPosition();
+                if (prePos != curPos)
+                {
+                    prePos = curPos;
+                    Application.DoEvents();
+                    await Task.Delay(100);
+                }
+                else
+                {
+                    var curZoom = Convert.ToSingle(curPos.Split()[2]);
+                    var diff = (float)Math.Round(zoom - curZoom, 1);
+                    if (diff < 0.05)
+                        break;
+                    else
+                        Move(0.0f, 0.0f, diff);
+                }
             }
         }
 

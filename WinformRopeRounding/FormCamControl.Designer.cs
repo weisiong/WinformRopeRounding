@@ -149,9 +149,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(16, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 15);
+            this.label1.Size = new System.Drawing.Size(97, 15);
             this.label1.TabIndex = 1;
-            this.label1.Text = "LOC_Info ( X  Y  Zoom ):";
+            this.label1.Text = "Camera Position:";
             // 
             // txtValue
             // 
@@ -206,7 +206,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormCamControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormCamCalibration";
+            this.Text = "Camera Control";
             this.Load += new System.EventHandler(this.FormCamCalibration_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

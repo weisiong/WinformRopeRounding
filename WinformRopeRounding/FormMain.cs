@@ -5,9 +5,9 @@ using Serilog;
 using SimpleTCP;
 using System.Net.Sockets;
 using WinformRopeRounding.Modules.ObjectDetection;
+using WinformRopeRounding.Modules.PtzController;
 using WinformRopeRounding.Modules.VideoProcessor;
 using WinformRopeRounding.Utilities;
-using static Emgu.CV.DepthAI.Camera;
 
 namespace WinformRopeRounding
 {
@@ -27,6 +27,7 @@ namespace WinformRopeRounding
 
         private static readonly SimpleTcpServer tcp = new();
         private VideoProcessor vp;
+        private Dictionary<string,PtzCamControl> ptzCtrs = new();
         ObjectDetector? det;
         public FormMain()
         {
@@ -41,8 +42,34 @@ namespace WinformRopeRounding
             det = new ObjectDetector();
         }
 
+        #region "PTZ"
+        private async Task InitPTZAsync()
+        {
+            var camSettings = GlobalVars.AppSetting.Cams;
+            foreach (var kv in camSettings)
+            {
+                var key = kv.Key;
+                var cam = kv.Value;
+                if (!cam.Enable) continue;
+                var ptz = new PtzCamControl();
+                ptzCtrs.Add(key, ptz);
+                Log.Information($"Initialize {key}...");
+                var success = await ptz.InitialiseAsync(cam.IPAddress, cam.Username , cam.Password);
+                if (success)
+                {
+                    await ptz.SetPositionAsync(cam.Position);
+                    Log.Information($"Set {key} position success.");
+                }
+                else
+                {
+                    Log.Information($"Initialize {key} failed.");
+                }
+            }
+        }
+        #endregion
+
         #region "TCP"
-        public void InitTCP()
+        private void InitTCP()
         {
             var tcpPortNo = GlobalVars.AppSetting.TcpPort;
             tcp.Start(tcpPortNo);
@@ -177,11 +204,12 @@ namespace WinformRopeRounding
 
 
         #region "UI Related"
-        private void BtnStart_Click(object sender, EventArgs e)
+        private async void BtnStart_Click(object sender, EventArgs e)
         {
             var txt = btnStart.Text;
             if(txt.Equals("Start"))
             {
+                await InitPTZAsync();
                 InitTCP();
                 //vp.Run();
                 cameraImageBox1.Image = vp.Snapshot();
