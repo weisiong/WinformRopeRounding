@@ -52,6 +52,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Images\" />
+    <Folder Include="Modules\AprilTag\" />
   </ItemGroup>
 
   <ItemGroup>
