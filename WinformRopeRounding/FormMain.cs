@@ -4,6 +4,7 @@ using Emgu.CV.Structure;
 using Serilog;
 using SimpleTCP;
 using System.Net.Sockets;
+using WinformRopeRounding.Modules.ArucoTag;
 using WinformRopeRounding.Modules.ObjectDetection;
 using WinformRopeRounding.Modules.PtzController;
 using WinformRopeRounding.Modules.Tags;
@@ -30,7 +31,9 @@ namespace WinformRopeRounding
         private VideoProcessor vp;
         private Dictionary<string,PtzCamControl> ptzCtrs = new();
         ObjectDetector? det;
-        private Apriltag apt = new("adaptive", false, "tag36h11");
+        private Apriltag aptag = new("canny", false, "tag36h11"); //,0.2,1,2200);
+        private Arucotag actag = new(Emgu.CV.Aruco.Dictionary.PredefinedDictionaryName.Dict4X4_50);
+
         public FormMain()
         {
             InitializeComponent();
@@ -248,16 +251,21 @@ namespace WinformRopeRounding
         {
             var frame = e.MatSrc;           
             if (frame is not null && frame.Ptr != IntPtr.Zero)
-            {               
+            {
                 //if (det is not null)
                 //{ 
                 //    var col = det.Inference(ref frame, false, 0.3f, 0.1f);
                 //    OnUpdate(ref frame, col);
                 //}
 
-                if(apt is not null)
+                //if (aptag is not null)
+                //{
+                //    DrawAprilTag(frame);
+                //}
+
+                if (actag is not null)
                 {
-                    DrawAprilTag(frame);
+                    actag.Detect(frame);
                 }
 
                 cameraImageBox1.Image = frame;
@@ -267,7 +275,7 @@ namespace WinformRopeRounding
         private void DrawAprilTag(Mat? frame)
         {
             if (frame is null) return;
-            var result = apt.detect(frame);
+            var result = aptag.detect(frame);
             foreach (TagDetection tag in result)
             {
                 Point[] points = tag.points;
@@ -276,7 +284,7 @@ namespace WinformRopeRounding
                 //CvInvoke.Circle(frame, new Point(X, Y), 14, new MCvScalar(0, 0, 255), 4, LineType.EightConnected, 0);
                 for (int i = 0; i < 4; i++)
                 {
-                    CvInvoke.Line(frame, points[i], points[(i + 1) % 4], new MCvScalar(255, 255, 0), 1);
+                    CvInvoke.Line(frame, points[i], points[(i + 1) % 4], new MCvScalar(255, 255, 0), 2);
                 }
                 CvInvoke.PutText(frame, tag.id.ToString(), new Point(X, Y), FontFace.HersheySimplex, 1, new MCvScalar(255, 255, 0), 3);
             }

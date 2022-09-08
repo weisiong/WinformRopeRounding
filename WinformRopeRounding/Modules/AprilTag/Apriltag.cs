@@ -267,9 +267,9 @@ namespace WinformRopeRounding.Modules.Tags
                 foreach (Point item in whitepoints)
                 {
                     Point tpoint = new Point(item.Y, item.X);
-                    CvInvoke.Circle(copyimg2, tpoint, 1, new MCvScalar(0, 0, 255));
+                    CvInvoke.Circle(copyimg2, tpoint, 1, new MCvScalar(0, 255, 255));
                 }
-                CvInvoke.Imshow("quad", copyimg2);
+                CvInvoke.Imshow("quad-white points", copyimg2);
                 CvInvoke.WaitKey();
             }
             return detections;
