@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Modules\CamCalibration\CameraCalibrator - Copy.cs" />
+    <Compile Remove="Modules\CamCalibration\CameraCalibrator-Err.cs" />
+    <Compile Remove="Modules\CamCalibration\CameraCalibrator-Org.cs" />
     <Compile Remove="UserControls\PtzPictureBoxEx.Designer.cs" />
   </ItemGroup>
 

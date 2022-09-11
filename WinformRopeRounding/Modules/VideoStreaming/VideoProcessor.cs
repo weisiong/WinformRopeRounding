@@ -1,6 +1,6 @@
 ﻿using Emgu.CV;
 
-namespace WinformRopeRounding.Modules.VideoProcessor
+namespace WinformRopeRounding.Modules.VideoStreaming
 {
     public class VideoProcessorEventArgs : EventArgs
     {

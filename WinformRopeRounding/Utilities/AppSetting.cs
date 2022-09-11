@@ -27,6 +27,8 @@
         public string Username { get; set; }
         public string Password { get; set; }
         public string Position { get; set; }
+        public string IntrinsicParas { get; set; }
+        public string DistCoeffParas { get; set; }
     }
 
     public class Action

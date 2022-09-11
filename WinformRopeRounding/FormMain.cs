@@ -5,10 +5,11 @@ using Serilog;
 using SimpleTCP;
 using System.Net.Sockets;
 using WinformRopeRounding.Modules.ArucoTag;
+using WinformRopeRounding.Modules.CamCalibration;
 using WinformRopeRounding.Modules.ObjectDetection;
 using WinformRopeRounding.Modules.PtzController;
 using WinformRopeRounding.Modules.Tags;
-using WinformRopeRounding.Modules.VideoProcessor;
+using WinformRopeRounding.Modules.VideoStreaming;
 using WinformRopeRounding.Utilities;
 
 namespace WinformRopeRounding
@@ -31,9 +32,9 @@ namespace WinformRopeRounding
         private VideoProcessor vp;
         private Dictionary<string,PtzCamControl> ptzCtrs = new();
         ObjectDetector? det;
-        private Apriltag aptag = new("canny", false, "tag36h11"); //,0.2,1,2200);
+        private Apriltag aptag = new("canny", false, "tag36h11");
         private Arucotag actag = new(Emgu.CV.Aruco.Dictionary.PredefinedDictionaryName.Dict4X4_50);
-
+        private CameraCalibrator camCal;
         public FormMain()
         {
             InitializeComponent();
@@ -45,6 +46,7 @@ namespace WinformRopeRounding
             string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
             vp = new VideoProcessor(url, EnumMediaInput.HTTP);
             det = new ObjectDetector();
+            camCal = new(url);
         }
 
         #region "PTZ"
@@ -263,10 +265,15 @@ namespace WinformRopeRounding
                 //    DrawAprilTag(frame);
                 //}
 
-                if (actag is not null)
-                {
-                    actag.Detect(frame);
-                }
+                //if (actag is not null)
+                //{
+                //    actag.Detect(frame);
+                //}
+
+                //if(camCal is not null)
+                //{
+                //    camCal.
+                //}
 
                 cameraImageBox1.Image = frame;
             }
@@ -306,16 +313,15 @@ namespace WinformRopeRounding
             FormColorSpacePicker frm = new(vp.CurrentFrame);
             frm.ShowDialog();
         }
-
-        private void cameraCalibrationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void configEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormConfigEditor frm = new();
-            var curFrame = vp.Snapshot(); // .CurrentFrame;
-            if(curFrame.DataPointer != IntPtr.Zero)
+            var curFrame = vp.Snapshot(); 
+            if (curFrame.DataPointer != IntPtr.Zero)
             {
                 Image img = vp.CurrentFrame.ToBitmap();
                 frm.SetImage(img);
-            }            
+            }
             frm.ShowDialog();
         }
 
@@ -324,7 +330,14 @@ namespace WinformRopeRounding
             Application.Exit();
         }
 
+
         #endregion
+
+        private void btnStartCalibrate_Click(object sender, EventArgs e)
+        {
+            camCal = new(url);
+            camCal.Start();
+        }
 
 
     }

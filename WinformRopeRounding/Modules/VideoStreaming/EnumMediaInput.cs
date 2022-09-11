@@ -1,4 +1,4 @@
-﻿namespace WinformRopeRounding.Modules.VideoProcessor
+﻿namespace WinformRopeRounding.Modules.VideoStreaming
 {
     public enum EnumMediaInput
     {

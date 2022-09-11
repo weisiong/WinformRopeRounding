@@ -34,12 +34,13 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorSpacePickerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cameraCalibrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cameraImageBox1 = new Emgu.CV.UI.ImageBox();
             this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
+            this.btnStartCalibrate = new System.Windows.Forms.Button();
             this.btnInitialize = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
@@ -82,7 +83,7 @@
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.colorSpacePickerToolStripMenuItem,
-            this.cameraCalibrationToolStripMenuItem});
+            this.configEditorToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -90,16 +91,16 @@
             // colorSpacePickerToolStripMenuItem
             // 
             this.colorSpacePickerToolStripMenuItem.Name = "colorSpacePickerToolStripMenuItem";
-            this.colorSpacePickerToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.colorSpacePickerToolStripMenuItem.Text = "ColorSpace&Picker";
+            this.colorSpacePickerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.colorSpacePickerToolStripMenuItem.Text = "Color Space &Picker";
             this.colorSpacePickerToolStripMenuItem.Click += new System.EventHandler(this.colorSpacePickerToolStripMenuItem_Click);
             // 
-            // cameraCalibrationToolStripMenuItem
+            // configEditorToolStripMenuItem
             // 
-            this.cameraCalibrationToolStripMenuItem.Name = "cameraCalibrationToolStripMenuItem";
-            this.cameraCalibrationToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.cameraCalibrationToolStripMenuItem.Text = "Camera&Calibration";
-            this.cameraCalibrationToolStripMenuItem.Click += new System.EventHandler(this.cameraCalibrationToolStripMenuItem_Click);
+            this.configEditorToolStripMenuItem.Name = "configEditorToolStripMenuItem";
+            this.configEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configEditorToolStripMenuItem.Text = "Config &Editor";
+            this.configEditorToolStripMenuItem.Click += new System.EventHandler(this.configEditorToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -123,6 +124,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnStartCalibrate);
             this.splitContainer1.Panel2.Controls.Add(this.btnInitialize);
             this.splitContainer1.Panel2.Controls.Add(this.btnPause);
             this.splitContainer1.Panel2.Controls.Add(this.btnStart);
@@ -174,6 +176,16 @@
             this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtDebug.Size = new System.Drawing.Size(806, 175);
             this.txtDebug.TabIndex = 3;
+            // 
+            // btnStartCalibrate
+            // 
+            this.btnStartCalibrate.Location = new System.Drawing.Point(10, 148);
+            this.btnStartCalibrate.Name = "btnStartCalibrate";
+            this.btnStartCalibrate.Size = new System.Drawing.Size(134, 31);
+            this.btnStartCalibrate.TabIndex = 3;
+            this.btnStartCalibrate.Text = "Start Cablirate";
+            this.btnStartCalibrate.UseVisualStyleBackColor = true;
+            this.btnStartCalibrate.Click += new System.EventHandler(this.btnStartCalibrate_Click);
             // 
             // btnInitialize
             // 
@@ -244,8 +256,9 @@
         private Emgu.CV.UI.ImageBox cameraImageBox1;
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem colorSpacePickerToolStripMenuItem;
-        private ToolStripMenuItem cameraCalibrationToolStripMenuItem;
         private Serilog.Sinks.WinForms.Core.SimpleLogTextBox txtDebug;
         private Button btnInitialize;
+        private Button btnStartCalibrate;
+        private ToolStripMenuItem configEditorToolStripMenuItem;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Newtonsoft.Json;
-using WinformRopeRounding.Modules.VideoProcessor;
+using System.Windows.Forms;
+using WinformRopeRounding.Modules.VideoStreaming;
 using WinformRopeRounding.Utilities;
 
 namespace WinformRopeRounding
@@ -99,6 +100,11 @@ namespace WinformRopeRounding
                         btnEdit.Enabled = true;
                         LastSelectedNode = $"CamPosition|{idx}";
                     }
+                    if (paths.Contains("CalibrationParas"))
+                    {
+                        btnEdit.Enabled = true;
+                        LastSelectedNode = $"CalibrationParas|{idx}";
+                    }
                     break;
                 case "Template":
                     if (paths.Length > 2)
@@ -158,6 +164,19 @@ namespace WinformRopeRounding
                             this.SetImage(img);
                             var locInfo = frm.InputValue;
                             cam.Position = locInfo;
+                            PTZRenderTreeView(cbShowValue.Checked);
+                        }
+                    }
+                    break;
+                case "CalibrationParas":
+                    {
+                        var camId = selectedNodes[1];
+                        var cam = Cams[camId];
+                        string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+                        var frm = new FormCamCalibration(camId,url);                        
+                        var result = frm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
                             PTZRenderTreeView(cbShowValue.Checked);
                         }
                     }
@@ -236,13 +255,15 @@ namespace WinformRopeRounding
             PTZRenderTreeView(cbShowValue.Checked);
         }
 
-        private static void AddNode(TreeNode RootNode, string Key, string Val, bool ShowValue = false)
+        private static TreeNode AddNode(TreeNode RootNode, string Key, string Val, bool ShowValue = false)
         {
             TreeNode newNode = new(Key);
             RootNode.Nodes.Add(newNode);
             newNode.Tag = Val;
             if (ShowValue)
                 newNode.Nodes.Add($"{Key}-val", Val);
+
+            return newNode;
         }
 
         private void PTZRenderTreeView(bool ShowValue = false)
@@ -260,6 +281,8 @@ namespace WinformRopeRounding
                 TreeNode camNode = new(kv.Key);
                 camsNode.Nodes.Add(camNode);
                 AddNode(camNode, $"Position", cam.Position, ShowValue);
+                var paraNode = AddNode(camNode, $"CalibrationParas", cam.IntrinsicParas, ShowValue);
+                if(ShowValue) paraNode.Nodes.Add($"DistCoeffParas-val", cam.DistCoeffParas);
             }
 
             TreeNode tplNode = new("Template");
