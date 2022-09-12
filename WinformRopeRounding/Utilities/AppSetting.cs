@@ -29,6 +29,7 @@
         public string Position { get; set; }
         public string IntrinsicParas { get; set; }
         public string DistCoeffParas { get; set; }
+        public Rectangle MeasurementRatio { get; set; } //"10mm:320pix"
     }
 
     public class Action

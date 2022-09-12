@@ -3,7 +3,6 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using Emgu.CV;
 using WinformRopeRounding.Modules.VideoStreaming;
-using System.Diagnostics;
 
 namespace WinformRopeRounding.Modules.CamCalibration
 {
@@ -145,7 +144,7 @@ namespace WinformRopeRounding.Modules.CamCalibration
             return _find;
         }
 
-        public double CalculateIntrinsics()
+        private double CalculateIntrinsics()
         {
             for (int k = 0; k < _frameArrayBuffer.Length; k++)
             {
@@ -175,7 +174,7 @@ namespace WinformRopeRounding.Modules.CamCalibration
         }
         public Mat GetUndistortedImage(Mat MatSrc)
         {
-            Mat outFrame = MatSrc.Clone();
+            Mat outFrame = new(); // MatSrc.Clone();
             CvInvoke.Undistort(MatSrc, outFrame, _cameraMatrix, _distCoeffs);
             return outFrame;
         }
@@ -203,7 +202,7 @@ namespace WinformRopeRounding.Modules.CamCalibration
                 {
                     dVals[i] = Convert.ToDouble(vals[i]);
                 }
-                _cameraMatrix.SetTo<double>(dVals);
+                _cameraMatrix.SetTo(dVals);
             }
         }
         public string DistortionCoefficients
@@ -232,18 +231,10 @@ namespace WinformRopeRounding.Modules.CamCalibration
                 {
                     dVals[i] = Convert.ToDouble(vals[i]);
                 }
-                _distCoeffs.SetTo<double>(dVals);
+                _distCoeffs.SetTo(dVals);
             }
         }
 
-        public bool Load(string FilePath)
-        {
-            return false;
-        }
-        public bool Save(string FilePath)
-        {
-            return false;
-        }
 
 
     }

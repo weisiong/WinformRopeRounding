@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Windows.Forms;
 using WinformRopeRounding.Modules.VideoStreaming;
+using WinformRopeRounding.UserControls;
 using WinformRopeRounding.Utilities;
 
 namespace WinformRopeRounding
@@ -105,6 +106,14 @@ namespace WinformRopeRounding
                         btnEdit.Enabled = true;
                         LastSelectedNode = $"CalibrationParas|{idx}";
                     }
+                    if (paths.Contains("MeasurementRatio"))
+                    {
+                        var cam = Cams[idx];
+                        pbImage.DrawMode = 1;
+                        pbImage.DrawShape(cam.MeasurementRatio, Color.Magenta);
+                        btnEdit.Enabled = true;
+                        LastSelectedNode = $"MeasurementRatio|{idx}";
+                    }
                     break;
                 case "Template":
                     if (paths.Length > 2)
@@ -168,18 +177,10 @@ namespace WinformRopeRounding
                         }
                     }
                     break;
-                case "CalibrationParas":
-                    {
-                        var camId = selectedNodes[1];
-                        var cam = Cams[camId];
-                        string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
-                        var frm = new FormCamCalibration(camId,url);                        
-                        var result = frm.ShowDialog();
-                        if (result == DialogResult.OK)
-                        {
-                            PTZRenderTreeView(cbShowValue.Checked);
-                        }
-                    }
+                case "MeasurementRatio":
+                    pbImage.EnabledEditMode = true;
+                    btnSave.Enabled = true;
+                    btnEdit.Enabled = false;
                     break;
                 case "HoleROIs":
                 case "TargetROI":
@@ -243,8 +244,28 @@ namespace WinformRopeRounding
                 case "Position":
                     //Actions[idx].Position = "";
                     break;
+                case "MeasurementRatio":
+                    var roi3 = pbImage.SaveNewROI();
+                    var frm = new FormInputBox()
+                    {
+                        Caption = "Measurement Ratio",
+                        Question = "The width is equal to how many milimeter(mm)?"
+                    };
+                    var result = frm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        var inpVal =  frm.GetInputValue;
+                       if(int.TryParse(inpVal, out int num))
+                       {
+                            roi3.Height = num;
+                            Cams[idx].MeasurementRatio = roi3;
+                            PTZRenderTreeView(cbShowValue.Checked);
+                       }
+                       else
+                            MessageBox.Show("Invalid Input!");
+                    }
+                    break;
             }
-
             pbImage.DrawMode = 0;
             PTZRenderTreeView(cbShowValue.Checked);
             btnSave.Enabled = false;
@@ -283,6 +304,7 @@ namespace WinformRopeRounding
                 AddNode(camNode, $"Position", cam.Position, ShowValue);
                 var paraNode = AddNode(camNode, $"CalibrationParas", cam.IntrinsicParas, ShowValue);
                 if(ShowValue) paraNode.Nodes.Add($"DistCoeffParas-val", cam.DistCoeffParas);
+                AddNode(camNode, $"MeasurementRatio", cam.MeasurementRatio.ToString(), ShowValue);
             }
 
             TreeNode tplNode = new("Template");

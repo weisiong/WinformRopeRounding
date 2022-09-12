@@ -37,9 +37,9 @@ namespace WinformRopeRounding.Utilities
             var cams = new Dictionary<string, Camera>
             {
                 { "Cam1", new() { Enable = true, IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", Position  =  "0.76324 0.28763 0.2", 
-                  IntrinsicParas ="1 0 0 0 1 0 0 0 1", DistCoeffParas = "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0"} },
+                  IntrinsicParas ="1 0 0 0 1 0 0 0 1", DistCoeffParas = "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0", MeasurementRatio=new(0,0,0,0)} },
                 { "Cam2", new() { Enable = false, IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", Position  =  "0.76324 0.28763 0.2",
-                  IntrinsicParas ="1 0 0 0 1 0 0 0 1", DistCoeffParas = "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0"} }
+                  IntrinsicParas ="1 0 0 0 1 0 0 0 1", DistCoeffParas = "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0" , MeasurementRatio=new(0,0,0,0)} }
             };
 
             var actions = new Dictionary<string, Action>
