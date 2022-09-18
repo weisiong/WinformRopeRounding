@@ -36,7 +36,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.BtnClose = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nudBufferFrame = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnApply = new System.Windows.Forms.Button();
             this.BtnLoad = new System.Windows.Forms.Button();
@@ -47,7 +47,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Sub_PicturBox)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBufferFrame)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -121,7 +121,7 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
             this.panel1.Controls.Add(this.BtnClose);
-            this.panel1.Controls.Add(this.numericUpDown1);
+            this.panel1.Controls.Add(this.nudBufferFrame);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.BtnApply);
             this.panel1.Controls.Add(this.BtnLoad);
@@ -143,24 +143,24 @@
             this.BtnClose.Text = "Close";
             this.BtnClose.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown1
+            // nudBufferFrame
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(100, 19);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nudBufferFrame.Location = new System.Drawing.Point(268, 19);
+            this.nudBufferFrame.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
-            this.numericUpDown1.Minimum = new decimal(new int[] {
+            this.nudBufferFrame.Minimum = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(75, 23);
-            this.numericUpDown1.TabIndex = 4;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            100,
+            this.nudBufferFrame.Name = "nudBufferFrame";
+            this.nudBufferFrame.Size = new System.Drawing.Size(54, 23);
+            this.nudBufferFrame.TabIndex = 4;
+            this.nudBufferFrame.Value = new decimal(new int[] {
+            10,
             0,
             0,
             0});
@@ -168,7 +168,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 22);
+            this.label1.Location = new System.Drawing.Point(185, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 15);
             this.label1.TabIndex = 3;
@@ -188,7 +188,7 @@
             // 
             // BtnLoad
             // 
-            this.BtnLoad.Location = new System.Drawing.Point(190, 12);
+            this.BtnLoad.Location = new System.Drawing.Point(328, 13);
             this.BtnLoad.Name = "BtnLoad";
             this.BtnLoad.Size = new System.Drawing.Size(102, 33);
             this.BtnLoad.TabIndex = 1;
@@ -198,7 +198,7 @@
             // 
             // BtnStartCalibrate
             // 
-            this.BtnStartCalibrate.Location = new System.Drawing.Point(316, 13);
+            this.BtnStartCalibrate.Location = new System.Drawing.Point(19, 12);
             this.BtnStartCalibrate.Name = "BtnStartCalibrate";
             this.BtnStartCalibrate.Size = new System.Drawing.Size(102, 33);
             this.BtnStartCalibrate.TabIndex = 0;
@@ -222,7 +222,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBufferFrame)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -238,7 +238,7 @@
         private Button BtnStartCalibrate;
         private Button BtnApply;
         private Button BtnLoad;
-        private NumericUpDown numericUpDown1;
+        private NumericUpDown nudBufferFrame;
         private Label label1;
         private Button BtnClose;
     }

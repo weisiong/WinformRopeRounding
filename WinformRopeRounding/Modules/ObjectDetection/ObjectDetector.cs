@@ -52,7 +52,7 @@ namespace WinformRopeRounding.Modules.ObjectDetection
             foreach (var res in results)
             {
                 if (res.Label.Equals("Head")) res.BBox = FinetuneHead(MatSrc, res);
-                if (res.Label.Equals("Body")) continue;
+                //if (res.Label.Equals("Body")) continue;
                 lstResult.Add(new Result(res.BBox, res.Label, res.Confidence));
                 if (DrawResult)
                 {

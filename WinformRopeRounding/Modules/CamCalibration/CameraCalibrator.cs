@@ -52,6 +52,15 @@ namespace WinformRopeRounding.Modules.CamCalibration
 
         public CameraCalibrator(string url, int NumOfFrameBuffer=10, int NumOfChessWidth=9, int NumOfChessHeight=7, int NumOfSquareSize=20)
         {
+            Init(NumOfFrameBuffer, NumOfChessWidth, NumOfChessHeight, NumOfSquareSize);
+
+            vp = new(url, EnumMediaInput.HTTP);
+            vp.OnFrameReceived += Vp_OnFrameReceived;
+            vp.Run();
+        }
+
+        private void Init(int NumOfFrameBuffer, int NumOfChessWidth, int NumOfChessHeight, int NumOfSquareSize)
+        {
             _frameArrayBuffer = new Mat[(int)NumOfFrameBuffer];
             _cornersObjectList = new MCvPoint3D32f[_frameArrayBuffer.Length][];
             _cornersPointsList = new PointF[_frameArrayBuffer.Length][];
@@ -62,10 +71,6 @@ namespace WinformRopeRounding.Modules.CamCalibration
             _height = NumOfChessHeight;     // heght of chess board no. squares in heigth - 1
             _squareSize = NumOfSquareSize;
             _patternSize = new Size(_width, _height); //size of chess board to be detected
-
-            vp = new(url, EnumMediaInput.HTTP);
-            vp.OnFrameReceived += Vp_OnFrameReceived;
-            vp.Run();
         }
 
         public void Start()

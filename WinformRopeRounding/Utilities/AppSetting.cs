@@ -5,7 +5,7 @@
         public int TcpPort { get; set; }
         public Dictionary<string,Camera> Cams { get; set; }
         public Dictionary<string,Action> Actions { get; set; }
-        public ProductTemplate Template { get; set; }
+        public Dictionary<string, ProductTemplate>  Templates { get; set; }
     }
 
     public class ProductTemplate

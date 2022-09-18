@@ -1,5 +1,4 @@
-﻿using Emgu.CV.DepthAI;
-using System.Globalization;
+﻿using System.Globalization;
 using WinformRopeRounding.Modules.CamCalibration;
 using WinformRopeRounding.Utilities;
 
@@ -7,15 +6,15 @@ namespace WinformRopeRounding
 {
     public partial class FormCamCalibration : Form
     {
-        private readonly string url; // = "http://admin:joseph12345@192.168.1.64/ISAPI/Streaming/channels/101/picture";
-        private CameraCalibrator camCal;
-        private string _camId;
+        private readonly CameraCalibrator camCal;
+        private readonly string _camId;
 
         public FormCamCalibration(string CameraId,string url)
         {
             InitializeComponent();
             _camId = CameraId;
-            camCal = new CameraCalibrator(url);
+            var bufVal =(int) nudBufferFrame.Value;
+            camCal = new CameraCalibrator(url, bufVal);
         }
 
         private void BtnStartCalibrate_Click(object sender, EventArgs e)

@@ -18,15 +18,16 @@ namespace WinformRopeRounding
     {
         //const string url = "rtsp://admin:joseph12345@192.168.1.64:554/Streaming/Channels/0101";
         //const string url = "http://admin:joseph12345@192.168.1.64/ISAPI/Streaming/channels/101/picture";
-        //const string url = @"C:\Users\U\Web\CaptureFiles\2022-07-23\";
-        //const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813162052323.mp4";
-        //const string url = @"C:\SourceCodes\samples\20220723\BlackBgd.mp4";
+        //const string url = @"C:\SourceCodes\samples\BlueBgdWithLight01_002";
+        //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190947761.mp4";
+        //const string url = @"C:\SourceCodes\samples\20220723\GreenBgdWithLight04.mp4"; //YellowBgdWithLight01.mp4"; // BlackBgd.mp4"; //BlueBgdWithLight01.mp4";
         //const string url = @"C:\SourceCodes\samples\20220723\BlackBgd01.jpg";        
         //const string url = @"C:\SourceCodes\samples\20220723\GreenBgdWithLight03.mp4";
-        const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813143001761.jpg";
-        //const string url = @"C:\SourceCodes\samples\20220723\192.168.125.64_01_20220723153920285.jpg";
+        const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813165506163.jpg";
+        //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190942145.jpg";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_2022082319074257.mp4";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190947761.mp4";
+        //const string url = @"C:\SourceCodes\samples\20220917-ApirlTag";
 
         private static readonly SimpleTcpServer tcp = new();
         private VideoProcessor vp;
@@ -43,10 +44,9 @@ namespace WinformRopeRounding
         {
             var cams = GlobalVars.AppSetting.Cams;
             var cam = cams.Values.ElementAt(0);
-            string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
-            vp = new VideoProcessor(url, EnumMediaInput.HTTP);
+            //string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+            vp = new VideoProcessor(url, EnumMediaInput.PIC);
             det = new ObjectDetector();
-            camCal = new(url);
         }
 
         #region "PTZ"
@@ -148,13 +148,15 @@ namespace WinformRopeRounding
                 if (det is not null)
                 {
                     var col = det.Inference(ref frame, true, 0.3f, 0.1f);
-                    var firstHead = col.FirstOrDefault(c => c.Label.Equals("Head"));
-                    if (firstHead is not null)
+                    var HeadFound = col.FirstOrDefault(c => c.Label.Equals("Head"));
+                    if (HeadFound is not null)
                     {
-                        if (firstHead.Rect.IntersectsWith(bbox))
-                        {
-                            isPass = true;
-                        }
+                        if (HeadFound.Rect.IntersectsWith(bbox)) isPass = true;
+                    }
+                    var BodyFound = col.FirstOrDefault(c => c.Label.Equals("Body"));
+                    if (BodyFound is not null)
+                    {
+                        if (BodyFound.Rect.IntersectsWith(bbox)) isPass = true;
                     }
                 }
                 CvInvoke.Rectangle(frame, bbox, new Bgr(Color.White).MCvScalar);
@@ -254,11 +256,11 @@ namespace WinformRopeRounding
             var frame = e.MatSrc;           
             if (frame is not null && frame.Ptr != IntPtr.Zero)
             {
-                //if (det is not null)
-                //{ 
-                //    var col = det.Inference(ref frame, false, 0.3f, 0.1f);
-                //    OnUpdate(ref frame, col);
-                //}
+                if (det is not null)
+                {
+                    var col = det.Inference(ref frame, true, 0.3f, 0.1f);
+                    OnUpdate(ref frame, col);
+                }
 
                 //if (aptag is not null)
                 //{
@@ -270,9 +272,9 @@ namespace WinformRopeRounding
                 //    actag.Detect(frame);
                 //}
 
-                //if(camCal is not null)
+                //if (camCal is not null)
                 //{
-                //    camCal.
+                //    frame = camCal.GetUndistortedImage(frame);
                 //}
 
                 cameraImageBox1.Image = frame;
@@ -316,12 +318,6 @@ namespace WinformRopeRounding
         private void configEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormConfigEditor frm = new();
-            var curFrame = vp.Snapshot(); 
-            if (curFrame.DataPointer != IntPtr.Zero)
-            {
-                Image img = vp.CurrentFrame.ToBitmap();
-                frm.SetImage(img);
-            }
             frm.ShowDialog();
         }
 

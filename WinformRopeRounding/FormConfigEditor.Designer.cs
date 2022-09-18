@@ -34,6 +34,7 @@
             this.cboCamera = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlSave = new System.Windows.Forms.Panel();
+            this.btnClose = new System.Windows.Forms.Button();
             this.btnSaveFile = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -121,6 +122,7 @@
             // pnlSave
             // 
             this.pnlSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnlSave.Controls.Add(this.btnClose);
             this.pnlSave.Controls.Add(this.btnSaveFile);
             this.pnlSave.Controls.Add(this.btnSave);
             this.pnlSave.Controls.Add(this.btnEdit);
@@ -133,13 +135,24 @@
             this.pnlSave.Size = new System.Drawing.Size(331, 177);
             this.pnlSave.TabIndex = 3;
             // 
+            // btnClose
+            // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnClose.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnClose.Location = new System.Drawing.Point(197, 105);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(123, 35);
+            this.btnClose.TabIndex = 7;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            // 
             // btnSaveFile
             // 
             this.btnSaveFile.Enabled = false;
             this.btnSaveFile.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btnSaveFile.Location = new System.Drawing.Point(10, 105);
             this.btnSaveFile.Name = "btnSaveFile";
-            this.btnSaveFile.Size = new System.Drawing.Size(308, 35);
+            this.btnSaveFile.Size = new System.Drawing.Size(172, 35);
             this.btnSaveFile.TabIndex = 6;
             this.btnSaveFile.Text = "Save Setting";
             this.btnSaveFile.UseVisualStyleBackColor = true;
@@ -271,6 +284,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1326, 599);
             this.Controls.Add(this.splitContainer1);
             this.Name = "FormConfigEditor";
@@ -310,5 +324,6 @@
         private ComboBox cboCamera;
         private Button btnSnapshoot;
         private Button btnCamControl;
+        private Button btnClose;
     }
 }

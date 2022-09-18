@@ -1,8 +1,6 @@
 ﻿using Emgu.CV;
 using Newtonsoft.Json;
-using System.Windows.Forms;
 using WinformRopeRounding.Modules.VideoStreaming;
-using WinformRopeRounding.UserControls;
 using WinformRopeRounding.Utilities;
 
 namespace WinformRopeRounding
@@ -11,7 +9,7 @@ namespace WinformRopeRounding
     {
         public string LastSelectedNode { get; internal set; }
         private Dictionary<string, Utilities.Action> Actions;
-        private Dictionary<string, ROI> HoleROIs = new();
+        private Dictionary<string, ProductTemplate> Templates = new();
         private Dictionary<string, Camera> Cams = new();
         public FormConfigEditor()
         {
@@ -35,7 +33,7 @@ namespace WinformRopeRounding
             }
             cboCamera.SelectedIndex = 0;
             Actions = GlobalVars.AppSetting.Actions;
-            HoleROIs = GlobalVars.AppSetting.Template.HoleROIs;
+            Templates = GlobalVars.AppSetting.Templates;
             PTZRenderTreeView(cbShowValue.Checked);
         }
 
@@ -69,7 +67,6 @@ namespace WinformRopeRounding
                     var img = frm.SnapshootImage;
                     this.SetImage(img);
                 }
-
             }
         }
 
@@ -115,14 +112,16 @@ namespace WinformRopeRounding
                         LastSelectedNode = $"MeasurementRatio|{idx}";
                     }
                     break;
-                case "Template":
-                    if (paths.Length > 2)
+                case "Templates":
+                    if (paths.Length > 3)
                     {
-                        var roi = HoleROIs[idx];
+                        var roiName = paths[3];
+                        var tpl = Templates[idx];
+                        var roi = tpl.HoleROIs[roiName];
                         pbImage.DrawMode = 1;
                         pbImage.DrawShape(roi.BBOX, Color.Pink);
                         btnEdit.Enabled = true;
-                        LastSelectedNode = $"HoleROIs|{idx}";
+                        LastSelectedNode = $"HoleROIs|{idx}|{roiName}";
                     }
                     break;
                 case "Actions":
@@ -177,11 +176,16 @@ namespace WinformRopeRounding
                         }
                     }
                     break;
-                case "MeasurementRatio":
-                    pbImage.EnabledEditMode = true;
-                    btnSave.Enabled = true;
-                    btnEdit.Enabled = false;
+                case "CalibrationParas":
+                    {
+                        var camId = selectedNodes[1];
+                        var cam = Cams[selectedNodes[1]];                        
+                        string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+                        var frm = new FormCamCalibration(camId, url);
+                        frm.ShowDialog();
+                    }                    
                     break;
+                case "MeasurementRatio":
                 case "HoleROIs":
                 case "TargetROI":
                     pbImage.EnabledEditMode = true;
@@ -212,12 +216,12 @@ namespace WinformRopeRounding
                     break;
                 case "CamId":
                     {
-                        var cam1 = Actions[selectedNodes[1]];
-                        var frmCam = new FormSelectCam();
-                        var result1 = frmCam.ShowDialog();
-                        if (result1 == DialogResult.OK)
+                        var cam = Actions[selectedNodes[1]];
+                        var frm = new FormSelectCam();
+                        var result = frm.ShowDialog();
+                        if (result == DialogResult.OK)
                         {
-                            cam1.CameraId = frmCam.GetSelectedCamName;
+                            cam.CameraId = frm.GetSelectedCamName;
                             PTZRenderTreeView(cbShowValue.Checked);
                         }
                     }
@@ -234,36 +238,43 @@ namespace WinformRopeRounding
             switch (selectedKey)
             {
                 case "HoleROIs":
-                    var roi1 = pbImage.SaveNewROI();
-                    HoleROIs[idx].BBOX = roi1;
+                    {
+                        var roiName = selectedNodes[2];
+                        var roi = pbImage.SaveNewROI();
+                        Templates[idx].HoleROIs[roiName].BBOX = roi;
+                    }                    
                     break;
                 case "TargetROI":
-                    var roi2 = pbImage.SaveNewROI();
-                    Actions[idx].BBox = roi2;
+                    {
+                        var roi = pbImage.SaveNewROI();
+                        Actions[idx].BBox = roi;
+                    }                    
                     break;
                 case "Position":
                     //Actions[idx].Position = "";
                     break;
                 case "MeasurementRatio":
-                    var roi3 = pbImage.SaveNewROI();
-                    var frm = new FormInputBox()
                     {
-                        Caption = "Measurement Ratio",
-                        Question = "The width is equal to how many milimeter(mm)?"
-                    };
-                    var result = frm.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        var inpVal =  frm.GetInputValue;
-                       if(int.TryParse(inpVal, out int num))
-                       {
-                            roi3.Height = num;
-                            Cams[idx].MeasurementRatio = roi3;
-                            PTZRenderTreeView(cbShowValue.Checked);
-                       }
-                       else
-                            MessageBox.Show("Invalid Input!");
-                    }
+                        var roi = pbImage.SaveNewROI();
+                        var frm = new FormInputBox()
+                        {
+                            Caption = "Measurement Ratio",
+                            Question = "The width is equal to how many milimeter(mm)?"
+                        };
+                        var result = frm.ShowDialog();
+                        if (result == DialogResult.OK)
+                        {
+                            var inpVal = frm.GetInputValue;
+                            if (int.TryParse(inpVal, out int num))
+                            {
+                                roi.Height = num;
+                                Cams[idx].MeasurementRatio = roi;
+                                PTZRenderTreeView(cbShowValue.Checked);
+                            }
+                            else
+                                MessageBox.Show("Invalid Input!");
+                        }
+                    }                    
                     break;
             }
             pbImage.DrawMode = 0;
@@ -290,43 +301,51 @@ namespace WinformRopeRounding
         private void PTZRenderTreeView(bool ShowValue = false)
         {
             var appSetting = GlobalVars.AppSetting;
-
             TreeNode rootNode = new("AppSetting");
 
-            TreeNode camsNode = new("Cameras");
-            rootNode.Nodes.Add(camsNode);
+            TreeNode cameraNode = new("Cameras");
+            rootNode.Nodes.Add(cameraNode);
             for (var i = 0; i < appSetting.Cams.Count; i++)
             {
                 var kv = appSetting.Cams.ElementAt(i);
-                var cam = kv.Value;
-                TreeNode camNode = new(kv.Key);
-                camsNode.Nodes.Add(camNode);
-                AddNode(camNode, $"Position", cam.Position, ShowValue);
-                var paraNode = AddNode(camNode, $"CalibrationParas", cam.IntrinsicParas, ShowValue);
-                if(ShowValue) paraNode.Nodes.Add($"DistCoeffParas-val", cam.DistCoeffParas);
-                AddNode(camNode, $"MeasurementRatio", cam.MeasurementRatio.ToString(), ShowValue);
+                var val = kv.Value;
+                TreeNode subNode = new(kv.Key);
+                cameraNode.Nodes.Add(subNode);
+                AddNode(subNode, $"Position", val.Position, ShowValue);
+                var paraNode = AddNode(subNode, $"CalibrationParas", val.IntrinsicParas, ShowValue);
+                if(ShowValue) paraNode.Nodes.Add($"DistCoeffParas-val", val.DistCoeffParas);
+                AddNode(subNode, $"MeasurementRatio", val.MeasurementRatio.ToString(), ShowValue);
             }
 
-            TreeNode tplNode = new("Template");
-            rootNode.Nodes.Add(tplNode);
-            for (var i = 0; i < HoleROIs.Count; i++)
-            {
-                var kv = HoleROIs.ElementAt(i);
-                AddNode(tplNode, kv.Key, kv.Value.BBOX.ToString(), ShowValue);
-            }
-
-            TreeNode actsNode = new("Actions");
-            rootNode.Nodes.Add(actsNode);
+            TreeNode actionNode = new("Actions");
+            rootNode.Nodes.Add(actionNode);
             for (var i = 0; i < appSetting.Actions.Count; i++)
             {
                 var kv = appSetting.Actions.ElementAt(i);
-                var act = kv.Value;
-                TreeNode actNode = new(kv.Key);
-                actsNode.Nodes.Add(actNode);
-                AddNode(actNode, $"CamId", act.CameraId, ShowValue);
-                AddNode(actNode, $"Position", act.Position, ShowValue);
-                AddNode(actNode, $"TargetROI", act.BBox.ToString(), ShowValue);
+                var val = kv.Value;
+                TreeNode subNode = new(kv.Key);
+                actionNode.Nodes.Add(subNode);
+                AddNode(subNode, $"CamId", val.CameraId, ShowValue);
+                AddNode(subNode, $"Position", val.Position, ShowValue);
+                AddNode(subNode, $"TargetROI", val.BBox.ToString(), ShowValue);
             }
+
+            TreeNode templateNode = new("Templates");
+            rootNode.Nodes.Add(templateNode);
+            for (var i = 0; i < appSetting.Templates.Count; i++)
+            {
+                var kv = Templates.ElementAt(i);
+                var val = kv.Value;
+                var holeROIs = val.HoleROIs;
+                TreeNode subNode = new(kv.Key);
+                templateNode.Nodes.Add(subNode);
+                for (var j = 0; j < holeROIs.Count; j++)
+                {
+                    var kv1 = holeROIs.ElementAt(j);
+                    AddNode(subNode, kv1.Key, kv1.Value.BBOX.ToString(), ShowValue);
+                }
+            }
+
             TreeView.Nodes.Clear();
             TreeView.Nodes.Add(rootNode);
             TreeView.ExpandAll();
@@ -338,7 +357,6 @@ namespace WinformRopeRounding
             {
                 var appSetting = GlobalVars.AppSetting;
                 appSetting.Actions = Actions;
-                appSetting.Template.HoleROIs = HoleROIs;
                 var json = JsonConvert.SerializeObject(appSetting, Formatting.Indented);
                 File.WriteAllText("Config.json", json);
                 MessageBox.Show("Setting Save Successfully.");

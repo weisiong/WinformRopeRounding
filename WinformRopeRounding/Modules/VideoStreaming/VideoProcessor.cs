@@ -56,6 +56,7 @@ namespace WinformRopeRounding.Modules.VideoStreaming
                         {
                             cam = new VideoCapture(file);
                             RaiseOnFrameReceivedEvent();
+                            await Task.Delay(1000);
                         }
                     }
                     else
