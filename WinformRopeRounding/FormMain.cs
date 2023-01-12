@@ -16,22 +16,29 @@ namespace WinformRopeRounding
 {
     public partial class FormMain : Form
     {
-        //const string url = "rtsp://admin:joseph12345@192.168.1.64:554/Streaming/Channels/0101";
-        //const string url = "http://admin:joseph12345@192.168.1.64/ISAPI/Streaming/channels/101/picture";
+        //const string url = @"C:\SourceCodes\samples\20220723\GreenBgdWithLight03.mp4"; //YellowBgdWithLight01.mp4"; // BlackBgd.mp4"; //BlueBgdWithLight01.mp4";
+        //const string url = "rtsp://admin:Heliotech@192.168.125.64:554/Streaming/Channels/0101";
+        const string url = "http://admin:Heliotech@192.168.125.64/ISAPI/Streaming/channels/101/picture";
+        //const string url = "http://admin:Heliotech@192.168.125.65/ISAPI/Streaming/channels/101/picture";
+        //const string url = "http://admin:Heliotech@192.168.125.66/ISAPI/Streaming/channels/101/picture";
+        // const string url = "http://admin:Heliotech@192.168.125.67/ISAPI/Streaming/channels/101/picture";
         //const string url = @"C:\SourceCodes\samples\BlueBgdWithLight01_002";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190947761.mp4";
         //const string url = @"C:\SourceCodes\samples\20220723\GreenBgdWithLight04.mp4"; //YellowBgdWithLight01.mp4"; // BlackBgd.mp4"; //BlueBgdWithLight01.mp4";
         //const string url = @"C:\SourceCodes\samples\20220723\BlackBgd01.jpg";        
         //const string url = @"C:\SourceCodes\samples\20220723\GreenBgdWithLight03.mp4";
-        const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813165506163.jpg";
+        //const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813165506163.jpg";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190942145.jpg";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_2022082319074257.mp4";
         //const string url = @"C:\SourceCodes\samples\20220823\192.168.125.64_01_20220823190947761.mp4";
+        //const string url = @"C:\SourceCodes\samples\20220813\192.168.125.64_01_20220813162052323.mp4";
         //const string url = @"C:\SourceCodes\samples\20220917-ApirlTag";
+
+        private System.Windows.Forms.Timer timer = new();
 
         private static readonly SimpleTcpServer tcp = new();
         private VideoProcessor vp;
-        private Dictionary<string,PtzCamControl> ptzCtrs = new();
+        private Dictionary<string, PtzCamControlOnvif> ptzCtrs = new();
         ObjectDetector? det;
         private Apriltag aptag = new("canny", false, "tag36h11");
         private Arucotag actag = new(Emgu.CV.Aruco.Dictionary.PredefinedDictionaryName.Dict4X4_50);
@@ -39,13 +46,14 @@ namespace WinformRopeRounding
         public FormMain()
         {
             InitializeComponent();
+            cboModel.SelectedIndex = 0;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
             var cams = GlobalVars.AppSetting.Cams;
             var cam = cams.Values.ElementAt(0);
             //string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
-            vp = new VideoProcessor(url, EnumMediaInput.PIC);
+            vp = new VideoProcessor(url, EnumMediaInput.HTTP);
             det = new ObjectDetector();
         }
 
@@ -58,13 +66,13 @@ namespace WinformRopeRounding
                 var key = kv.Key;
                 var cam = kv.Value;
                 if (!cam.Enable) continue;
-                var ptz = new PtzCamControl();
+                var ptz = new PtzCamControlOnvif();
                 ptzCtrs.Add(key, ptz);
                 Log.Information($"Initialize {key}...");
-                var success = await ptz.InitialiseAsync(cam.IPAddress, cam.Username , cam.Password);
+                var success = await ptz.InitialiseAsync(cam.IPAddress, cam.Username, cam.Password);
                 if (success)
                 {
-                    await ptz.SetPositionAsync(cam.Position);
+                    //await ptz.SetPositionAsync(cam.Position);
                     Log.Information($"Set {key} position success.");
                 }
                 else
@@ -84,7 +92,103 @@ namespace WinformRopeRounding
             tcp.ClientDisconnected += Server_ClientDisconnected;
             tcp.DataReceived += Server_DataReceived;
             Log.Information($"TCP started at port: {tcpPortNo}");
+            timer.Enabled = true;
+            timer.Interval = 2000;
+            timer.Tick += Timer_Tick;
         }
+
+        private int offlineCounter = 0;
+        private string lastReq = "?";
+        private void Timer_Tick(object? sender, EventArgs e)
+        {
+            if (curState == 0)
+            {
+                PerformActionIdle();
+            }
+            else if (curState == 1)
+            {
+                PerformAction0();
+                curState = 2;
+            }
+            else if (curState == 2)
+            {
+                PerformStartTask();
+                curState = 3;
+            }
+            else if (curState == 3)
+            {
+                switch (lastReq)
+                {
+                    case "A":
+                        {
+                            PerformActionA();
+                        }
+                        break;
+                    case "B":
+                        {
+                            PerformActionB();
+                        }
+                        break;
+                    case ">":
+                        if (txtStatus.Text == "Stop")
+                        {
+                            PerformActionIdle();
+                        }
+                        else
+                        {
+                            PerformContinueTask();
+                        }
+                        break;
+                    case "+":
+                        {
+                            //lastReq = "?";
+                            curUnitCompleted++;
+                            txtCounter.Text = curUnitCompleted.ToString();
+                            if (stopAfterThisUnit == 1)
+                            {
+                                stopAfterThisUnit = 0;
+                                curState = 4;
+                                btnStart.PerformClick();
+                                PerformActionIdle();
+                                Console.WriteLine("break");
+                            }
+                            else if(unitToComplete > curUnitCompleted)
+                            {
+                                curState = 4;
+                            }
+                            else
+                            {
+                                curState = 0;
+                                btnStart.PerformClick();
+                                PerformActionIdle();
+                            }
+                            txtCounter.Text = curUnitCompleted.ToString();
+                        }
+                        break;
+                        //default:
+                        //    PerformActionUndefined();
+                        //    break;
+                }
+
+            }
+            else if (curState == 4)
+            {
+                PerformActionIdle();
+                curState = 2;
+            }
+            
+            if (--offlineCounter <= 0)
+            {
+                lblABBStatus.Text = "ABB OFFLINE";
+                lblABBStatus.BackColor = Color.Red;
+            }
+            else
+            {
+                lblABBStatus.Text = "ABB ONLINE";
+                lblABBStatus.BackColor = Color.Green;
+            }
+        }
+
         private static void Server_ClientDisconnected(object sender, TcpClient e)
         {
             Log.Information($"Client disconnected: {e.Client.RemoteEndPoint}");
@@ -93,29 +197,37 @@ namespace WinformRopeRounding
         {
             Log.Information($"Client connected: {e.Client.RemoteEndPoint}");
         }
+
         private void Server_DataReceived(object sender, SimpleTCP.Message e)
         {
-            string req = e.MessageString;
-            Log.Information($"RX: {req}");
-            switch (req)
-            {
-                case "0":
-                    PerformAction0();
-                    break;
-                case "A":
-                    PerformActionA();
-                    break;
-                case "B":
-                    PerformActionB();
-                    break;
-                default:
-                    PerformActionUndefined();
-                    break;
-            }
+            lastReq = e.MessageString;
+            Log.Information($"RX: {lastReq}");
+            offlineCounter = 3;
         }
         #endregion
 
         #region "Perform Actions"
+        private void PerformContinueTask()
+        {
+            var resp = ">";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
+        }
+
+        private void PerformStartTask()
+        {
+            var resp = "1";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
+        }
+
+        private void PerformActionIdle()
+        {
+            var resp = "?";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
+        }
+
         private void PerformActionUndefined()
         {
             Mat frame = vp.Snapshot();
@@ -123,20 +235,16 @@ namespace WinformRopeRounding
             {
                 cameraImageBox1.Image = frame;
             }
-            var msg = "Undefined";
-            tcp.Broadcast(msg);
-            Log.Information($"TX: {msg}");
+            var resp = "Undefined";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
         }
         private void PerformAction0()
         {
-            Mat frame = vp.Snapshot();
-            if (frame is not null && frame.Ptr != IntPtr.Zero)
-            {
-                cameraImageBox1.Image = frame;
-            }
-            var msg = "Repeat";
-            tcp.Broadcast(msg);
-            Log.Information($"TX: {msg}");
+            var modelId = selectedModel;
+            var resp = $"01234{modelId}ThisIsTestingData";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
         }
         private void PerformActionB()
         {
@@ -162,9 +270,9 @@ namespace WinformRopeRounding
                 CvInvoke.Rectangle(frame, bbox, new Bgr(Color.White).MCvScalar);
                 cameraImageBox1.Image = frame;
             }
-            var msg = isPass ? "Y" : "N";
-            tcp.Broadcast(msg);
-            Log.Information($"TX: {msg}");
+            var resp = isPass ? "Y" : "N";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
         }
         private void PerformActionA()
         {
@@ -175,39 +283,43 @@ namespace WinformRopeRounding
             //frame = new(frame, bbox);
             if (frame is not null && frame.Ptr != IntPtr.Zero)
             {
-                if (det is not null)
-                {
-                    var col = det.Inference(ref frame, true, 0.3f, 0.1f);
-                    var firstHole = col.FirstOrDefault(c => c.Label.Equals("Base"));
-                    var firstHead = col.FirstOrDefault(c => c.Label.Equals("Head"));
-                    if (firstHole is not null && firstHead is not null)
-                    {
-                        var holeX = firstHole.Rect.X + firstHole.Rect.Width;
-                        var headX = firstHead.Rect.X + firstHead.Rect.Width;
-                        var dist = headX - holeX;
-                        if (dist > 0)
-                        {
-                            CvInvoke.Line(frame, new Point(headX, firstHead.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //right line
-                            CvInvoke.PutText(frame, $"X:{dist}px", new Point(30, 80), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
-                            locX = dist;
-                        }
-
-                        dist = firstHead.Rect.Y - firstHole.Rect.Y;
-                        if (dist < 5000)
-                        {
-                            CvInvoke.Line(frame, new Point(holeX, firstHole.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //top line 
-                            CvInvoke.PutText(frame, $"Y:{dist}px", new Point(30, 120), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
-                            locY = dist;
-                        }
-                    }
-                }
+                GetBaseToHeadPos(ref locX, ref locY, ref frame);
                 cameraImageBox1.Image = frame;
             }
-            var msg = $"{locX}:{locY}";
-            tcp.Broadcast(msg);
-            Log.Information($"TX: {msg}");
+            var resp = $"{locX}:{locY}";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}");
         }
 
+        private void GetBaseToHeadPos(ref int locX, ref int locY, ref Mat frame)
+        {
+            if (det is not null)
+            {
+                var col = det.Inference(ref frame, true, 0.3f, 0.1f);
+                var firstHole = col.FirstOrDefault(c => c.Label.Equals("Base"));
+                var firstHead = col.FirstOrDefault(c => c.Label.Equals("Head"));
+                if (firstHole is not null && firstHead is not null)
+                {
+                    var holeX = firstHole.Rect.X + firstHole.Rect.Width;
+                    var headX = firstHead.Rect.X + firstHead.Rect.Width;
+                    var dist = headX - holeX;
+                    if (dist > 0)
+                    {
+                        CvInvoke.Line(frame, new Point(headX, firstHead.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //right line
+                        CvInvoke.PutText(frame, $"X:{dist}px", new Point(30, 80), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
+                        locX = dist;
+                    }
+
+                    dist = firstHead.Rect.Y - firstHole.Rect.Y;
+                    if (dist < 5000)
+                    {
+                        CvInvoke.Line(frame, new Point(holeX, firstHole.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //top line 
+                        CvInvoke.PutText(frame, $"Y:{dist}px", new Point(30, 120), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
+                        locY = dist;
+                    }
+                }
+            }
+        }
         #endregion
 
 
@@ -220,20 +332,58 @@ namespace WinformRopeRounding
             Log.Information("Initialization fully complete.");
         }
 
-        private void BtnStart_Click(object sender, EventArgs e)
+        private int stopAfterThisUnit = 0;
+        private int unitToComplete = 0;
+        private int curUnitCompleted = 0;
+        private int curState = 0;
+        private string selectedModel = string.Empty;
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            var txt = btnStart.Text;
-            if(txt.Equals("Start"))
+            if (btnStart.Text == "Start")
+            {
+                selectedModel = cboModel.Text;
+                curState = 1;
+                btnStart.Text = "Stop";
+                txtStatus.Text = "Running";
+                unitToComplete = Convert.ToInt16(nudUnit.Value);
+                curUnitCompleted = 0;
+                txtCounter.Text = curUnitCompleted.ToString();
+                btnStop.Enabled = true;
+            }
+            else
+            {
+                curState = 0;
+                btnStart.Text = "Start";
+                txtStatus.Text = "Standby";
+                btnStop.Enabled = false;
+            }
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            btnStop.Enabled = false;
+            stopAfterThisUnit = 1;
+        }
+
+        private void TmrState_Tick(object? sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnStartTest_Click(object sender, EventArgs e)
+        {
+            var txt = btnStartTest.Text;
+            if (txt.Equals("Start Test"))
             {
                 vp.OnFrameReceived += Vp_OnFrameReceived;
                 vp.Run();
-                btnStart.Text = "Stop";
+                btnStartTest.Text = "Stop Test";
             }
             else
             {
                 vp.OnFrameReceived -= Vp_OnFrameReceived;
                 vp.Stop();
-                btnStart.Text = "Start";
+                btnStartTest.Text = "Start Test";
             }
         }
         private void BtnPause_Click(object sender, EventArgs e)
@@ -248,19 +398,23 @@ namespace WinformRopeRounding
             {
                 vp.Pause();
                 btnPause.Text = "Pause";
-            }   
+            }
         }
-        
+
         private void Vp_OnFrameReceived(object? sender, VideoProcessorEventArgs e)
         {
-            var frame = e.MatSrc;           
+            var frame = e.MatSrc;
             if (frame is not null && frame.Ptr != IntPtr.Zero)
             {
                 if (det is not null)
                 {
-                    var col = det.Inference(ref frame, true, 0.3f, 0.1f);
-                    OnUpdate(ref frame, col);
+                    int locX = 0; int locY = 0;
+                    GetBaseToHeadPos(ref locX, ref locY, ref frame);
+
+                    //var col = det.Inference(ref frame, true, 0.1f, 0.1f);
+                    //OnUpdate(ref frame, col);
                 }
+
 
                 //if (aptag is not null)
                 //{

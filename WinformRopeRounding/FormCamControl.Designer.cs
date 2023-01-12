@@ -31,15 +31,19 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblMessage = new System.Windows.Forms.Label();
             this.pnlRight = new System.Windows.Forms.TableLayoutPanel();
+            this.ucCamPtzPanel1 = new WinformRopeRounding.UserControls.ucCamPtzPanel();
             this.pnlBottomRight = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnGetPosition = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtValue = new System.Windows.Forms.TextBox();
-            this.ucCamPtzPanel1 = new WinformRopeRounding.UserControls.ucCamPtzPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtZoomLevel = new System.Windows.Forms.TextBox();
+            this.txtFocusPos = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -89,34 +93,46 @@
             // 
             this.pnlRight.ColumnCount = 1;
             this.pnlRight.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pnlRight.Controls.Add(this.pnlBottomRight, 0, 1);
             this.pnlRight.Controls.Add(this.ucCamPtzPanel1, 0, 0);
+            this.pnlRight.Controls.Add(this.pnlBottomRight, 0, 1);
             this.pnlRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlRight.Location = new System.Drawing.Point(0, 0);
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.RowCount = 2;
-            this.pnlRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.22873F));
-            this.pnlRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.77127F));
+            this.pnlRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60.41276F));
+            this.pnlRight.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.58724F));
             this.pnlRight.Size = new System.Drawing.Size(192, 533);
             this.pnlRight.TabIndex = 0;
             // 
+            // ucCamPtzPanel1
+            // 
+            this.ucCamPtzPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucCamPtzPanel1.Location = new System.Drawing.Point(3, 3);
+            this.ucCamPtzPanel1.Name = "ucCamPtzPanel1";
+            this.ucCamPtzPanel1.Size = new System.Drawing.Size(186, 316);
+            this.ucCamPtzPanel1.TabIndex = 0;
+            // 
             // pnlBottomRight
             // 
+            this.pnlBottomRight.Controls.Add(this.txtFocusPos);
+            this.pnlBottomRight.Controls.Add(this.txtZoomLevel);
+            this.pnlBottomRight.Controls.Add(this.label3);
+            this.pnlBottomRight.Controls.Add(this.label2);
             this.pnlBottomRight.Controls.Add(this.btnCancel);
             this.pnlBottomRight.Controls.Add(this.btnOK);
             this.pnlBottomRight.Controls.Add(this.btnGetPosition);
             this.pnlBottomRight.Controls.Add(this.label1);
             this.pnlBottomRight.Controls.Add(this.txtValue);
             this.pnlBottomRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBottomRight.Location = new System.Drawing.Point(3, 276);
+            this.pnlBottomRight.Location = new System.Drawing.Point(3, 325);
             this.pnlBottomRight.Name = "pnlBottomRight";
-            this.pnlBottomRight.Size = new System.Drawing.Size(186, 254);
+            this.pnlBottomRight.Size = new System.Drawing.Size(186, 205);
             this.pnlBottomRight.TabIndex = 1;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(112, 211);
+            this.btnCancel.Location = new System.Drawing.Point(111, 171);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(66, 25);
             this.btnCancel.TabIndex = 4;
@@ -126,7 +142,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(16, 211);
+            this.btnOK.Location = new System.Drawing.Point(15, 171);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(66, 25);
             this.btnOK.TabIndex = 3;
@@ -136,18 +152,18 @@
             // 
             // btnGetPosition
             // 
-            this.btnGetPosition.Location = new System.Drawing.Point(16, 67);
+            this.btnGetPosition.Location = new System.Drawing.Point(12, 129);
             this.btnGetPosition.Name = "btnGetPosition";
             this.btnGetPosition.Size = new System.Drawing.Size(162, 25);
             this.btnGetPosition.TabIndex = 2;
-            this.btnGetPosition.Text = "&Get Current Position";
+            this.btnGetPosition.Text = "&Get Current Values";
             this.btnGetPosition.UseVisualStyleBackColor = true;
             this.btnGetPosition.Click += new System.EventHandler(this.btnGetPosition_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 20);
+            this.label1.Location = new System.Drawing.Point(12, 76);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(97, 15);
             this.label1.TabIndex = 1;
@@ -155,18 +171,10 @@
             // 
             // txtValue
             // 
-            this.txtValue.Location = new System.Drawing.Point(16, 38);
+            this.txtValue.Location = new System.Drawing.Point(12, 92);
             this.txtValue.Name = "txtValue";
             this.txtValue.Size = new System.Drawing.Size(162, 23);
             this.txtValue.TabIndex = 0;
-            // 
-            // ucCamPtzPanel1
-            // 
-            this.ucCamPtzPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ucCamPtzPanel1.Location = new System.Drawing.Point(3, 3);
-            this.ucCamPtzPanel1.Name = "ucCamPtzPanel1";
-            this.ucCamPtzPanel1.Size = new System.Drawing.Size(186, 267);
-            this.ucCamPtzPanel1.TabIndex = 0;
             // 
             // statusStrip1
             // 
@@ -195,6 +203,38 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(847, 564);
             this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(42, 15);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Zoom:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 47);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 15);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Focus:";
+            // 
+            // txtZoomLevel
+            // 
+            this.txtZoomLevel.Location = new System.Drawing.Point(60, 8);
+            this.txtZoomLevel.Name = "txtZoomLevel";
+            this.txtZoomLevel.Size = new System.Drawing.Size(69, 23);
+            this.txtZoomLevel.TabIndex = 7;
+            // 
+            // txtFocusPos
+            // 
+            this.txtFocusPos.Location = new System.Drawing.Point(60, 42);
+            this.txtFocusPos.Name = "txtFocusPos";
+            this.txtFocusPos.Size = new System.Drawing.Size(69, 23);
+            this.txtFocusPos.TabIndex = 8;
             // 
             // FormCamControl
             // 
@@ -236,5 +276,9 @@
         private Button btnOK;
         private Label lblMessage;
         private TableLayoutPanel tableLayoutPanel1;
+        private Label label3;
+        private Label label2;
+        private TextBox txtFocusPos;
+        private TextBox txtZoomLevel;
     }
 }

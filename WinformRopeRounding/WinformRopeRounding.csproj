@@ -9,7 +9,15 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="echo Configuration: $(Configuration)&#xD;&#xA;echo DevEnvDir: $(DevEnvDir)&#xD;&#xA;echo OutDir: $(OutDir)&#xD;&#xA;echo ProjectDir: $(ProjectDir)&#xD;&#xA;echo VisualStudioVersion: $(VisualStudioVersion)&#xD;&#xA;echo AssemblySearchPaths: $(AssemblySearchPaths)&#xD;&#xA;echo AssemblyName: $(AssemblyName)&#xD;&#xA;echo BaseIntermediateOutputPath: $(BaseIntermediateOutputPath)&#xD;&#xA;echo CscToolPath: $(CscToolPath)" />
+	</Target>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="copy $(SolutionDir)$(ProjectName)\Dlls\*.dll $(OutDir)*" />
+	</Target>
+
+	<ItemGroup>
     <Compile Remove="RtspPlayer\**" />
     <EmbeddedResource Remove="RtspPlayer\**" />
     <None Remove="RtspPlayer\**" />
@@ -23,11 +31,11 @@
   </ItemGroup>
 
     <ItemGroup>
-	    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.5.4823" />
-	    <PackageReference Include="Emgu.CV.UI" Version="4.5.5.4823" />
+		<PackageReference Include="Emgu.CV.runtime.windows" Version="4.6.0.5131" />
+		<PackageReference Include="Emgu.CV.UI" Version="4.6.0.5131" />
 		<PackageReference Include="Microsoft.ML" Version="1.7.1" />
 		<PackageReference Include="Microsoft.ML.ImageAnalytics" Version="1.7.1" />
-		<PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.12.1" />
+		<PackageReference Include="Microsoft.ML.OnnxRuntime.Gpu" Version="1.13.1" />
 		<PackageReference Include="Microsoft.ML.OnnxTransformer" Version="1.7.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Serilog.Sinks.WinForms.Core" Version="1.0.2" />
@@ -56,6 +64,7 @@
   <ItemGroup>
     <Folder Include="Assets\Images\" />
     <Folder Include="Modules\AprilTag\" />
+    <Folder Include="Dlls\" />
   </ItemGroup>
 
   <ItemGroup>

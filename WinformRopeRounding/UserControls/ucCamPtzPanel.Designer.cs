@@ -41,8 +41,12 @@
             this.btnHome = new System.Windows.Forms.Button();
             this.btnZoomIn = new System.Windows.Forms.Button();
             this.btnZoomOut = new System.Windows.Forms.Button();
+            this.tlpFocus = new System.Windows.Forms.TableLayoutPanel();
+            this.btnFocusFront = new System.Windows.Forms.Button();
+            this.btnFocusBack = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tlpZoom.SuspendLayout();
+            this.tlpFocus.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -197,7 +201,7 @@
             this.tlpZoom.Controls.Add(this.btnHome, 0, 0);
             this.tlpZoom.Controls.Add(this.btnZoomIn, 0, 0);
             this.tlpZoom.Controls.Add(this.btnZoomOut, 0, 0);
-            this.tlpZoom.Location = new System.Drawing.Point(0, 214);
+            this.tlpZoom.Location = new System.Drawing.Point(0, 204);
             this.tlpZoom.Name = "tlpZoom";
             this.tlpZoom.RowCount = 1;
             this.tlpZoom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -230,7 +234,8 @@
             this.btnZoomIn.TabIndex = 8;
             this.btnZoomIn.Tag = "11";
             this.btnZoomIn.UseVisualStyleBackColor = false;
-            this.btnZoomIn.Click += new System.EventHandler(this.BtnClick);
+            this.btnZoomIn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnMouseDown);
+            this.btnZoomIn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMouseUp);
             // 
             // btnZoomOut
             // 
@@ -244,18 +249,66 @@
             this.btnZoomOut.TabIndex = 7;
             this.btnZoomOut.Tag = "10";
             this.btnZoomOut.UseVisualStyleBackColor = false;
-            this.btnZoomOut.Click += new System.EventHandler(this.BtnClick);
+            this.btnZoomOut.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnMouseDown);
+            this.btnZoomOut.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMouseUp);
+            // 
+            // tlpFocus
+            // 
+            this.tlpFocus.ColumnCount = 3;
+            this.tlpFocus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpFocus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpFocus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tlpFocus.Controls.Add(this.btnFocusFront, 0, 0);
+            this.tlpFocus.Controls.Add(this.btnFocusBack, 0, 0);
+            this.tlpFocus.Location = new System.Drawing.Point(0, 259);
+            this.tlpFocus.Name = "tlpFocus";
+            this.tlpFocus.RowCount = 1;
+            this.tlpFocus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFocus.Size = new System.Drawing.Size(188, 51);
+            this.tlpFocus.TabIndex = 3;
+            // 
+            // btnFocusFront
+            // 
+            this.btnFocusFront.BackColor = System.Drawing.Color.Transparent;
+            this.btnFocusFront.BackgroundImage = global::WinformRopeRounding.Properties.Resources.Keypad_FocusFront;
+            this.btnFocusFront.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFocusFront.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFocusFront.Location = new System.Drawing.Point(65, 3);
+            this.btnFocusFront.Name = "btnFocusFront";
+            this.btnFocusFront.Size = new System.Drawing.Size(56, 45);
+            this.btnFocusFront.TabIndex = 8;
+            this.btnFocusFront.Tag = "14";
+            this.btnFocusFront.UseVisualStyleBackColor = false;
+            this.btnFocusFront.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnMouseDown);
+            this.btnFocusFront.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMouseUp);
+            // 
+            // btnFocusBack
+            // 
+            this.btnFocusBack.BackColor = System.Drawing.Color.Transparent;
+            this.btnFocusBack.BackgroundImage = global::WinformRopeRounding.Properties.Resources.Keypad_FocusBack;
+            this.btnFocusBack.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnFocusBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFocusBack.Location = new System.Drawing.Point(3, 3);
+            this.btnFocusBack.Name = "btnFocusBack";
+            this.btnFocusBack.Size = new System.Drawing.Size(56, 45);
+            this.btnFocusBack.TabIndex = 7;
+            this.btnFocusBack.Tag = "13";
+            this.btnFocusBack.UseVisualStyleBackColor = false;
+            this.btnFocusBack.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnMouseDown);
+            this.btnFocusBack.MouseUp += new System.Windows.Forms.MouseEventHandler(this.BtnMouseUp);
             // 
             // ucCamPtzPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tlpFocus);
             this.Controls.Add(this.tlpZoom);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ucCamPtzPanel";
-            this.Size = new System.Drawing.Size(188, 265);
+            this.Size = new System.Drawing.Size(188, 313);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tlpZoom.ResumeLayout(false);
+            this.tlpFocus.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -275,5 +328,8 @@
         private Button btnHome;
         private Button btnZoomIn;
         private Button btnZoomOut;
+        private TableLayoutPanel tlpFocus;
+        private Button btnFocusFront;
+        private Button btnFocusBack;
     }
 }

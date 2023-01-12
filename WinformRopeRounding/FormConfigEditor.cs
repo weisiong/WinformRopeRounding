@@ -48,6 +48,7 @@ namespace WinformRopeRounding
                 SetImage(vp.Snapshot().ToBitmap());
             }
         }
+
         private void btnCamControl_Click(object sender, EventArgs e)
         {
             var idx = cboCamera.SelectedIndex;

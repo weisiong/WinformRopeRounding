@@ -31,7 +31,7 @@ namespace WinformRopeRounding.Modules.ObjectDetection
                     {
                         { "images", new[] { 1, 3, 640, 640 } },
                         { "output", new[] { 1, 25200, 9 } },
-                    }, null, true));
+                    },null, true)); //  gpuDeviceId: 0, false)); //
 
             // Fit on empty list to obtain input data schema
             var model = pipeline.Fit(mlContext.Data.LoadFromEnumerable(new List<BitmapData>()));
@@ -51,8 +51,8 @@ namespace WinformRopeRounding.Modules.ObjectDetection
             using Graphics g = Graphics.FromImage(bitmap);
             foreach (var res in results)
             {
-                if (res.Label.Equals("Head")) res.BBox = FinetuneHead(MatSrc, res);
-                //if (res.Label.Equals("Body")) continue;
+                //if (res.Label.Equals("Head")) res.BBox = FinetuneHead(MatSrc, res);
+                if (res.Label.Equals("Body")) continue;
                 lstResult.Add(new Result(res.BBox, res.Label, res.Confidence));
                 if (DrawResult)
                 {
@@ -123,7 +123,7 @@ namespace WinformRopeRounding.Modules.ObjectDetection
                 g.FillRectangle(brushes, x1, y1, x2 - x1, y2 - y1);
             }
             g.DrawString(res.Label, new Font("Arial", 8), Brushes.White, new PointF(x1, y1));
-            //g.DrawString(res.Label + " " + res.Confidence.ToString("0.00"), new Font("Arial", 8), Brushes.Wheat, new PointF(x1, y1));
+            g.DrawString(res.Label + " " + res.Confidence.ToString("0.00"), new Font("Arial", 8), Brushes.Wheat, new PointF(x1, y1));
         }
 
 

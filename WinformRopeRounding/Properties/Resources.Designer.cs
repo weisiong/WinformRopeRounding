@@ -83,6 +83,26 @@ namespace WinformRopeRounding.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Keypad_FocusBack {
+            get {
+                object obj = ResourceManager.GetObject("Keypad-FocusBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Keypad_FocusFront {
+            get {
+                object obj = ResourceManager.GetObject("Keypad-FocusFront", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Keypad_Home {
             get {
                 object obj = ResourceManager.GetObject("Keypad-Home", resourceCulture);
