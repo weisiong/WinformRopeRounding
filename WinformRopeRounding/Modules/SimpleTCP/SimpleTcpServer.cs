@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Microsoft.VisualBasic.Logging;
+using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
@@ -64,7 +65,14 @@ namespace SimpleTCP
         {
             foreach(var client in _listeners.SelectMany(x => x.ConnectedClients))
             {
-                client.GetStream().Write(data, 0, data.Length);
+                try
+                {
+                    client.GetStream().Write(data, 0, data.Length);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }                
             }
         }
 

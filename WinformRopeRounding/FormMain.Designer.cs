@@ -40,6 +40,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.cameraImageBox1 = new Emgu.CV.UI.ImageBox();
             this.txtDebug = new Serilog.Sinks.WinForms.Core.SimpleLogTextBox();
+            this.lblWarning = new System.Windows.Forms.TextBox();
+            this.btnRight = new System.Windows.Forms.Button();
+            this.btnLeft = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.lblABBStatus = new System.Windows.Forms.Label();
             this.btnAcknowledge = new System.Windows.Forms.Button();
@@ -137,6 +140,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btnRight);
+            this.splitContainer1.Panel2.Controls.Add(this.btnLeft);
             this.splitContainer1.Panel2.Controls.Add(this.btnStop);
             this.splitContainer1.Panel2.Controls.Add(this.lblABBStatus);
             this.splitContainer1.Panel2.Controls.Add(this.btnAcknowledge);
@@ -160,15 +165,17 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.cameraImageBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtDebug, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lblWarning, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.5946F));
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.59459F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.40541F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(805, 592);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -181,7 +188,7 @@
             this.cameraImageBox1.Enabled = false;
             this.cameraImageBox1.Location = new System.Drawing.Point(3, 3);
             this.cameraImageBox1.Name = "cameraImageBox1";
-            this.cameraImageBox1.Size = new System.Drawing.Size(799, 405);
+            this.cameraImageBox1.Size = new System.Drawing.Size(799, 385);
             this.cameraImageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cameraImageBox1.TabIndex = 2;
             this.cameraImageBox1.TabStop = false;
@@ -192,15 +199,49 @@
             this.txtDebug.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtDebug.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtDebug.ForContext = "";
-            this.txtDebug.Location = new System.Drawing.Point(4, 414);
+            this.txtDebug.Location = new System.Drawing.Point(4, 394);
             this.txtDebug.LogBorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.txtDebug.LogPadding = new System.Windows.Forms.Padding(3);
             this.txtDebug.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtDebug.Name = "txtDebug";
             this.txtDebug.ReadOnly = true;
             this.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDebug.Size = new System.Drawing.Size(797, 175);
+            this.txtDebug.Size = new System.Drawing.Size(797, 164);
             this.txtDebug.TabIndex = 3;
+            // 
+            // lblWarning
+            // 
+            this.lblWarning.BackColor = System.Drawing.Color.Red;
+            this.lblWarning.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblWarning.ForeColor = System.Drawing.Color.White;
+            this.lblWarning.Location = new System.Drawing.Point(3, 564);
+            this.lblWarning.Name = "lblWarning";
+            this.lblWarning.Size = new System.Drawing.Size(799, 29);
+            this.lblWarning.TabIndex = 4;
+            this.lblWarning.Text = "Warning";
+            this.lblWarning.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // btnRight
+            // 
+            this.btnRight.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnRight.Location = new System.Drawing.Point(89, 400);
+            this.btnRight.Name = "btnRight";
+            this.btnRight.Size = new System.Drawing.Size(64, 31);
+            this.btnRight.TabIndex = 18;
+            this.btnRight.Text = ">";
+            this.btnRight.UseVisualStyleBackColor = true;
+            this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
+            // 
+            // btnLeft
+            // 
+            this.btnLeft.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnLeft.Location = new System.Drawing.Point(12, 400);
+            this.btnLeft.Name = "btnLeft";
+            this.btnLeft.Size = new System.Drawing.Size(64, 31);
+            this.btnLeft.TabIndex = 17;
+            this.btnLeft.Text = "<";
+            this.btnLeft.UseVisualStyleBackColor = true;
+            this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
             // 
             // btnStop
             // 
@@ -226,12 +267,16 @@
             // 
             // btnAcknowledge
             // 
+            this.btnAcknowledge.BackColor = System.Drawing.Color.Red;
+            this.btnAcknowledge.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnAcknowledge.ForeColor = System.Drawing.Color.White;
             this.btnAcknowledge.Location = new System.Drawing.Point(12, 445);
             this.btnAcknowledge.Name = "btnAcknowledge";
             this.btnAcknowledge.Size = new System.Drawing.Size(141, 31);
             this.btnAcknowledge.TabIndex = 14;
             this.btnAcknowledge.Text = "Acknowledge";
-            this.btnAcknowledge.UseVisualStyleBackColor = true;
+            this.btnAcknowledge.UseVisualStyleBackColor = false;
+            this.btnAcknowledge.Click += new System.EventHandler(this.btnAcknowledge_Click);
             // 
             // txtStatus
             // 
@@ -392,6 +437,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cameraImageBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUnit)).EndInit();
             this.ResumeLayout(false);
@@ -428,5 +474,8 @@
         private Button btnAcknowledge;
         private Label lblABBStatus;
         private Button btnStop;
+        private TextBox lblWarning;
+        private Button btnLeft;
+        private Button btnRight;
     }
 }

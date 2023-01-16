@@ -128,7 +128,8 @@ namespace WinformRopeRounding.Modules.PtzController
             str2 = Convert.ToString(float.Parse(TiltPos) * 10);
             m_struPtzCfg.wTiltPos = Convert.ToUInt16(str2, 16);
             str3 = Convert.ToString(float.Parse(ZoomPos) * 10);
-            m_struPtzCfg.wZoomPos = Convert.ToUInt16(str3, 16); ;
+            str3 = Math.Floor(Convert.ToDecimal(str3)).ToString();
+            m_struPtzCfg.wZoomPos = Convert.ToUInt16(str3, 16);
 
             int nSize = Marshal.SizeOf(m_struPtzCfg);
             IntPtr ptrPtzCfg = Marshal.AllocHGlobal(nSize);

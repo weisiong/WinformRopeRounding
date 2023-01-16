@@ -36,7 +36,7 @@ namespace WinformRopeRounding
 
         private System.Windows.Forms.Timer timer = new();
 
-        private static readonly SimpleTcpServer tcp = new();
+        private SimpleTcpServer tcp;
         private VideoProcessor vp;
         private Dictionary<string, PtzCamControlOnvif> ptzCtrs = new();
         ObjectDetector? det;
@@ -47,6 +47,7 @@ namespace WinformRopeRounding
         {
             InitializeComponent();
             cboModel.SelectedIndex = 0;
+            lblWarning.Visible = false;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -60,6 +61,8 @@ namespace WinformRopeRounding
         #region "PTZ"
         private async Task InitPTZAsync()
         {
+            if (ptzCtrs.Count() > 0) return;
+
             var camSettings = GlobalVars.AppSetting.Cams;
             foreach (var kv in camSettings)
             {
@@ -86,24 +89,48 @@ namespace WinformRopeRounding
         #region "TCP"
         private void InitTCP()
         {
+            if (tcp is not null)
+            {
+                tcp.ClientConnected -= Server_ClientConnected;
+                tcp.ClientDisconnected -= Server_ClientDisconnected;
+                tcp.DataReceived -= Server_DataReceived;
+                tcp.Stop();
+                var clients = tcp.GetListeningIPs();
+                clients.Clear();
+            }
             var tcpPortNo = GlobalVars.AppSetting.TcpPort;
+            tcp = new();
             tcp.Start(tcpPortNo);
             tcp.ClientConnected += Server_ClientConnected;
             tcp.ClientDisconnected += Server_ClientDisconnected;
             tcp.DataReceived += Server_DataReceived;
             Log.Information($"TCP started at port: {tcpPortNo}");
+        }
+
+        private void InitTimer()
+        {
+            if (timer is not null)
+            {
+                timer.Enabled = false;
+                timer.Tick -= Timer_Tick;
+                timer.Dispose();
+            }
+            timer = new();
             timer.Enabled = true;
             timer.Interval = 2000;
             timer.Tick += Timer_Tick;
         }
 
         private int offlineCounter = 0;
-        private string lastReq = "?";
+        private string lastReq = string.Empty;
         private void Timer_Tick(object? sender, EventArgs e)
         {
             if (curState == 0)
             {
-                PerformActionIdle();
+                if(lastReq == string.Empty)
+                    WaitForResponse();
+                else
+                    PerformActionIdle();
             }
             else if (curState == 1)
             {
@@ -141,7 +168,6 @@ namespace WinformRopeRounding
                         break;
                     case "+":
                         {
-                            //lastReq = "?";
                             curUnitCompleted++;
                             txtCounter.Text = curUnitCompleted.ToString();
                             if (stopAfterThisUnit == 1)
@@ -150,7 +176,6 @@ namespace WinformRopeRounding
                                 curState = 4;
                                 btnStart.PerformClick();
                                 PerformActionIdle();
-                                Console.WriteLine("break");
                             }
                             else if(unitToComplete > curUnitCompleted)
                             {
@@ -163,6 +188,20 @@ namespace WinformRopeRounding
                                 PerformActionIdle();
                             }
                             txtCounter.Text = curUnitCompleted.ToString();
+                        }
+                        break;
+                    case "!":
+                        {
+                            lblWarning.Visible = true;
+                            lblWarning.Text = "Cannot measure image XY. Please Acknowledge!";
+                            btnAcknowledge.Visible = true;
+                        }
+                        break;
+                    case "^":
+                        {
+                            lblWarning.Visible = true;
+                            lblWarning.Text = "Robot cannot grip the wire. Please Acknowledge!";
+                            btnAcknowledge.Visible = true;
                         }
                         break;
                         //default:
@@ -202,11 +241,12 @@ namespace WinformRopeRounding
         {
             lastReq = e.MessageString;
             Log.Information($"RX: {lastReq}");
-            offlineCounter = 3;
+            offlineCounter = 5;
         }
         #endregion
 
         #region "Perform Actions"
+
         private void PerformContinueTask()
         {
             var resp = ">";
@@ -228,6 +268,12 @@ namespace WinformRopeRounding
             Log.Information($"TX: {resp}");
         }
 
+        private void WaitForResponse()
+        {
+            var resp = "Waiting Response...";
+            Log.Information($"{resp}");
+        }
+
         private void PerformActionUndefined()
         {
             Mat frame = vp.Snapshot();
@@ -245,6 +291,18 @@ namespace WinformRopeRounding
             var resp = $"01234{modelId}ThisIsTestingData";
             tcp.Broadcast(resp);
             Log.Information($"TX: {resp}");
+        }
+        private void PerformAction2()
+        {
+            var resp = $"2";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}, Turn Left.");
+        }
+        private void PerformAction3()
+        {
+            var resp = $"3";
+            tcp.Broadcast(resp);
+            Log.Information($"TX: {resp}, Turn Right");
         }
         private void PerformActionB()
         {
@@ -306,7 +364,7 @@ namespace WinformRopeRounding
                     if (dist > 0)
                     {
                         CvInvoke.Line(frame, new Point(headX, firstHead.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //right line
-                        CvInvoke.PutText(frame, $"X:{dist}px", new Point(30, 80), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
+                        CvInvoke.PutText(frame, $"X:{dist}px", new Point(30, 100), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
                         locX = dist;
                     }
 
@@ -314,7 +372,7 @@ namespace WinformRopeRounding
                     if (dist < 5000)
                     {
                         CvInvoke.Line(frame, new Point(holeX, firstHole.Rect.Y), new Point(headX, firstHole.Rect.Y), new MCvScalar(255, 255, 0), 3); //top line 
-                        CvInvoke.PutText(frame, $"Y:{dist}px", new Point(30, 120), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
+                        CvInvoke.PutText(frame, $"Y:{dist}px", new Point(30, 140), FontFace.HersheySimplex, 1, new MCvScalar(0, 255, 255), 3);// distance pixels
                         locY = dist;
                     }
                 }
@@ -327,9 +385,24 @@ namespace WinformRopeRounding
         private async void btnInitialize_Click(object sender, EventArgs e)
         {
             await InitPTZAsync();
+            InitValues();
             InitTCP();
+            InitTimer();
             cameraImageBox1.Image = vp.Snapshot();
             Log.Information("Initialization fully complete.");
+        }
+
+        private void InitValues()
+        {
+            lastReq = string.Empty;
+            curState = 0;
+            unitToComplete = 0;
+            stopAfterThisUnit = 0;
+            curUnitCompleted = 0;
+            selectedModel = string.Empty;
+            lblWarning.Visible = false;
+            lblWarning.Text = string.Empty;
+            btnAcknowledge.Visible = false;
         }
 
         private int stopAfterThisUnit = 0;
@@ -365,9 +438,14 @@ namespace WinformRopeRounding
             stopAfterThisUnit = 1;
         }
 
-        private void TmrState_Tick(object? sender, EventArgs e)
+        private void btnLeft_Click(object sender, EventArgs e)
         {
+            PerformAction2();
+        }
 
+        private void btnRight_Click(object sender, EventArgs e)
+        {
+            PerformAction3();
         }
 
         private void BtnStartTest_Click(object sender, EventArgs e)
@@ -489,6 +567,14 @@ namespace WinformRopeRounding
             camCal.Start();
         }
 
+        private void btnAcknowledge_Click(object sender, EventArgs e)
+        {
+            lblWarning.Text = string.Empty;
+            lblWarning.Visible = false;
+            btnAcknowledge.Visible = false;
+            btnStart.PerformClick();
+            btnInitialize.PerformClick();                            
+        }
 
     }
 }
