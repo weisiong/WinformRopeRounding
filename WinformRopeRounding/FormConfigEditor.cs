@@ -43,11 +43,12 @@ namespace WinformRopeRounding
             if (idx >= 0)
             {
                 var cam = Cams.Values.ElementAt(idx);
-                string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+                string url = string.Format(GlobalVars.SNAPSHOT_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
                 VideoProcessor vp = new(url, EnumMediaInput.HTTP);
                 SetImage(vp.Snapshot().ToBitmap());
             }
         }
+
         private void btnCamControl_Click(object sender, EventArgs e)
         {
             var idx = cboCamera.SelectedIndex;
@@ -180,7 +181,7 @@ namespace WinformRopeRounding
                     {
                         var camId = selectedNodes[1];
                         var cam = Cams[selectedNodes[1]];                        
-                        string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
+                        string url = string.Format(GlobalVars.SNAPSHOT_SOURCE_FORMAT, cam.Username, cam.Password, cam.IPAddress);
                         var frm = new FormCamCalibration(camId, url);
                         frm.ShowDialog();
                     }                    
@@ -312,9 +313,9 @@ namespace WinformRopeRounding
                 TreeNode subNode = new(kv.Key);
                 cameraNode.Nodes.Add(subNode);
                 AddNode(subNode, $"Position", val.Position, ShowValue);
-                var paraNode = AddNode(subNode, $"CalibrationParas", val.IntrinsicParas, ShowValue);
-                if(ShowValue) paraNode.Nodes.Add($"DistCoeffParas-val", val.DistCoeffParas);
-                AddNode(subNode, $"MeasurementRatio", val.MeasurementRatio.ToString(), ShowValue);
+                //var paraNode = AddNode(subNode, $"CalibrationParas", val.IntrinsicParas, ShowValue);
+                //if(ShowValue) paraNode.Nodes.Add($"DistCoeffParas-val", val.DistCoeffParas);
+                //AddNode(subNode, $"MeasurementRatio", val.MeasurementRatio.ToString(), ShowValue);
             }
 
             TreeNode actionNode = new("Actions");
@@ -327,24 +328,27 @@ namespace WinformRopeRounding
                 actionNode.Nodes.Add(subNode);
                 AddNode(subNode, $"CamId", val.CameraId, ShowValue);
                 AddNode(subNode, $"Position", val.Position, ShowValue);
-                AddNode(subNode, $"TargetROI", val.BBox.ToString(), ShowValue);
+                //AddNode(subNode, $"TargetROI", val.BBox.ToString(), ShowValue);
             }
 
-            TreeNode templateNode = new("Templates");
-            rootNode.Nodes.Add(templateNode);
-            for (var i = 0; i < appSetting.Templates.Count; i++)
-            {
-                var kv = Templates.ElementAt(i);
-                var val = kv.Value;
-                var holeROIs = val.HoleROIs;
-                TreeNode subNode = new(kv.Key);
-                templateNode.Nodes.Add(subNode);
-                for (var j = 0; j < holeROIs.Count; j++)
-                {
-                    var kv1 = holeROIs.ElementAt(j);
-                    AddNode(subNode, kv1.Key, kv1.Value.BBOX.ToString(), ShowValue);
-                }
-            }
+            //if(appSetting.Templates is not null)
+            //{
+            //    TreeNode templateNode = new("Templates");
+            //    rootNode.Nodes.Add(templateNode);
+            //    for (var i = 0; i < appSetting.Templates.Count; i++)
+            //    {
+            //        var kv = Templates.ElementAt(i);
+            //        var val = kv.Value;
+            //        var holeROIs = val.HoleROIs;
+            //        TreeNode subNode = new(kv.Key);
+            //        templateNode.Nodes.Add(subNode);
+            //        for (var j = 0; j < holeROIs.Count; j++)
+            //        {
+            //            var kv1 = holeROIs.ElementAt(j);
+            //            AddNode(subNode, kv1.Key, kv1.Value.BBOX.ToString(), ShowValue);
+            //        }
+            //    }
+            //}
 
             TreeView.Nodes.Clear();
             TreeView.Nodes.Add(rootNode);

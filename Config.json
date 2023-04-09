@@ -1,0 +1,129 @@
+{
+  "TcpPort": 1888,
+  "Cams": {
+    "Cam1": {
+      "Enable": true,
+      "IPAddress": "192.168.125.64",
+      "Username": "admin",
+      "Password": "Heliotech",
+      "Position": "145 2 3.700001 6492",
+      "IntrinsicParas": "1 0 0 0 1 0 0 0 1",
+      "DistCoeffParas": "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0",
+      "MeasurementRatio": "283, 289, 497, 13"
+    },
+    "Cam2": {
+      "Enable": false,
+      "IPAddress": "192.168.125.66",
+      "Username": "admin",
+      "Password": "Heliotech",
+      "Position": "12 328 2.8 39418",
+      "IntrinsicParas": "1 0 0 0 1 0 0 0 1",
+      "DistCoeffParas": "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0",
+      "MeasurementRatio": "0, 0, 0, 0"
+    }
+  },
+  "Actions": {
+    "A": {
+      "CameraId": "Cam1",
+      "Position": "0.827222 0.519778 0.4",
+      "BBox": "200, 70, 860, 600"
+    },
+    "B": {
+      "CameraId": "Cam2",
+      "Position": "0.76324 0.28763 0.2",
+      "BBox": "300, 330, 115, 40"
+    }
+  },
+  "Templates": {
+    "Cam1": {
+      "Name": "ProductModel1",
+      "ProductCode": "Pro-01",
+      "HoleROIs": {
+        "Base00": {
+          "BBOX": "253, 107, 55, 65"
+        },
+        "Hole01": {
+          "BBOX": "322, 172, 95, 30"
+        },
+        "Hole02": {
+          "BBOX": "322, 213, 95, 30"
+        },
+        "Hole03": {
+          "BBOX": "322, 254, 95, 30"
+        },
+        "Hole04": {
+          "BBOX": "253, 293, 55, 65"
+        },
+        "Hole05": {
+          "BBOX": "253, 334, 55, 65"
+        },
+        "Hole06": {
+          "BBOX": "253, 375, 55, 65"
+        },
+        "Hole07": {
+          "BBOX": "253, 417, 55, 65"
+        },
+        "Hole08": {
+          "BBOX": "253, 454, 55, 65"
+        },
+        "Hole09": {
+          "BBOX": "253, 497, 55, 65"
+        },
+        "Hole10": {
+          "BBOX": "253, 538, 55, 65"
+        },
+        "Hole11": {
+          "BBOX": "253, 577, 55, 65"
+        },
+        "Hole12": {
+          "BBOX": "253, 617, 55, 65"
+        }
+      }
+    },
+    "Cam2": {
+      "Name": "ProductModel1",
+      "ProductCode": "Pro-01",
+      "HoleROIs": {
+        "Base00": {
+          "BBOX": "253, 107, 55, 65"
+        },
+        "Hole01": {
+          "BBOX": "322, 172, 95, 30"
+        },
+        "Hole02": {
+          "BBOX": "322, 213, 95, 30"
+        },
+        "Hole03": {
+          "BBOX": "322, 254, 95, 30"
+        },
+        "Hole04": {
+          "BBOX": "253, 293, 55, 65"
+        },
+        "Hole05": {
+          "BBOX": "253, 334, 55, 65"
+        },
+        "Hole06": {
+          "BBOX": "253, 375, 55, 65"
+        },
+        "Hole07": {
+          "BBOX": "253, 417, 55, 65"
+        },
+        "Hole08": {
+          "BBOX": "253, 454, 55, 65"
+        },
+        "Hole09": {
+          "BBOX": "253, 497, 55, 65"
+        },
+        "Hole10": {
+          "BBOX": "253, 538, 55, 65"
+        },
+        "Hole11": {
+          "BBOX": "253, 577, 55, 65"
+        },
+        "Hole12": {
+          "BBOX": "253, 617, 55, 65"
+        }
+      }
+    }
+  }
+}

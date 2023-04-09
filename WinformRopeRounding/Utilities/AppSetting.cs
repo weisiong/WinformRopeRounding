@@ -1,4 +1,6 @@
-﻿namespace WinformRopeRounding.Utilities
+﻿using WinformRopeRounding.Models;
+
+namespace WinformRopeRounding.Utilities
 {
     public class AppSetting
     {
@@ -6,6 +8,7 @@
         public Dictionary<string,Camera> Cams { get; set; }
         public Dictionary<string,Action> Actions { get; set; }
         public Dictionary<string, ProductTemplate>  Templates { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 
     public class ProductTemplate

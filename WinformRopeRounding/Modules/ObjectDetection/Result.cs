@@ -6,7 +6,7 @@
         /// x1, y1, x2, y2 in page coordinates.
         /// <para>left, top, right, bottom.</para>
         /// </summary>
-        public float[] BBox { get; set; }
+        public int[] BBox { get; set; }
 
         /// <summary>
         /// The Bbox category.
@@ -18,7 +18,7 @@
         /// </summary>
         public float Confidence { get; }
 
-        public Result(float[] bbox, string label, float confidence)
+        public Result(int[] bbox, string label, float confidence)
         {
             BBox = bbox;
             Label = label;

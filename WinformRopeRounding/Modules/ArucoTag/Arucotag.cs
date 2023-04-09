@@ -56,7 +56,7 @@ namespace WinformRopeRounding.Modules.ArucoTag
                         rvec.Push(values);
                         tvecMat.CopyTo(values);
                         tvec.Push(values);
-                        ArucoInvoke.DrawAxis(frameCopy, _cameraMatrix, _distCoeffs, rvec, tvec, markersLength * 0.5f);
+                        //ArucoInvoke.DrawAxis(frameCopy, _cameraMatrix, _distCoeffs, rvec, tvec, markersLength * 0.5f);
                     }
                 }
             }

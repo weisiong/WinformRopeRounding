@@ -9,7 +9,7 @@ namespace WinformRopeRounding
     public partial class FormCamControl : Form
     {       
         private ucCamPtzPanel _ctrpanel;
-        private PtzCamControl _controller;
+        private PtzCamControlSDK _controller;
         public string CameraIP { get; set; }
         public string CamUsername { get; set; }
         public string CamPassword { get; set; }
@@ -31,7 +31,7 @@ namespace WinformRopeRounding
             _ctrpanel.OnActionButtonDown += Ctrpanel_OnButtonMouseDown;
             _ctrpanel.OnActionButtonUp += Ctrpanel_OnButtonMouseUp;
             _ctrpanel.OnActionButtonClick += _ctrpanel_OnActionButtonClick;
-            _controller = new PtzCamControl();
+            _controller = new PtzCamControlSDK();
             var success = await _controller.InitialiseAsync(CameraIP, CamUsername, CamPassword);
             if (success)
             {
@@ -44,7 +44,7 @@ namespace WinformRopeRounding
                     cameraImageBox.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
 
                     lblMessage.Visible = false;
-                    string url = string.Format(GlobalVars.VIDEO_SOURCE_FORMAT, CamUsername, CamPassword, CameraIP);
+                    string url = string.Format(GlobalVars.SNAPSHOT_SOURCE_FORMAT, CamUsername, CamPassword, CameraIP);
                     vp = new(url, EnumMediaInput.HTTP);
                     vp.OnFrameReceived += Vp_OnFrameReceived;
                     vp.Run();
@@ -83,20 +83,13 @@ namespace WinformRopeRounding
             _controller.ActionCommand(e);
         }
 
-        bool IsMouseDown = false;
         private async void Ctrpanel_OnButtonMouseDown(object sender, int e)
         {
-            IsMouseDown = true;
-            while (IsMouseDown)
-            {
-                _controller.ActionCommand(e);
-                await Task.Delay(100);
-            }
+            _controller.ActionCommand(e);
         }
 
         private void Ctrpanel_OnButtonMouseUp(object sender, int e)
         {
-            IsMouseDown = false;
             _controller.Stop();
         }
 

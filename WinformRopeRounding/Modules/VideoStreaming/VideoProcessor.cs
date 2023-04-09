@@ -4,8 +4,10 @@ namespace WinformRopeRounding.Modules.VideoStreaming
 {
     public class VideoProcessorEventArgs : EventArgs
     {
+        public string CamId { get; set; } = string.Empty;
         public Mat? MatSrc { get; set; }
     }
+
     public class VideoProcessor
     {
         private static bool isLoaded = false;
@@ -24,7 +26,7 @@ namespace WinformRopeRounding.Modules.VideoStreaming
             _uri = uri;
             _mediaInput = mediaInput;
         }
-
+        public string CamId { get; set; }   = string.Empty;
         public Mat CurrentFrame { get; internal set; } = new Mat();
         public async void Run()
         {
@@ -74,7 +76,7 @@ namespace WinformRopeRounding.Modules.VideoStreaming
 
         public Mat Snapshot()
         {
-            if (CurrentFrame.IsEmpty)
+            //if (CurrentFrame.IsEmpty)
             {
                 cam = new VideoCapture(_uri);
                 CurrentFrame = cam.QueryFrame();                

@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Sinks.WinForms.Base;
 using Newtonsoft.Json;
+using WinformRopeRounding.Models;
 
 namespace WinformRopeRounding.Utilities
 {
@@ -8,12 +9,15 @@ namespace WinformRopeRounding.Utilities
     public static class GlobalVars
     {
         // System Variables
-        public const string SoftwareVersion = "RopeRounding ver.20220918_1500";
+        public const string SoftwareVersion = "RopeRounding ver.20230209_1330";
 
         public static string SettingPath = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
 
-        public static string VIDEO_SOURCE_FORMAT = "http://{0}:{1}@{2}/ISAPI/Streaming/channels/101/picture";
+        public static string SNAPSHOT_SOURCE_FORMAT = "http://{0}:{1}@{2}/ISAPI/Streaming/channels/101/picture";
+        
+        public static string ConfigFileName = "Config.json";
 
+        public static string ProductFileName = "Products.json";
 
         public static AppSetting AppSetting { get; set; } = new AppSetting();
         public static void Init()
@@ -21,7 +25,7 @@ namespace WinformRopeRounding.Utilities
             DefaultAppSetting();
             ConfigureSerilog();
 
-            var fullFileName = "Config.json"; //System.IO.Path.Combine(SettingPath, "Config.json");
+            var fullFileName = ConfigFileName; //System.IO.Path.Combine(SettingPath, "Config.json");
             if (File.Exists(fullFileName))
             {
                 var jsonString = File.ReadAllText(fullFileName);
@@ -30,15 +34,25 @@ namespace WinformRopeRounding.Utilities
                     AppSetting = JsonConvert.DeserializeObject<AppSetting>(jsonString);
                 }
             }
+
+            fullFileName = ProductFileName;
+            if (File.Exists(fullFileName))
+            {
+                var jsonString = File.ReadAllText(fullFileName);
+                if (AppSetting is not null && !string.IsNullOrEmpty(jsonString))
+                {
+                    AppSetting.Products = JsonConvert.DeserializeObject<List<Product>>(jsonString); // new Products(jsonString);
+                }
+            }
         }
 
         private static void DefaultAppSetting()
         {
             var cams = new Dictionary<string, Camera>
             {
-                { "Cam1", new() { Enable = true, IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", Position  =  "0.76324 0.28763 0.2", 
+                { "Cam1", new() { Enable = true, IPAddress = "192.168.125.64", Username = "admin", Password = "Heliotech", Position  =  "0.76324 0.28763 0.2", 
                   IntrinsicParas ="1 0 0 0 1 0 0 0 1", DistCoeffParas = "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0", MeasurementRatio=new(0,0,0,0)} },
-                { "Cam2", new() { Enable = false, IPAddress = "192.168.1.64", Username = "admin", Password = "joseph12345", Position  =  "0.76324 0.28763 0.2",
+                { "Cam2", new() { Enable = false, IPAddress = "192.168.125.66", Username = "admin", Password = "Heliotech", Position  =  "0.76324 0.28763 0.2",
                   IntrinsicParas ="1 0 0 0 1 0 0 0 1", DistCoeffParas = "0.00 -0.00 0.00 0.00 -0.00 -0.00 0.00 0.00 0 0 0 0 0 0" , MeasurementRatio=new(0,0,0,0)} }
             };
 
@@ -99,6 +113,25 @@ namespace WinformRopeRounding.Utilities
                 Actions = actions,
                 Templates = templates
             };
+
+            //Products products = new();
+            var products = AppSetting.Products;
+            products.Add(new Product() { Name = "1001A001", Catagory = "1001", ModelFiles = "A,B" });
+            products.Add(new Product() { Name = "1001A002", Catagory = "1001", ModelFiles = "A,B" });
+            products.Add(new Product() { Name = "1001A003", Catagory = "1001", ModelFiles = "A,B" });
+
+            products.Add(new Product() { Name = "2001A001", Catagory = "2001", ModelFiles = "C,D" });
+            products.Add(new Product() { Name = "2001A002", Catagory = "2001", ModelFiles = "C,D" });
+            products.Add(new Product() { Name = "2001A003", Catagory = "2001", ModelFiles = "C,D" });
+
+            products.Add(new Product() { Name = "3001A001", Catagory = "3001", ModelFiles = "E,F" });
+            products.Add(new Product() { Name = "3001A002", Catagory = "3001", ModelFiles = "E,F" });
+            products.Add(new Product() { Name = "3001A003", Catagory = "3001", ModelFiles = "E,F" });
+
+            AppSetting.Products = products;
+
+            //var json = products.ToJson();
+            //File.WriteAllText(ProductFileName, json);
         }
 
         private static void ConfigureSerilog()
@@ -110,8 +143,12 @@ namespace WinformRopeRounding.Utilities
                         .WriteToSimpleAndRichTextBox(formatter)
                         //.WriteToGridView()
                         //.WriteToJsonTextBox()                        
+                        .WriteTo.File(
+                            path: @"C:\Apps\Logger\log-.json",
+                            rollingInterval: RollingInterval.Day,
+                            outputTemplate: "{Timestamp:yyyyMMdd HHmmss} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
                         .CreateLogger();
         }
-    
+
     }
 }

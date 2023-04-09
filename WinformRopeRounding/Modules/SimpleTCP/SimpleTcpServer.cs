@@ -12,7 +12,7 @@ namespace SimpleTCP
             StringEncoder = System.Text.Encoding.UTF8;
         }
 
-        private List<Server.ServerListener> _listeners = new List<Server.ServerListener>();
+        private List<Server.ServerListener> _listeners = new();
         public byte Delimiter { get; set; }
         public System.Text.Encoding StringEncoder { get; set; }
 
@@ -26,7 +26,7 @@ namespace SimpleTCP
 
         public IEnumerable<IPAddress> GetIPAddresses()
         {
-            List<IPAddress> ipAddresses = new List<IPAddress>();
+            List<IPAddress> ipAddresses = new();
 
 			IEnumerable<NetworkInterface> enabledNetInterfaces = NetworkInterface.GetAllNetworkInterfaces()
 				.Where(nic => nic.OperationalStatus == OperationalStatus.Up);
@@ -48,7 +48,7 @@ namespace SimpleTCP
 
         public List<IPAddress> GetListeningIPs()
         {
-            List<IPAddress> listenIps = new List<IPAddress>();
+            List<IPAddress> listenIps = new();
             foreach (var l in _listeners)
             {
                 if (!listenIps.Contains(l.IPAddress))
