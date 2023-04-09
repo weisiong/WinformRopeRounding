@@ -1,9 +1,4 @@
-﻿using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
-using Emgu.CV.Util;
-using Emgu.CV;
-using Microsoft.ML;
-using static Microsoft.ML.Transforms.Image.ImageResizingEstimator;
+﻿using Emgu.CV;
 using Yolov8Net;
 
 namespace WinformRopeRounding.Modules.ObjectDetection
